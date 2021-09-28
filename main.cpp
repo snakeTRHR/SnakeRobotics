@@ -11,8 +11,13 @@
 
 namespace plt = matplotlibcpp;
 
-double curvature(int input){
-    return sin(input * 0.01);
+double curvature_y(int input){
+    //return sin(input * 0.01);
+    return 3.0;
+}
+double curvature_p(int input){
+    //return sin(input * 0.01);
+    return 3.0;
 }
 double torsion(){
 }
@@ -37,8 +42,8 @@ int main(){
            0,
            1;
 
-    int n = 1000;
-    std::vector<double> val_x(n), val_y(n), val_z;
+    int n = 10;
+    std::vector<double> val_x(n), val_y(n), val_z(n);
 
     for(int s = 0; s < n; ++s){
         //solve differential equation(using diagonalization)
@@ -46,30 +51,46 @@ int main(){
         //d/dx = Ax
         //diagonalization
         Eigen::Matrix<double, 3, 3> A;
-        A <<             0, curvature(s), -1 * curvature(s),
-             -curvature(s),            0,                 0,
-              curvature(s),            0,                 0;
+        A <<             0, curvature_y(s), -1 * curvature_p(s),
+             -curvature_y(s),            0,                 0,
+              curvature_p(s),            0,                 0;
+        std::cout << "A" << std::endl;
+        std::cout << A << std::endl;
         Eigen::EigenSolver<Eigen::Matrix<double, 3, 3>> eigensolver(A);
         Eigen::Matrix<double, 3, 3> P;
         P = eigensolver.eigenvectors().real();
-        eigensolver.eigenvectors();
+        std::cout << "P" << std::endl;
+        std::cout << P << std::endl;
         Eigen::Matrix<double, 3, 3> D;
-        D = P.inverse() * A * P;
+        Eigen::Matrix<double, 3, 3> P_INV;
+        P_INV = P.inverse();
+        std::cout << "P_INV" << std::endl;
+        std::cout << P_INV << std::endl;
+        D = P_INV * A * P;
+        std::cout << "D" << std::endl;
+        std::cout << D << std::endl;
         //P^-1x = y
         //d/dty = Dy
-        Eigen::Matrix<double, 3, 1> Y;
-        Y << exp(D(0, 0)),
-             exp(D(1, 0)),
-             exp(D(2, 0));
-        //x = Py(C(s) = X)
+        Eigen::Matrix<double, 3, 3> Y;
+        Y << exp(D(0, 0)), exp(D(0, 1)), exp(D(0, 2)),
+             exp(D(1, 0)), exp(D(1, 1)), exp(D(1, 2)),
+             exp(D(2, 0)), exp(D(2, 1)), exp(D(2, 2));
+        //x = Py
+        Eigen::Matrix<double, 3, 3> X;
+        X = P * Y;
+
         Eigen::Matrix<double, 3, 1> C;
-        C = P * Y;
+        //FIX
+        C += X.row(0);
         //display graph
         //set display value
         val_x[s] = C(0, 0);
-        val_y[s] = C(1, 1);
-        val_z[s] = C(2, 2);
-        // Clear previous plot
+        val_y[s] = C(1, 0);
+        val_z[s] = C(2, 0);
+
+        std::cout << val_x[s] << " " << val_y[s] << " " << val_z[s] << std::endl;
+        /*
+ // Clear previous plot
 		plt::clf();
 		// Plot line from given x and y data. Color is selected automatically.
 		plt::plot(val_x, val_y);
@@ -82,7 +103,7 @@ int main(){
 		// Enable legend.
 		plt::legend();
 		// Display plot continuously
-		plt::pause(0.01);
+		plt::pause(0.01);*/
     }
 
 }

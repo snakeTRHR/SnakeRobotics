@@ -11,8 +11,8 @@ int main(){
    //double a = A(2, 3);
    //cout << a << endl;
     //MatrixXd A = MatrixXd::Identity(3,3);
-    cout << "A(0,0,0) = " << A(2,1) << endl;;
-    cout << "A.coeff(1,2) = " << A.coeff(1,2) << endl;
-    cout << "A.coeffRef(1,2) = " << A.coeff(1,2) << endl;
- 
+    cout << "A(0,0,0) = " << A.col(0) << endl;
+    Matrix<double, 3, 1> B;
+    B = A.col(0);
+    cout << B << endl;
 }
