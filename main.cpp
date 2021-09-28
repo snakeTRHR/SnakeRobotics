@@ -1,53 +1,50 @@
 #include<iostream>
 #include<cmath>
+#include<limits>
+#include<iomanip>
 #include<vector>
 #include "matplotlibcpp.h"
 #include "/usr/include/eigen3/Eigen/Dense"
+#include "/usr/include/eigen3/Eigen/Sparse"
+#include "/usr/include/eigen3/Eigen/Core"
 
 namespace plt = matplotlibcpp;
-using Eigen::MatrixXd;
-
-void RungeKutta(){
-}
-
-void rk4(void (*f_ptr)(),double x,double y[],double f[],int n,double h,double yw[],double k[][5])
-{
-    int i,j;
-    double xw;
-    static double c[4] = {0.0,0.5,0.5,1.0};
-
-    for(i=0;i<4;i++){
-        xw = x + c[i] * h;
-        for(j=0;j<n;j++){
-            yw[j] = y[j] + c[i] * k[j][i];
-        }
-
-        (*f_ptr)(xw,yw,f);
-
-        for(j=0;j<n;j++){
-            k[j][i+1] = h * f[j];
-        }
-    }
-
-    for(j=0;j<n;j++){
-        y[j] += (k[j][1] + 2.0*k[j][2] + 2.0*k[j][3] + k[j][4])/6.0;
-    }
-}
-
-void func(double x,double y[],double f[])
-{
-    f[0] = y[1];
-    f[1] = 1.0 - y[0] -2.0*y[1];
-}
 
 int main(){
-    double a = 3;
-    double b = 1;
-    double kappa = 0;
+
+    //(e_r, e_p, e_s)
+    Eigen::Matrix<double, 3, 1> c_s;
+    Eigen::Matrix<double, 3, 1> e_r;
+    Eigen::Matrix<double, 3, 1> e_p;
+    Eigen::Matrix<double, 3, 1> e_s;
+    //set initial value
+    c_s << 1,
+           0,
+           0;
+    e_r << 1,
+           0,
+           0;
+    e_p << 0,
+           1,
+           0;
+    e_s << 0,
+           0,
+           1;
+
+    double curvature = 0;
+    double torsion = 0;
 
     int n = 1000;
     std::vector<double> val_x(n), val_y(n), z;
 
+    //runge_kutta_4th_order
+    //step1
+
+    //step2
+
+    //step3
+
+    //step4
 
     //display graph
     for(int t = 0; t < 100; ++t){
