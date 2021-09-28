@@ -3,13 +3,10 @@
 #include<limits>
 #include<iomanip>
 #include<vector>
-#include "matplotlibcpp.h"
 #include "/usr/include/eigen3/Eigen/Dense"
 #include "/usr/include/eigen3/Eigen/Sparse"
 #include "/usr/include/eigen3/Eigen/Core"
 #include "/usr/include/eigen3/Eigen/LU"
-
-namespace plt = matplotlibcpp;
 
 double a = 1;
 double b = 0.1;
@@ -23,11 +20,11 @@ double torsion(){
 Eigen::Matrix<double, 3, 1> Func_1(Eigen::Matrix<double, 3, 1> input_1){
     return (curvature() * input_1);
 }
-Eigen::Matrix<double, 3, 1> Func_1(Eigen::Matrix<double, 3, 1> input_1, Eigen::Matrix<double, 3, 1> input_2){
-    return (-1 * curvature() * input_1 + torsion * input_2);
+Eigen::Matrix<double, 3, 1> Func_2(Eigen::Matrix<double, 3, 1> input_1, Eigen::Matrix<double, 3, 1> input_2){
+    return (-1 * curvature() * input_1 + torsion() * input_2);
 }
-Eigen::Matrix<double, 3, 1> Func_1(Eigen::Matrix<double, 3, 1> input_1){
-    return (-1 * input_2);
+Eigen::Matrix<double, 3, 1> Func_3(Eigen::Matrix<double, 3, 1> input_1){
+    return (-1 * torsion() * input_1);
 }
 
 int main(){
@@ -90,23 +87,4 @@ int main(){
 
         std::cout << T << std::endl;
     }
-
-        std::cout << val_x[s] << " " << val_y[s] << " " << val_z[s] << std::endl;
-        /*
- // Clear previous plot
-		plt::clf();
-		// Plot line from given x and y data. Color is selected automatically.
-		plt::plot(val_x, val_y);
-		// Plot a line whose name will show up as "log(x)" in the legend.
-		plt::named_plot("serpenoid", val_x, val_z);
-		// Set x-axis to interval [0,1000000]
-		plt::xlim(-10, 10);
-		// Add graph title
-		plt::title("Sample figure");
-		// Enable legend.
-		plt::legend();
-		// Display plot continuously
-		plt::pause(0.01);*/
-    }
-
 }
