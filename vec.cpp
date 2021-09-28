@@ -1,9 +1,17 @@
 #include<iostream>
 #include"/usr/include/eigen3/Eigen/Dense"
 
-int main(){
-    Eigen::Matrix<3, 1> c_s;
-    c_s << 1,
-           0,
-           0;
-    Eigen::Ma
+using namespace std;
+using namespace Eigen;
+int main()
+{
+   Matrix2f A;
+   A << 1, 2, 2, 3;
+   cout << "Here is the matrix A:\n" << A << endl;
+   SelfAdjointEigenSolver<Matrix2f> eigensolver(A);
+   if (eigensolver.info() != Success) abort();
+   cout << "The eigenvalues of A are:\n" << eigensolver.eigenvalues() << endl;
+   cout << "Here's a matrix whose columns are eigenvectors of A \n"
+        << "corresponding to these eigenvalues:\n"
+        << eigensolver.eigenvectors() << endl;
+}

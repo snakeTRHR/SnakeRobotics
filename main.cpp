@@ -10,15 +10,18 @@
 
 namespace plt = matplotlibcpp;
 
-int main(){
+double curvature(int input){
+    return sin(input * 0.01);
+}
 
+int main(){
     //(e_r, e_p, e_s)
     Eigen::Matrix<double, 3, 1> c_s;
     Eigen::Matrix<double, 3, 1> e_r;
     Eigen::Matrix<double, 3, 1> e_p;
     Eigen::Matrix<double, 3, 1> e_s;
     //set initial value
-    c_s << 1,
+    c_s << 0,
            0,
            0;
     e_r << 1,
@@ -35,25 +38,36 @@ int main(){
     double torsion = 0;
 
     int n = 1000;
-    std::vector<double> val_x(n), val_y(n), z;
+    std::vector<double> val_x(n), val_y(n), val_z;
 
-    //runge_kutta_4th_order
-    //step1
-
-    //step2
-
-    //step3
-
-    //step4
-
-    //display graph
-    for(int t = 0; t < 100; ++t){
-        for(int i = 0; i < 1000; ++i){
-            kappa = sin(t * 0.01);
-            val_x[i] = cos(kappa * i) / kappa;
-            val_y[i] = sin(kappa * i) / kappa;
-            std::cout << val_x[i] << " " << val_y[i] << std::endl;
-        }
+    for(int s = 0; s < n; ++s){
+        //solve differential equation(using diagonalization)
+        //d/dx = Ax
+        //diagonalization
+        Eigen::Matrix<double, 3, 3> A;
+        A <<             0, curvature(s), -1 * curvature(s),
+             -curvature(s),            0,                 0,
+              curvature(s),            0,                 0;
+        Eigen::EigenSolver<Eigen::Matrix<double, 3, 3>> eigensolver(A);
+        if (eigensolver.info() != Success) abort();
+        Eigen::Matrix<double, 3, 3> P;
+        P = eigensolver.eigenvectors();
+        Eigen::Matrix<double, 3, 3> D;
+        D = A.diagonal();
+        //P^-1x = y
+        //d/dty = Dy
+        Eigen::Matrix<double, 3, 1> Y;
+        Y << exp(D(1, 0, 0)),
+             exp(D(0, 1, 0)),
+             exp(D(0, 0, 1));
+        //x = Py(C(s) = X)
+        Eigen::Matrix<double, 3, 1> C;
+        C = P * Y;
+        //display graph
+        //set display value
+        val_x[s] = C(1, 0, 0);
+        val_y[s] = C(0, 1, 0);
+        val_z[s] = C(0, 0, 1);
         // Clear previous plot
 		plt::clf();
 		// Plot line from given x and y data. Color is selected automatically.
