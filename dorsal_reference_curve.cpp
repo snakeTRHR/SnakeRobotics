@@ -15,16 +15,18 @@ double b = 0.1;
 
 double alpha_yaw = M_PI / 3;
 double alpha_pitch = M_PI / 9;
+double alpha_zero = M_PI / 6;
 double bias_yaw = 0;
 double bias_pitch = 0;
-double l = 3.5;
+double l = 5;
 
 double curvature_pitch(double _s){
-    return (alpha_pitch * M_PI * sin(4 * M_PI * _s * M_PI / (2 * l)) + bias_pitch);
+    //return (alpha_pitch * M_PI * sin(4 * M_PI * _s * M_PI / (2 * l)) + bias_pitch);
     return 0;
 }
 double curvature_yaw(double _s){
-    return (alpha_yaw * M_PI * sin(2 * M_PI * _s * M_PI / (2 * l)) + bias_yaw);
+    return ((-2 * 5 * M_PI * alpha_zero / l) * sin(2 * 5 * M_PI * _s / l) + bias_yaw);
+    //return (alpha_yaw * M_PI * sin(2 * M_PI * _s * M_PI / (2 * l)) + bias_yaw);
 }
 double torsion(double _s){
     return 0;
