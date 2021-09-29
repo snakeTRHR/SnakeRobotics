@@ -13,22 +13,23 @@ namespace plt = matplotlibcpp;
 double a = 1;
 double b = 0.1;
 
-double curvature(){
-    return a /(a * a + b * b);
+double curvature(double _s){
+    return a / (a * a + b * b);
     //return 1/0.2;
+    //return sin(2 * 3.141592 * (_s / 100 - )_s * 0.01);
 }
-double torsion(){
-    return b / (a * a + b *b);
+double torsion(double _s){
+    return b / (a * a + b * b);
     //return 0;
 }
-Eigen::Matrix<double, 3, 1> Func_1(Eigen::Matrix<double, 3, 1> input_1){
-    return (curvature() * input_1);
+Eigen::Matrix<double, 3, 1> Func_1(double _s, Eigen::Matrix<double, 3, 1> input_1){
+    return (curvature(_s) * input_1);
 }
-Eigen::Matrix<double, 3, 1> Func_2(Eigen::Matrix<double, 3, 1> input_1, Eigen::Matrix<double, 3, 1> input_2){
-    return (-1 * curvature() * input_1 + torsion() * input_2);
+Eigen::Matrix<double, 3, 1> Func_2(double _s, Eigen::Matrix<double, 3, 1> input_1, Eigen::Matrix<double, 3, 1> input_2){
+    return (-1 * curvature(_s) * input_1 + torsion(_s) * input_2);
 }
-Eigen::Matrix<double, 3, 1> Func_3(Eigen::Matrix<double, 3, 1> input_1){
-    return (-1 * torsion() * input_1);
+Eigen::Matrix<double, 3, 1> Func_3(double _s, Eigen::Matrix<double, 3, 1> input_1){
+    return (-1 * torsion(_s) * input_1);
 }
 
 int main(){
@@ -64,29 +65,29 @@ int main(){
     Eigen::Matrix<double, 3, 1> K_d_2;
     Eigen::Matrix<double, 3, 1> K_d_3;
 
-    double t = 0;
+    double s = 0;
 
     std::vector<double> T_x, T_y, T_z;
 
-    for(int s = 0; s < n; ++s){
-        K_a_1 = h * Func_1(N);
-        K_a_2 = h * Func_2(T, B);
-        K_a_3 = h * Func_3(N);
+    for(int i = 0; i < n; ++i){
+        K_a_1 = h * Func_1(s, N);
+        K_a_2 = h * Func_2(s, T, B);
+        K_a_3 = h * Func_3(s, N);
 
-        K_b_1 = h * Func_1(N + K_a_2 / 2);
-        K_b_2 = h * Func_2(T + K_a_1 / 2, B + K_a_3 / 2);
-        K_b_3 = h * Func_3(N + K_a_2 / 2);
+        K_b_1 = h * Func_1(s + h / 2, N + K_a_2 / 2);
+        K_b_2 = h * Func_2(s + h / 2, T + K_a_1 / 2, B + K_a_3 / 2);
+        K_b_3 = h * Func_3(s + h / 2, N + K_a_2 / 2);
 
 
-        K_c_1 = h * Func_1(N + K_b_2 / 2);
-        K_c_2 = h * Func_2(T + K_b_1 / 2, B + K_b_3 / 2);
-        K_c_3 = h * Func_3(N + K_b_2 / 2);
+        K_c_1 = h * Func_1(s + h / 2, N + K_b_2 / 2);
+        K_c_2 = h * Func_2(s + h / 2, T + K_b_1 / 2, B + K_b_3 / 2);
+        K_c_3 = h * Func_3(s + h / 2, N + K_b_2 / 2);
 
-        K_d_1 = h * Func_1(N + K_c_2);
-        K_d_2 = h * Func_2(T + K_c_1, B + K_c_3);
-        K_d_3 = h * Func_3(N + K_c_2);
+        K_d_1 = h * Func_1(s + h, N + K_c_2);
+        K_d_2 = h * Func_2(s + h, T + K_c_1, B + K_c_3);
+        K_d_3 = h * Func_3(s + h, N + K_c_2);
 
-        t += h;
+        s += h;
 
         T += (K_a_1 + 2 * K_b_1 + 2 * K_c_1 + K_d_1) / 6;
         N += (K_a_2 + 2 * K_b_2 + 2 * K_c_2 + K_d_2) / 6;
