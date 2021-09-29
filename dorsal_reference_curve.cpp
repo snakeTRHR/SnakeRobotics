@@ -13,17 +13,21 @@ namespace plt = matplotlibcpp;
 double a = 1;
 double b = 0.1;
 
+double alpha_yaw = M_PI / 3;
+double alpha_pitch = M_PI / 9;
+double bias_yaw = 0;
+double bias_pitch = 0;
+double l = 3.5;
+
 double curvature_pitch(double _s){
-    return a / (a * a + b * b);
-    //return 1/0.2;
-    //return sin(2 * 3.141592 * (_s / 100 - )_s * 0.01);
+    return (alpha_pitch * M_PI * sin(4 * M_PI * _s * M_PI / (2 * l)) + bias_pitch);
+    return 0;
 }
 double curvature_yaw(double _s){
+    return (alpha_yaw * M_PI * sin(2 * M_PI * _s * M_PI / (2 * l)) + bias_yaw);
 }
-
 double torsion(double _s){
-    return b / (a * a + b * b);
-    //return 0;
+    return 0;
 }
 Eigen::Matrix<double, 3, 1> Func_1(double _s, Eigen::Matrix<double, 3, 1> input_1, Eigen::Matrix<double, 3, 1> input_2){
     return (curvature_yaw(_s) * input_1 - curvature_pitch(_s) * input_2);
@@ -47,7 +51,7 @@ int main(){
     E_p << 0, 1, 0;
     E_y << 0, 0, 1;
 
-    int n = 1000;
+    int n = 100;
     std::vector<double> val_x(n), val_y(n), val_z(n);
 
     //RungeKutta

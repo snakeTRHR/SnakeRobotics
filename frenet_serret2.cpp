@@ -14,13 +14,13 @@ double a = 1;
 double b = 0.1;
 
 double curvature(double _s){
-    return a / (a * a + b * b);
-    //return 1/0.2;
-    //return sin(2 * 3.141592 * (_s / 100 - )_s * 0.01);
+    //return a / (a * a + b * b);
+    return 1/0.5;
+    //return sin(_s * 0.5);
 }
 double torsion(double _s){
-    return b / (a * a + b * b);
-    //return 0;
+    //return b / (a * a + b * b);
+    return 0;
 }
 Eigen::Matrix<double, 3, 1> Func_1(double _s, Eigen::Matrix<double, 3, 1> input_1){
     return (curvature(_s) * input_1);
@@ -102,10 +102,11 @@ int main(){
     std::map<std::string, std::string> keywords;
     keywords.insert(std::pair<std::string, std::string>("label", "parametric curve") );
 
-    plt::plot3(T_x, T_y, T_z, keywords);
+    //plt::plot3(T_x, T_y, T_z, keywords);
+    plt::plot(T_x, T_y);
     plt::xlabel("x label");
     plt::ylabel("y label");
-    plt::set_zlabel("z label"); // set_zlabel rather than just zlabel, in accordance with the Axes3D method
-    plt::legend();
+    //plt::set_zlabel("z label"); // set_zlabel rather than just zlabel, in accordance with the Axes3D method
+    //plt::legend();
     plt::show();
 }
