@@ -10,18 +10,18 @@
 #include "matplotlibcpp.h"
 namespace plt = matplotlibcpp;
 
-double a = 2;
-double b = 4;
+double r = 1.0;
+double h = 0.5;
 
 double curvature(double _s){
-    //return a / (a * a + b * b);
+    return r / (r * r + h * h);
     //return std::abs(sin(_s * 0.5)) / std::pow(cos(_s) *cos(_s) + 1, 3.0/2.0);
-    return 5.0 / 4.0;
+    //return 5.0 / 4.0;
 }
 double torsion(double _s){
-    //return b / (a * a + b * b);
+    return h / (r * r + h * h);
     //return 1.0 / 4.0;
-    return 0.0;
+    //return 0.0;
     //return 0;
 }
 Eigen::Matrix<double, 3, 1> Func_1(double _s, Eigen::Matrix<double, 3, 1> input_1){
@@ -52,7 +52,7 @@ int main(){
     int n = 1000;
     std::vector<double> val_x(n), val_y(n), val_z(n);
 
-    //RungeKutta
+    //4次ルンゲクッタ
     double h = 0.05;
     Eigen::Matrix<double, 3, 1> K_a_1;
     Eigen::Matrix<double, 3, 1> K_a_2;
@@ -77,6 +77,7 @@ int main(){
     double s = 0;
 
     std::vector<double> C_x, C_y, C_z;
+    std::vector<double> T_x, T_y, T_z;
 
     for(int i = 0; i < n; ++i){
         K_a_1 = h * Func_1(s, N);
@@ -105,25 +106,39 @@ int main(){
         T += (K_a_1 + 2 * K_b_1 + 2 * K_c_1 + K_d_1) / 6;
         N += (K_a_2 + 2 * K_b_2 + 2 * K_c_2 + K_d_2) / 6;
         B += (K_a_3 + 2 * K_b_3 + 2 * K_c_3 + K_d_3) / 6;
-        C += (K_a_4 + 2 * K_b_4 + 2 * K_c_4 + K_d_4) / 6;
+        //C += (K_a_4 + 2 * K_b_4 + 2 * K_c_4 + K_d_4) / 6;
 
-        C_x.push_back(C(0, 0));
-        C_y.push_back(C(1, 0));
-        C_z.push_back(C(2, 0));
+        T_x.push_back(T(0, 0));
+        T_y.push_back(T(1, 0));
+        T_z.push_back(T(2, 0));
     }
 
-    std::cout << "s " << s << std::endl;
+    //数値積分を行う
+    //シンプソンの積分公式を用いる(区間[a,b]をn分割)
+    for(int i = 0; i < n; ++i){   
+        std::cout << "i = " << i << std::endl; 
+        Eigen::Matrix<double, 3, 1> value;
+        double start = 0, finish = (i * h) - h;
+        double separate_num = 100;
+        double width = (finish - start) / separate_num;
+        double x = 0, y = 0, z = 0;
+        for(int k = 0; k < separate_num; ++k){
+            x = T_x[i] * width;
+            y = T_x[i] * width;
+            z = T_x[i] * width;
+        }
+        C_x.push_back(x);
+        C_x.push_back(y);
+        C_x.push_back(z);
+    }
+
     std::map<std::string, std::string> keywords;
     keywords.insert(std::pair<std::string, std::string>("label", "parametric curve") );
-
-    plt::plot3(C_x, C_y, C_z, keywords);
+    //plt::plot3(C_x, C_y, C_z, keywords);
     //plt::plot(C_x, C_z);
     plt::xlabel("x label");
     plt::ylabel("y label");
-
-    //plt::xlim(-1, 1);
-    //plt::ylim(0, 2);
-    plt::set_zlabel("z label"); // set_zlabel rather than just zlabel, in accordance with the Axes3D method
+    plt::set_zlabel("z label"); 
     //plt::legend();
     plt::show();
 }
