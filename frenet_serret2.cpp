@@ -70,7 +70,7 @@ int main(){
     Eigen::Matrix<double, 3, 1> K_d_3;
     Eigen::Matrix<double, 3, 1> K_d_4;
 
-    double s_long = 100;
+    double s_long = 10;
     double s = 0;
     double h = 0.05;
     double n = s_long / h;
