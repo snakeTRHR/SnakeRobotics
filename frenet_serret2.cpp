@@ -14,14 +14,15 @@ double r_c = 1.0;
 double h_c = 0.5;
 
 double curvature(double _s){
-    return r_c / (r_c * r_c + h_c * h_c);
+    //return r_c / (r_c * r_c + h_c * h_c);
     //return std::abs(sin(_s * 0.5)) / std::pow(cos(_s) *cos(_s) + 1, 3.0/2.0);
     //return 1 / 0.5;
+    return sin(_s * M_PI + M_PI / 2);
 }
 double torsion(double _s){
-    return h_c / (r_c * r_c + h_c * h_c);
+    //return h_c / (r_c * r_c + h_c * h_c);
     //return 1.0 / 4.0;
-    //return 0.0;
+    return 0.0;
     //return 0;
 }
 Eigen::Matrix<double, 3, 1> Func_c(double _s, Eigen::Matrix<double, 3, 1> _E_1){
@@ -70,7 +71,7 @@ int main(){
     Eigen::Matrix<double, 3, 1> K_d_2;
     Eigen::Matrix<double, 3, 1> K_d_3;
 
-    double s_long = 10;
+    double s_long = 3;
     double s = 0;
     double h = 0.05;
     double n = s_long / h;
