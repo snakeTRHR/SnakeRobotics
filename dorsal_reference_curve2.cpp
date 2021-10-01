@@ -22,25 +22,27 @@ double l = 5;
 
 double curvature_pitch(double _s){
     //return (alpha_pitch * M_PI * sin(4 * M_PI * _s * M_PI / (2 * l)) + bias_pitch);
-    return 0;
+    return sin(_s * M_PI);
+    //return 0;
 }
 double curvature_yaw(double _s){
     //return ((-2 * 5 * M_PI * alpha_zero / l) * sin(2 * 5 * M_PI * _s / l) + bias_yaw);
-    return (alpha_yaw * M_PI * sin(2 * M_PI * _s * M_PI / (2 * l)) + bias_yaw);
+    //return (alpha_yaw * M_PI * sin(2 * M_PI * _s * M_PI / (2 * l)) + bias_yaw);
+    return sin(_s * M_PI);
 }
 double torsion(double _s){
     return 0;
 }
-Eigen::Matrix<double, 3, 1> Func_1(double _s, Eigen::Matrix<double, 3, 1> input_1){
+Eigen::Matrix<double, 3, 1> Func_C(double _s, Eigen::Matrix<double, 3, 1> input_1){
     return (input_1);;
 }
-Eigen::Matrix<double, 3, 1> Func_2(double _s, Eigen::Matrix<double, 3, 1> input_1, Eigen::Matrix<double, 3, 1> input_2){
+Eigen::Matrix<double, 3, 1> Func_E_r(double _s, Eigen::Matrix<double, 3, 1> input_1, Eigen::Matrix<double, 3, 1> input_2){
     return (curvature_yaw(_s) * input_1 - curvature_pitch(_s) * input_2);
 }
-Eigen::Matrix<double, 3, 1> Func_3(double _s, Eigen::Matrix<double, 3, 1> input_1, Eigen::Matrix<double, 3, 1> input_2){
+Eigen::Matrix<double, 3, 1> Func_E_p(double _s, Eigen::Matrix<double, 3, 1> input_1, Eigen::Matrix<double, 3, 1> input_2){
     return (-1 * curvature_yaw(_s) * input_1 + torsion(_s) * input_2);
 }
-Eigen::Matrix<double, 3, 1> Func_4(double _s, Eigen::Matrix<double, 3, 1> input_1, Eigen::Matrix<double, 3, 1> input_2){
+Eigen::Matrix<double, 3, 1> Func_E_y(double _s, Eigen::Matrix<double, 3, 1> input_1, Eigen::Matrix<double, 3, 1> input_2){
     return (curvature_pitch(_s) * input_1 - torsion(_s) * input_2);
 }
 
@@ -86,25 +88,25 @@ int main(){
     std::vector<double> C_x, C_y, C_z;
 
     for(int i = 0; i < n; ++i){
-        K_a_1 = h * Func_1(s, E_r);
-        K_a_2 = h * Func_2(s, E_p, E_y);
-        K_a_3 = h * Func_3(s, E_r, E_y);
-        K_a_4 = h * Func_4(s, E_r, E_p);
+        K_a_1 = h * Func_C(s, E_r);
+        K_a_2 = h * Func_E_r(s, E_p, E_y);
+        K_a_3 = h * Func_E_p(s, E_r, E_y);
+        K_a_4 = h * Func_E_y(s, E_r, E_p);
 
-        K_b_1 = h * Func_1(s + h / 2, E_r + K_a_2 / 2);
-        K_b_2 = h * Func_2(s + h / 2, E_p + K_a_3 / 2, E_y + K_a_4 / 2);
-        K_b_3 = h * Func_3(s + h / 2, E_r + K_a_2 / 2, E_y + K_a_4 / 2);
-        K_b_4 = h * Func_4(s + h / 2, E_r + K_a_2 / 2, E_p + K_a_3 / 2);
+        K_b_1 = h * Func_C(s + h / 2, E_r + K_a_2 / 2);
+        K_b_2 = h * Func_E_r(s + h / 2, E_p + K_a_3 / 2, E_y + K_a_4 / 2);
+        K_b_3 = h * Func_E_p(s + h / 2, E_r + K_a_2 / 2, E_y + K_a_4 / 2);
+        K_b_4 = h * Func_E_y(s + h / 2, E_r + K_a_2 / 2, E_p + K_a_3 / 2);
 
-        K_c_1 = h * Func_1(s + h / 2, E_p + K_b_2 / 2);
-        K_c_2 = h * Func_2(s + h / 2, E_p + K_b_3 / 2, E_y + K_b_4 / 2);
-        K_c_3 = h * Func_3(s + h / 2, E_r + K_b_2 / 2, E_y + K_b_4 / 2);
-        K_c_4 = h * Func_4(s + h / 2, E_r + K_b_2 / 2, E_p + K_b_3 / 2);
+        K_c_1 = h * Func_C(s + h / 2, E_p + K_b_2 / 2);
+        K_c_2 = h * Func_E_r(s + h / 2, E_p + K_b_3 / 2, E_y + K_b_4 / 2);
+        K_c_3 = h * Func_E_p(s + h / 2, E_r + K_b_2 / 2, E_y + K_b_4 / 2);
+        K_c_4 = h * Func_E_y(s + h / 2, E_r + K_b_2 / 2, E_p + K_b_3 / 2);
 
-        K_d_1 = h * Func_1(s + h, E_r + K_c_2);
-        K_d_2 = h * Func_2(s + h, E_p + K_c_3, E_y + K_c_4);
-        K_d_3 = h * Func_3(s + h, E_r + K_c_2, E_y + K_c_4);
-        K_d_4 = h * Func_4(s + h, E_r + K_c_2, E_p + K_c_3);
+        K_d_1 = h * Func_C(s + h, E_r + K_c_2);
+        K_d_2 = h * Func_E_r(s + h, E_p + K_c_3, E_y + K_c_4);
+        K_d_3 = h * Func_E_p(s + h, E_r + K_c_2, E_y + K_c_4);
+        K_d_4 = h * Func_E_y(s + h, E_r + K_c_2, E_p + K_c_3);
 
         s += h;
 
@@ -121,11 +123,11 @@ int main(){
     std::map<std::string, std::string> keywords;
     keywords.insert(std::pair<std::string, std::string>("label", "parametric curve") );
 
-    //plt::plot3(C_x, C_y, C_z, keywords);
+    plt::plot3(C_x, C_y, C_z, keywords);
     plt::plot(C_x, C_y);
     plt::xlabel("x label");
     plt::ylabel("y label");
-    //plt::set_zlabel("z label"); // set_zlabel rather than just zlabel, in accordance with the Axes3D method
+    plt::set_zlabel("z label"); // set_zlabel rather than just zlabel, in accordance with the Axes3D method
     plt::legend();
     plt::show();
 }
