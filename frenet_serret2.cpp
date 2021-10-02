@@ -43,14 +43,6 @@ int main(){
     E_2 << 0, 1, 0;
     E_3 << 0, 0, 1;
 
-    Eigen::Matrix<double, 3, 1> E_1_SUM;
-    Eigen::Matrix<double, 3, 1> E_2_SUM;
-    Eigen::Matrix<double, 3, 1> E_3_SUM;
-    E_1_SUM << 1, 0, 0;
-    E_2_SUM << 0, 1, 0;
-    E_3_SUM << 0, 0, 1;
-    
-    
     //RungeKutta
     Eigen::Matrix<double, 3, 1> K_a_c;
     Eigen::Matrix<double, 3, 1> K_a_1;
