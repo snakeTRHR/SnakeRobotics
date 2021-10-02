@@ -36,10 +36,11 @@ if (__name__ == '__main__'):
     h = 0.5;
     curvature = r / (r * r + h * h);
     torsion = h / (r * r + h * h);
-    c_0 = [0, 0, 0]
-    t_0 = [1, 0, 0]
-    n_0 = [0, 1, 0]
-    b_0 = [0, 0, 1]
+    k = np.sqrt(r * r + h * h)
+    c_0 = [0,      0,     0]
+    t_0 = [0,  r / k, h / k]
+    n_0 = [-1,     0,     0]
+    b_0 = [0, -h / k, r / k]
     var_init = np.hstack((c_0, t_0, n_0, b_0))
     var_list = odeint(func_frenet_serret, var_init, s_list, args=(curvature, torsion))
     print(var_list)

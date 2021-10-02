@@ -38,10 +38,11 @@ int main(){
     Eigen::Matrix<double, 3, 1> E_2;
     Eigen::Matrix<double, 3, 1> E_3;
     //set initial value
+    double k = std::sqrt(r_c * r_c + h_c * h_c);
     C << 0, 0, 0;
-    E_1 << 1, 0, 0;
-    E_2 << 0, 1, 0;
-    E_3 << 0, 0, 1;
+    E_1 << 0, r_c / k, h_c / k;
+    E_2 << -1, 0, 0;
+    E_3 << 0, -h_c / k, r_c / k;
 
     //RungeKutta
     Eigen::Matrix<double, 3, 1> K_a_c;
