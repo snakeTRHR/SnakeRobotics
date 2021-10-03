@@ -21,8 +21,8 @@ double bias_pitch = 0;
 double l = 5;
 
 double curvature_pitch(double _s){
-    //return (alpha_pitch * M_PI * sin(4 * M_PI * _s * M_PI / (2 * l)) + bias_pitch);
-    return 0;
+    return (alpha_pitch * M_PI * sin(4 * M_PI * _s * M_PI / (2 * l)) + bias_pitch);
+    //return 0;
 }
 double curvature_yaw(double _s){
     return ((-2 * 5 * M_PI * alpha_zero / l) * sin(2 * 5 * M_PI * _s / l) + bias_yaw);

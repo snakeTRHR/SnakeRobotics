@@ -3,107 +3,132 @@
 #include<limits>
 #include<iomanip>
 #include<vector>
-#include "matplotlibcpp.h"
 #include "/usr/include/eigen3/Eigen/Dense"
 #include "/usr/include/eigen3/Eigen/Sparse"
 #include "/usr/include/eigen3/Eigen/Core"
 #include "/usr/include/eigen3/Eigen/LU"
-
+#include "matplotlibcpp.h"
 namespace plt = matplotlibcpp;
 
-double curvature_y(int input){
-    //return sin(input * 0.01);
-    return 3.0;
+double r_c = 1.0;
+double h_c = 0.5;
+
+double curvature(double _s){
+    return r_c / (r_c * r_c + h_c * h_c);
 }
-double curvature_p(int input){
-    //return sin(input * 0.01);
-    return 3.0;
+double torsion(double _s){
+    return h_c / (r_c * r_c + h_c * h_c);
 }
-double torsion(){
+Eigen::Matrix<double, 3, 1> Func_c(double _s, Eigen::Matrix<double, 3, 1> _E_1){
+    return (_E_1);
+}
+Eigen::Matrix<double, 3, 1> Func_1(double _s, Eigen::Matrix<double, 3, 1> _E_2){
+    return (curvature(_s) * _E_2);
+}
+Eigen::Matrix<double, 3, 1> Func_2(double _s, Eigen::Matrix<double, 3, 1> _E_1, Eigen::Matrix<double, 3, 1> _E_3){
+    return ((-1 * curvature(_s) * _E_1) + (torsion(_s) * _E_3));
+}
+Eigen::Matrix<double, 3, 1> Func_3(double _s, Eigen::Matrix<double, 3, 1> _E_2){
+    return (-1 * torsion(_s) * _E_2);
 }
 
 int main(){
-    //(e_r, e_p, e_s)
-    Eigen::Matrix<double, 3, 1> c_s;
-    Eigen::Matrix<double, 3, 1> e_r;
-    Eigen::Matrix<double, 3, 1> e_p;
-    Eigen::Matrix<double, 3, 1> e_s;
+    Eigen::Matrix<double, 3, 1> C;
+    Eigen::Matrix<double, 3, 1> E_1;
+    Eigen::Matrix<double, 3, 1> E_2;
+    Eigen::Matrix<double, 3, 1> E_3;
     //set initial value
-    c_s << 0,
-           0,
-           0;
-    e_r << 1,
-           0,
-           0;
-    e_p << 0,
-           1,
-           0;
-    e_s << 0,
-           0,
-           1;
+    double k = std::sqrt(r_c * r_c + h_c * h_c);
+    C << 0, 0, 0;
+    E_1 << 0, r_c / k, h_c / k;
+    E_2 << -1, 0, 0;
+    E_3 << 0, -h_c / k, r_c / k;
 
-    int n = 10;
-    std::vector<double> val_x(n), val_y(n), val_z(n);
+    //RungeKutta
+    Eigen::Matrix<double, 3, 1> K_a_c;
+    Eigen::Matrix<double, 3, 1> K_a_1;
+    Eigen::Matrix<double, 3, 1> K_a_2;
+    Eigen::Matrix<double, 3, 1> K_a_3;
 
-    for(int s = 0; s < n; ++s){
-        //solve differential equation(using diagonalization)
-        //https://www.momoyama-usagi.com/entry/math-ode11
-        //d/dx = Ax
-        //diagonalization
-        Eigen::Matrix<double, 3, 3> A;
-        A <<             0, curvature_y(s), -1 * curvature_p(s),
-             -curvature_y(s),            0,                 0,
-              curvature_p(s),            0,                 0;
-        std::cout << "A" << std::endl;
-        std::cout << A << std::endl;
-        Eigen::EigenSolver<Eigen::Matrix<double, 3, 3>> eigensolver(A);
-        Eigen::Matrix<double, 3, 3> P;
-        P = eigensolver.eigenvectors().real();
-        std::cout << "P" << std::endl;
-        std::cout << P << std::endl;
-        Eigen::Matrix<double, 3, 3> D;
-        Eigen::Matrix<double, 3, 3> P_INV;
-        P_INV = P.inverse();
-        std::cout << "P_INV" << std::endl;
-        std::cout << P_INV << std::endl;
-        D = P_INV * A * P;
-        std::cout << "D" << std::endl;
-        std::cout << D << std::endl;
-        //P^-1x = y
-        //d/dty = Dy
-        Eigen::Matrix<double, 3, 3> Y;
-        Y << exp(D(0, 0)), exp(D(0, 1)), exp(D(0, 2)),
-             exp(D(1, 0)), exp(D(1, 1)), exp(D(1, 2)),
-             exp(D(2, 0)), exp(D(2, 1)), exp(D(2, 2));
-        //x = Py
-        Eigen::Matrix<double, 3, 3> X;
-        X = P * Y;
+    Eigen::Matrix<double, 3, 1> K_b_c;
+    Eigen::Matrix<double, 3, 1> K_b_1;
+    Eigen::Matrix<double, 3, 1> K_b_2;
+    Eigen::Matrix<double, 3, 1> K_b_3;
 
-        Eigen::Matrix<double, 3, 1> C;
-        //FIX
-        C += X.row(0);
-        //display graph
-        //set display value
-        val_x[s] = C(0, 0);
-        val_y[s] = C(1, 0);
-        val_z[s] = C(2, 0);
+    Eigen::Matrix<double, 3, 1> K_c_c;
+    Eigen::Matrix<double, 3, 1> K_c_1;
+    Eigen::Matrix<double, 3, 1> K_c_2;
+    Eigen::Matrix<double, 3, 1> K_c_3;
 
-        std::cout << val_x[s] << " " << val_y[s] << " " << val_z[s] << std::endl;
-        /*
- // Clear previous plot
-		plt::clf();
-		// Plot line from given x and y data. Color is selected automatically.
-		plt::plot(val_x, val_y);
-		// Plot a line whose name will show up as "log(x)" in the legend.
-		plt::named_plot("serpenoid", val_x, val_z);
-		// Set x-axis to interval [0,1000000]
-		plt::xlim(-10, 10);
-		// Add graph title
-		plt::title("Sample figure");
-		// Enable legend.
-		plt::legend();
-		// Display plot continuously
-		plt::pause(0.01);*/
+    Eigen::Matrix<double, 3, 1> K_d_c;
+    Eigen::Matrix<double, 3, 1> K_d_1;
+    Eigen::Matrix<double, 3, 1> K_d_2;
+    Eigen::Matrix<double, 3, 1> K_d_3;
+
+    double s_long = 30;
+    double s = 0;
+    double h = 0.05;
+    double n = s_long / h;
+    std::vector<double> C_x, C_y, C_z;
+    std::vector<double> E_1_x, E_1_y, E_1_z;
+    std::vector<double> E_2_x, E_2_y, E_2_z;
+    std::vector<double> E_3_x, E_3_y, E_3_z;
+
+    for(int i = 0; i < n; ++i){
+        K_a_c = h * Func_c(s, E_1);
+        K_a_1 = h * Func_1(s, E_2);
+        K_a_2 = h * Func_2(s, E_1, E_3);
+        K_a_3 = h * Func_3(s, E_2);
+
+        K_b_c = h * Func_c(s + h / 2, E_1 + K_a_1 / 2);
+        K_b_1 = h * Func_1(s + h / 2, E_2 + K_a_2 / 2);
+        K_b_2 = h * Func_2(s + h / 2, E_1 + K_a_1 / 2, E_3 + K_a_3 / 2);
+        K_b_3 = h * Func_3(s + h / 2, E_2 + K_a_2 / 2);
+
+
+        K_c_c = h * Func_c(s + h / 2, E_1 + K_b_1 / 2);
+        K_c_1 = h * Func_1(s + h / 2, E_2 + K_b_2 / 2);
+        K_c_2 = h * Func_2(s + h / 2, E_1 + K_b_1 / 2, E_3 + K_b_3 / 2);
+        K_c_3 = h * Func_3(s + h / 2, E_2 + K_b_2 / 2);
+
+        K_d_c = h * Func_c(s + h, E_1 + K_c_1);
+        K_d_1 = h * Func_1(s + h, E_2 + K_c_2);
+        K_d_2 = h * Func_2(s + h, E_1 + K_c_1, E_3 + K_c_3);
+        K_d_3 = h * Func_3(s + h, E_2 + K_c_2);
+
+        s += h;
+
+        C   += (K_a_c + 2 * K_b_c + 2 * K_c_c + K_d_c) / 6;
+        E_1 += (K_a_1 + 2 * K_b_1 + 2 * K_c_1 + K_d_1) / 6;
+        E_2 += (K_a_2 + 2 * K_b_2 + 2 * K_c_2 + K_d_2) / 6;
+        E_3 += (K_a_3 + 2 * K_b_3 + 2 * K_c_3 + K_d_3) / 6;
+        
+        C_x.push_back(C(0, 0));
+        C_y.push_back(C(1, 0));
+        C_z.push_back(C(2, 0));
+
+        E_1_x.push_back(E_1(0, 0));
+        E_1_y.push_back(E_1(1, 0));
+        E_1_z.push_back(E_1(2, 0));
+        
+        E_2_x.push_back(E_2(0, 0));
+        E_2_y.push_back(E_2(1, 0));
+        E_2_z.push_back(E_2(2, 0));
+        
+        E_3_x.push_back(E_3(0, 0));
+        E_3_y.push_back(E_3(1, 0));
+        E_3_z.push_back(E_3(2, 0));
     }
-
+    
+    //matplotlib
+    std::map<std::string, std::string> keywords;
+    keywords.insert(std::pair<std::string, std::string>("label", "parametric curve") );
+    plt::plot3(C_x, C_y, C_z, keywords);
+    plt::plot3(E_1_x, E_1_y, E_1_z, keywords);
+    plt::plot(E_1_x, E_1_y);
+    plt::xlabel("x label");
+    plt::ylabel("y label");
+    plt::set_zlabel("z label"); 
+    plt::legend();
+    plt::show();
 }
