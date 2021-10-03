@@ -10,26 +10,32 @@
 #include "matplotlibcpp.h"
 namespace plt = matplotlibcpp;
 
-double r_c = 1.0;
-double h_c = 0.5;
+double alpha_yaw = M_PI / 6;
+double alpha_pitch = M_PI / 9;
+double bias_yaw = 0;
+double bias_pitch = 0;
+double l = 2;
 
-double curvature(double _s){
-    return r_c / (r_c * r_c + h_c * h_c);
+double curvature_yaw(double _s){
+    return alpha_yaw * M_PI * sin(M_PI * _s / (2 * l))/ (2 * l) + bias_yaw;
+}
+double curvature_pitch(double _s){
+    return alpha_pitch * M_PI * sin(_s * M_PI / (2 * l))/ (2 * l) + bias_pitch;
 }
 double torsion(double _s){
-    return h_c / (r_c * r_c + h_c * h_c);
+    return 0;
 }
 Eigen::Matrix<double, 3, 1> Func_c(double _s, Eigen::Matrix<double, 3, 1> _E_1){
     return (_E_1);
 }
-Eigen::Matrix<double, 3, 1> Func_1(double _s, Eigen::Matrix<double, 3, 1> _E_2){
-    return (curvature(_s) * _E_2);
+Eigen::Matrix<double, 3, 1> Func_1(double _s, Eigen::Matrix<double, 3, 1> _E_2, Eigen::Matrix<double, 3, 1> _E_3){
+    return (curvature_yaw(_s) * _E_2 - curvature_pitch(_s) * _E_3);
 }
 Eigen::Matrix<double, 3, 1> Func_2(double _s, Eigen::Matrix<double, 3, 1> _E_1, Eigen::Matrix<double, 3, 1> _E_3){
-    return ((-1 * curvature(_s) * _E_1) + (torsion(_s) * _E_3));
+    return ((-1 * curvature_yaw(_s) * _E_1) + (torsion(_s) * _E_3));
 }
-Eigen::Matrix<double, 3, 1> Func_3(double _s, Eigen::Matrix<double, 3, 1> _E_2){
-    return (-1 * torsion(_s) * _E_2);
+Eigen::Matrix<double, 3, 1> Func_3(double _s, Eigen::Matrix<double, 3, 1> _E_1, Eigen::Matrix<double, 3, 1> _E_2){
+    return (curvature_pitch(_s) * _E_1 -1 * torsion(_s) * _E_2);
 }
 
 int main(){
@@ -38,11 +44,10 @@ int main(){
     Eigen::Matrix<double, 3, 1> E_2;
     Eigen::Matrix<double, 3, 1> E_3;
     //set initial value
-    double k = std::sqrt(r_c * r_c + h_c * h_c);
     C << 0, 0, 0;
-    E_1 << 0, r_c / k, h_c / k;
-    E_2 << -1, 0, 0;
-    E_3 << 0, -h_c / k, r_c / k;
+    E_1 << 1, 0, 0;
+    E_2 << 0, 1, 0;
+    E_3 << 0, 0, 1;
 
     //RungeKutta
     Eigen::Matrix<double, 3, 1> K_a_c;
@@ -76,25 +81,25 @@ int main(){
 
     for(int i = 0; i < n; ++i){
         K_a_c = h * Func_c(s, E_1);
-        K_a_1 = h * Func_1(s, E_2);
+        K_a_1 = h * Func_1(s, E_2, E_3);
         K_a_2 = h * Func_2(s, E_1, E_3);
-        K_a_3 = h * Func_3(s, E_2);
+        K_a_3 = h * Func_3(s, E_1, E_2);
 
         K_b_c = h * Func_c(s + h / 2, E_1 + K_a_1 / 2);
-        K_b_1 = h * Func_1(s + h / 2, E_2 + K_a_2 / 2);
+        K_b_1 = h * Func_1(s + h / 2, E_2 + K_a_2 / 2, E_3 + K_a_3 / 2);
         K_b_2 = h * Func_2(s + h / 2, E_1 + K_a_1 / 2, E_3 + K_a_3 / 2);
-        K_b_3 = h * Func_3(s + h / 2, E_2 + K_a_2 / 2);
+        K_b_3 = h * Func_3(s + h / 2, E_1 + K_a_1 / 2, E_2 + K_a_2 / 2);
 
 
         K_c_c = h * Func_c(s + h / 2, E_1 + K_b_1 / 2);
-        K_c_1 = h * Func_1(s + h / 2, E_2 + K_b_2 / 2);
+        K_c_1 = h * Func_1(s + h / 2, E_2 + K_b_2 / 2, E_3 + K_b_3 / 2);
         K_c_2 = h * Func_2(s + h / 2, E_1 + K_b_1 / 2, E_3 + K_b_3 / 2);
-        K_c_3 = h * Func_3(s + h / 2, E_2 + K_b_2 / 2);
+        K_c_3 = h * Func_3(s + h / 2, E_1 + K_a_1 / 2, E_2 + K_b_2 / 2);
 
         K_d_c = h * Func_c(s + h, E_1 + K_c_1);
-        K_d_1 = h * Func_1(s + h, E_2 + K_c_2);
+        K_d_1 = h * Func_1(s + h, E_2 + K_c_2, E_3 + K_c_3);
         K_d_2 = h * Func_2(s + h, E_1 + K_c_1, E_3 + K_c_3);
-        K_d_3 = h * Func_3(s + h, E_2 + K_c_2);
+        K_d_3 = h * Func_3(s + h, E_1 + K_c_1, E_2 + K_c_2);
 
         s += h;
 

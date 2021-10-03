@@ -10,19 +10,17 @@
 #include "matplotlibcpp.h"
 namespace plt = matplotlibcpp;
 
-double alpha_yaw = M_PI / 6;
+double alpha_yaw = M_PI;
 double alpha_pitch = M_PI / 9;
 double bias_yaw = 0;
 double bias_pitch = 0;
 double l = 2;
 
 double curvature_yaw(double _s){
-    return -2 * 5 * alpha_yaw * M_PI * sin(2 * 5 * M_PI * _s / l)/ l + bias_yaw;
-    //return -1 * alpha_yaw * M_PI * sin(M_PI * _s / (2 * l))/ (2 * l) + bias_yaw;
+    return alpha_yaw * M_PI * sin(2 * M_PI * _s * M_PI/ (2 * l))/ (2 * l) + bias_yaw;
 }
 double curvature_pitch(double _s){
-    //return alpha_pitch * M_PI * sin(_s * M_PI / (2 * l))/ (2 * l) + bias_pitch;
-    return 0;
+    return alpha_pitch * M_PI * sin(4* M_PI * _s * M_PI / (2 * l))/ (2 * l) + bias_pitch;
 }
 double torsion(double _s){
     return 0;
@@ -73,7 +71,7 @@ int main(){
     Eigen::Matrix<double, 3, 1> K_d_3;
     Eigen::Matrix<double, 3, 1> K_d_4;
 
-    double s_long = 6;
+    double s_long = 5.0;
     double s = 0;
     double h = 0.05;
     double n = s_long / h;
@@ -114,8 +112,8 @@ int main(){
     std::map<std::string, std::string> keywords;
     keywords.insert(std::pair<std::string, std::string>("label", "parametric curve") );
 
-    //plt::plot3(C_x, C_y, C_z, keywords);
-    plt::plot(C_x, C_y);
+    plt::plot3(C_x, C_y, C_z, keywords);
+    //plt::plot(C_x, C_y);
     plt::xlabel("x label");
     plt::ylabel("y label");
     //plt::set_zlabel("z label"); // set_zlabel rather than just zlabel, in accordance with the Axes3D method
