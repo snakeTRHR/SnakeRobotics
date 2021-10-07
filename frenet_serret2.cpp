@@ -14,10 +14,12 @@ double r_c = 1.0;
 double h_c = 0.5;
 
 double curvature(double _s){
-    return r_c / (r_c * r_c + h_c * h_c);
+    return std::abs(sin(_s)) / std::pow(cos(_s) * cos(_s) + 1, 3 / 2);
+    //return r_c / (r_c * r_c + h_c * h_c);
 }
 double torsion(double _s){
-    return h_c / (r_c * r_c + h_c * h_c);
+    return 0;
+    //return h_c / (r_c * r_c + h_c * h_c);
 }
 Eigen::Matrix<double, 3, 1> Func_c(double _s, Eigen::Matrix<double, 3, 1> _E_1){
     return (_E_1);
@@ -40,9 +42,41 @@ int main(){
     //set initial value
     double k = std::sqrt(r_c * r_c + h_c * h_c);
     C << 0, 0, 0;
+    
+    /*
     E_1 << 0, r_c / k, h_c / k;
     E_2 << -1, 0, 0;
     E_3 << 0, -h_c / k, r_c / k;
+    */
+
+    /*
+    E_1 << 1, 0, 0;
+    E_2 << 0, 1, 0;
+    E_3 << 0, 0, 1;
+    */
+    Eigen::Matrix<double, 3, 3> Identity_Matrix;
+    Identity_Matrix << 1,  0,  0,
+                       0, -1,  0,
+                       0,  0, -1;
+
+    double theta_roll = 0;
+    double theta_pitch = 0;
+    double theta_yaw = M_PI / 4;
+
+    Eigen::Matrix<double, 3, 3> Rotation_Matrix;
+    //Rotation_Matrix <<  cos(theta_pitch) * cos(theta_roll), sin(theta_yaw) * sin(theta_pitch) * cos(theta_roll),  sin(theta_yaw) * sin(theta_roll) + cos(theta_yaw) * sin(theta_pitch) * cos(theta_roll),
+    //                    cos(theta_pitch) * sin(theta_roll), sin(theta_yaw) * sin(theta_pitch) * sin(theta_roll), -sin(theta_yaw) * cos(theta_roll) + cos(theta_yaw) * sin(theta_pitch) * sin(theta_roll),
+    //                   -sin(theta_pitch)                  , sin(theta_yaw) * cos(theta_pitch)                  ,  cos(theta_yaw) * cos(theta_pitch);
+    Rotation_Matrix << cos(theta_yaw),-sin(theta_yaw), 0,
+                       sin(theta_yaw), cos(theta_yaw), 0,
+                       0,                           0, 1;
+    Eigen::Matrix<double, 3, 3> Initial_Matrix;
+    Initial_Matrix = Rotation_Matrix * Identity_Matrix;
+    Initial_Matrix.transpose();
+
+    E_1 = Initial_Matrix.row(0);
+    E_2 = Initial_Matrix.row(1);
+    E_3 = Initial_Matrix.row(2);
 
     //RungeKutta
     Eigen::Matrix<double, 3, 1> K_a_c;

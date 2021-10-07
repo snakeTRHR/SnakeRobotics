@@ -10,17 +10,18 @@
 #include "matplotlibcpp.h"
 namespace plt = matplotlibcpp;
 
-double alpha_yaw = M_PI;
-double alpha_pitch = M_PI / 9;
+double alpha_yaw = M_PI / 4;
+double alpha_pitch = 0;
 double bias_yaw = 0;
 double bias_pitch = 0;
-double l = 2;
+double l = 5;
 
 double curvature_yaw(double _s){
-    return alpha_yaw * M_PI * sin(2 * M_PI * _s * M_PI/ (2 * l))/ (2 * l) + bias_yaw;
+    return alpha_yaw * M_PI * sin(_s * M_PI/ (2 * l))/ (2 * l) + bias_yaw;
 }
 double curvature_pitch(double _s){
-    return alpha_pitch * M_PI * sin(4* M_PI * _s * M_PI / (2 * l))/ (2 * l) + bias_pitch;
+    return 0;
+    //return alpha_pitch * M_PI * sin(4* M_PI * _s * M_PI / (2 * l))/ (2 * l) + bias_pitch;
 }
 double torsion(double _s){
     return 0;
@@ -46,10 +47,36 @@ int main(){
     Eigen::Matrix<double, 3, 1> E_y;
     //set initial value
     C   << 0, 0, 0;
-    E_r << 1, 0, 0;
-    E_p << 0, 1, 0;
-    E_y << 0, 0, 1;
+    //E_r << 1, 0, 0;
+    //E_p << 0, 1, 0;
+    //E_y << 0, 0, 1;
+    Eigen::Matrix<double, 3, 3> Identity_Matrix;
+    Identity_Matrix << 1,  0,  0,
+                       0, -1,  0,
+                       0,  0, -1;
 
+    double theta_roll = 0;
+    double theta_pitch = alpha_pitch;
+    double theta_yaw = alpha_yaw;
+
+    Eigen::Matrix<double, 3, 3> Rotation_Matrix;
+    //Rotation_Matrix <<  cos(theta_pitch) * cos(theta_roll), sin(theta_yaw) * sin(theta_pitch) * cos(theta_roll),  sin(theta_yaw) * sin(theta_roll) + cos(theta_yaw) * sin(theta_pitch) * cos(theta_roll),
+    //                    cos(theta_pitch) * sin(theta_roll), sin(theta_yaw) * sin(theta_pitch) * sin(theta_roll), -sin(theta_yaw) * cos(theta_roll) + cos(theta_yaw) * sin(theta_pitch) * sin(theta_roll),
+    //                   -sin(theta_pitch)                  , sin(theta_yaw) * cos(theta_pitch)                  ,  cos(theta_yaw) * cos(theta_pitch);
+    Rotation_Matrix << cos(theta_yaw),-sin(theta_yaw), 0,
+                       sin(theta_yaw), cos(theta_yaw), 0,
+                       0,                           0, 1;
+    Eigen::Matrix<double, 3, 3> Initial_Matrix;
+    Initial_Matrix = Rotation_Matrix * Identity_Matrix;
+    Initial_Matrix.transpose();
+
+    E_r = Initial_Matrix.row(0);
+    E_p = Initial_Matrix.row(1);
+    E_y = Initial_Matrix.row(2);
+
+    std::cout << "E_r" << std::endl << E_r << std::endl; 
+    std::cout << "E_p" << std::endl << E_p << std::endl; 
+    std::cout << "E_y" << std::endl << E_y << std::endl; 
     //RungeKutta
     Eigen::Matrix<double, 3, 1> K_a_1;
     Eigen::Matrix<double, 3, 1> K_a_2;
@@ -71,7 +98,7 @@ int main(){
     Eigen::Matrix<double, 3, 1> K_d_3;
     Eigen::Matrix<double, 3, 1> K_d_4;
 
-    double s_long = 5.0;
+    double s_long = 4 * l;
     double s = 0;
     double h = 0.05;
     double n = s_long / h;
@@ -109,6 +136,7 @@ int main(){
         C_y.push_back(C(1, 0));
         C_z.push_back(C(2, 0));
     }
+    std::cout << "s = " << s << std::endl;
     std::map<std::string, std::string> keywords;
     keywords.insert(std::pair<std::string, std::string>("label", "parametric curve") );
 
