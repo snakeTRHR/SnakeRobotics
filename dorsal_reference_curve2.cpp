@@ -63,12 +63,13 @@ int main(){
     //Rotation_Matrix <<  cos(theta_pitch) * cos(theta_roll), sin(theta_yaw) * sin(theta_pitch) * cos(theta_roll),  sin(theta_yaw) * sin(theta_roll) + cos(theta_yaw) * sin(theta_pitch) * cos(theta_roll),
     //                    cos(theta_pitch) * sin(theta_roll), sin(theta_yaw) * sin(theta_pitch) * sin(theta_roll), -sin(theta_yaw) * cos(theta_roll) + cos(theta_yaw) * sin(theta_pitch) * sin(theta_roll),
     //                   -sin(theta_pitch)                  , sin(theta_yaw) * cos(theta_pitch)                  ,  cos(theta_yaw) * cos(theta_pitch);
-    Rotation_Matrix << cos(theta_yaw),-sin(theta_yaw), 0,
-                       sin(theta_yaw), cos(theta_yaw), 0,
-                       0,                           0, 1;
+    Rotation_Matrix <<  cos(theta_pitch) * cos(theta_yaw) + sin(theta_pitch) * sin(theta_roll) * sin(theta_yaw), -cos(theta_pitch) * sin(theta_yaw) + sin(theta_pitch) * sin(theta_roll) * cos(theta_yaw),  sin(theta_pitch) * cos(theta_roll),
+                        cos(theta_roll)  * sin(theta_yaw)                                                      ,  cos(theta_roll)  * cos(theta_yaw)                                                      , -sin(theta_roll),
+                       -sin(theta_pitch) * cos(theta_yaw) + cos(theta_pitch) * sin(theta_roll) * sin(theta_yaw),  sin(theta_pitch) * sin(theta_yaw) + cos(theta_pitch) * sin(theta_roll) * cos(theta_yaw),  cos(theta_pitch) * cos(theta_roll);
+
     Eigen::Matrix<double, 3, 3> Initial_Matrix;
     Initial_Matrix = Rotation_Matrix * Identity_Matrix;
-    Initial_Matrix.transpose();
+    Initial_Matrix.transposeInPlace();
 
     E_r = Initial_Matrix.row(0);
     E_p = Initial_Matrix.row(1);

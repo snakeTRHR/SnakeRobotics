@@ -18,26 +18,24 @@ int main(){
   
     Eigen::Matrix<double, 3, 3> Identity_Matrix;
     Identity_Matrix << 1, 0, 0,
-                       0, -1, 0,
-                       0, 0, -1;
+                       0, 1, 0,
+                       0, 0, 1;
 
     double theta_roll = 0;
     double theta_pitch = 0;
     double theta_yaw = M_PI / 4;
 
     Eigen::Matrix<double, 3, 3> Rotation_Matrix;
-    //Rotation_Matrix <<  cos(theta_pitch) * cos(theta_roll), sin(theta_yaw) * sin(theta_pitch) * cos(theta_roll) - cos(theta_yaw) * sin(theta_roll),  sin(theta_yaw) * sin(theta_roll) + cos(theta_yaw) * sin(theta_pitch) * cos(theta_roll),
-    //                    cos(theta_pitch) * sin(theta_roll), sin(theta_yaw) * sin(theta_pitch) * sin(theta_roll) + cos(theta_yaw) * cos(theta_roll), -sin(theta_yaw) * cos(theta_roll) + cos(theta_yaw) * sin(theta_pitch) * sin(theta_roll),
-    //                   -sin(theta_pitch)                  , sin(theta_yaw) * cos(theta_pitch)                                                     ,  cos(theta_yaw) * cos(theta_pitch);
+    Rotation_Matrix <<  cos(theta_pitch) * cos(theta_yaw) + sin(theta_pitch) * sin(theta_roll) * sin(theta_yaw), -cos(theta_pitch) * sin(theta_yaw) + sin(theta_pitch) * sin(theta_roll) * cos(theta_yaw),  sin(theta_pitch) * cos(theta_roll),
+                        cos(theta_roll)  * sin(theta_yaw)                                                      ,  cos(theta_roll)  * cos(theta_yaw)                                                      , -sin(theta_roll),
+                       -sin(theta_pitch) * cos(theta_yaw) + cos(theta_pitch) * sin(theta_roll) * sin(theta_yaw),  sin(theta_pitch) * sin(theta_yaw) + cos(theta_pitch) * sin(theta_roll) * cos(theta_yaw),  cos(theta_pitch) * cos(theta_roll);
 
-    Rotation_Matrix << cos(theta_yaw),-sin(theta_yaw), 0,
-                       sin(theta_yaw), cos(theta_yaw), 0,
-                       0,                           0, 1;
     Eigen::Matrix<double, 3, 3> Initial_Matrix;
     Initial_Matrix = Rotation_Matrix * Identity_Matrix;
     cout << Identity_Matrix << endl;
     cout << Initial_Matrix << endl;
-    Initial_Matrix.transpose();
+    Initial_Matrix.transposeInPlace();
+    cout << Initial_Matrix << endl;
 
     E_1 = Initial_Matrix.row(0);
     E_2 = Initial_Matrix.row(1);
