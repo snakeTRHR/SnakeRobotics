@@ -13,9 +13,14 @@ namespace plt = matplotlibcpp;
 double r_c = 1.0;
 double h_c = 0.5;
 
+double alpha_yaw = M_PI / 4;
+double alpha_pitch = 0;
+double bias_yaw = 0;
+double bias_pitch = 0;
+double l = 5;
 double curvature(double _s){
     //return std::abs(sin(_s)) / std::pow(cos(_s) * cos(_s) + 1, 3.0 / 2.0);
-    return 0;
+    return alpha_yaw * M_PI * sin(_s * M_PI/ (2 * l))/ (2 * l) + bias_yaw;
     //return r_c / (r_c * r_c + h_c * h_c);
 }
 double torsion(double _s){
@@ -62,7 +67,7 @@ int main(){
 
     double theta_roll = 0;
     double theta_pitch = 0;
-    double theta_yaw = 0;
+    double theta_yaw = M_PI / 4;
 
     Eigen::Matrix<double, 3, 3> Rotation_Matrix;
     
@@ -98,7 +103,7 @@ int main(){
     Eigen::Matrix<double, 3, 1> K_d_2;
     Eigen::Matrix<double, 3, 1> K_d_3;
 
-    double s_long = 30;
+    double s_long = 20;
     double s = 0;
     double h = 0.05;
     double n = s_long / h;

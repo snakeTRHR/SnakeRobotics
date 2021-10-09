@@ -10,14 +10,15 @@
 #include "matplotlibcpp.h"
 namespace plt = matplotlibcpp;
 
-double alpha_yaw = M_PI / 4;
+double alpha_yaw = 0;
 double alpha_pitch = 0;
 double bias_yaw = 0;
 double bias_pitch = 0;
 double l = 5;
 
 double curvature_yaw(double _s){
-    return alpha_yaw * M_PI * sin(_s * M_PI/ (2 * l))/ (2 * l) + bias_yaw;
+    //return alpha_yaw * M_PI * sin(_s * M_PI/ (2 * l))/ (2 * l) + bias_yaw;
+    return 0;
 }
 double curvature_pitch(double _s){
     return 0;
