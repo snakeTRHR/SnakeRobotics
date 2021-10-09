@@ -10,17 +10,20 @@
 #include "matplotlibcpp.h"
 namespace plt = matplotlibcpp;
 
-double alpha_yaw = M_PI / 6;
-double alpha_pitch = M_PI / 9;
+double alpha_yaw = M_PI / 4;
+double alpha_pitch = 0;
 double bias_yaw = 0;
 double bias_pitch = 0;
 double l = 2;
 
 double curvature_yaw(double _s){
-    return alpha_yaw * M_PI * sin(M_PI * _s / (2 * l))/ (2 * l) + bias_yaw;
+    //return 0;
+    return alpha_yaw * M_PI * sin(_s * M_PI/ (2 * l))/ (2 * l) + bias_yaw;
+    //return alpha_yaw * M_PI * sin(M_PI * _s / (2 * l))/ (2 * l) + bias_yaw;
 }
 double curvature_pitch(double _s){
-    return alpha_pitch * M_PI * sin(_s * M_PI / (2 * l))/ (2 * l) + bias_pitch;
+    return 0;
+    //return alpha_pitch * M_PI * sin(_s * M_PI / (2 * l))/ (2 * l) + bias_pitch;
 }
 double torsion(double _s){
     return 0;
@@ -45,10 +48,33 @@ int main(){
     Eigen::Matrix<double, 3, 1> E_3;
     //set initial value
     C << 0, 0, 0;
-    E_1 << 1, 0, 0;
-    E_2 << 0, 1, 0;
-    E_3 << 0, 0, 1;
 
+    Eigen::Matrix<double, 3, 3> Identity_Matrix;
+    Identity_Matrix << 1,  0,  0,
+                       0, -1,  0,
+                       0,  0, -1;
+
+    double theta_roll = 0;
+    double theta_pitch = alpha_pitch;
+    double theta_yaw = alpha_yaw;
+
+    Eigen::Matrix<double, 3, 3> Rotation_Matrix;
+    Rotation_Matrix <<  cos(theta_pitch) * cos(theta_yaw) + sin(theta_pitch) * sin(theta_roll) * sin(theta_yaw), -cos(theta_pitch) * sin(theta_yaw) + sin(theta_pitch) * sin(theta_roll) * cos(theta_yaw),  sin(theta_pitch) * cos(theta_roll),
+                        cos(theta_roll)  * sin(theta_yaw)                                                      ,  cos(theta_roll)  * cos(theta_yaw)                                                      , -sin(theta_roll),
+                       -sin(theta_pitch) * cos(theta_yaw) + cos(theta_pitch) * sin(theta_roll) * sin(theta_yaw),  sin(theta_pitch) * sin(theta_yaw) + cos(theta_pitch) * sin(theta_roll) * cos(theta_yaw),  cos(theta_pitch) * cos(theta_roll);
+
+    Eigen::Matrix<double, 3, 3> Initial_Matrix;
+    Initial_Matrix = Rotation_Matrix * Identity_Matrix;
+    Initial_Matrix.transposeInPlace();
+
+    E_1 = Initial_Matrix.row(0);
+    E_2 = Initial_Matrix.row(1);
+    E_3 = Initial_Matrix.row(2);
+    
+    std::cout << "E_1" << std::endl << E_1 << std::endl; 
+    std::cout << "E_2" << std::endl << E_2 << std::endl; 
+    std::cout << "E_3" << std::endl << E_3 << std::endl; 
+    
     //RungeKutta
     Eigen::Matrix<double, 3, 1> K_a_c;
     Eigen::Matrix<double, 3, 1> K_a_1;
