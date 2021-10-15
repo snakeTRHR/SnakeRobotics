@@ -33,6 +33,18 @@ class SnakeRobot{
             E_1 = Initial_Matrix.row(0);
             E_2 = Initial_Matrix.row(1);
             E_3 = Initial_Matrix.row(2);
+        }
+        void Forward(){
+            bias_yaw = 0;
+            Update();
+        }
+        void Right(){
+            bias_yaw = 0.025;
+            Update();
+        }
+        void Left(){
+            bias_yaw = -0.05;
+            Update();
         }  
         void Update(){
             SolveDE();
@@ -42,8 +54,8 @@ class SnakeRobot{
             plt::clf();
             plt::plot(C_x, C_y);
             plt::named_plot("snake", C_x, C_y);
-            plt::xlim(0, 300);
-            plt::ylim(-10, 10);
+            //plt::xlim(0, 300);
+            //plt::ylim(-10, 10);
             plt::legend();
             plt::pause(0.01);
         }
@@ -179,7 +191,7 @@ int main(){
         std::cerr << "open failed" << std::endl;
     }
     bool stop_loop = false;
-    bool forth = false;
+    bool forward = false;
     bool back = false;
     bool right = false;
     bool left = false;
@@ -187,10 +199,10 @@ int main(){
         //usleep(1000);
         JoystickEvent event;
         if(joystick.sample(&event)){
-            if(event.isButton() && event.number == 8 && event.value == 1){
+            /*if(event.isButton() && event.number == 8 && event.value == 1){
                 stop_loop = true;
                 std::cout << "exit" << std::endl;
-            }
+            }*/
             usleep(1000);
             if(event.isAxis()){
                 int key_num = event.number;
@@ -213,9 +225,9 @@ int main(){
                         }
                     case 7:
                         if(key_val < 0){
-                            forth = true;
+                            forward = true;
                         }else{
-                            forth = false;
+                            forward = false;
                         }
                         break;
                     default:
@@ -224,14 +236,16 @@ int main(){
                 }
             }
         }
-        if(forth == true){
-            snake.Update();
+        if(forward == true){
+            snake.Forward();
         }
         if(right == true){
             std::cout << "right" << std::endl;
+            snake.Right();
         }
         if(left == true){
             std::cout << "left" << std::endl;
+            snake.Left();
         }
         snake.Animation();
     }
