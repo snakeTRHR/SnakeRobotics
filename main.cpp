@@ -3,11 +3,14 @@
 #include<limits>
 #include<iomanip>
 #include<vector>
+#include<chrono>
 #include "/usr/include/eigen3/Eigen/Dense"
 #include "/usr/include/eigen3/Eigen/Sparse"
 #include "/usr/include/eigen3/Eigen/Core"
 #include "/usr/include/eigen3/Eigen/LU"
 #include "matplotlibcpp.h"
+
+using namespace std::chrono;
 namespace plt = matplotlibcpp;
 
 class SnakeRobot{
@@ -85,11 +88,10 @@ class SnakeRobot{
             Eigen::Matrix<double, 3, 1> K_d_2;
             Eigen::Matrix<double, 3, 1> K_d_3;
 
-            double s_long = 30;
+            double s_long = 20;
             double s = 0;
             double h = 0.05;
             double n = s_long / h;
-           
             for(int i = 0; i < n; ++i){
                 K_a_c = h * Func_c(s, E_1);
                 K_a_1 = h * Func_1(s, E_2, E_3);
@@ -148,10 +150,22 @@ class SnakeRobot{
             return (curvature_pitch(_s) * _E_1 -1 * torsion(_s) * _E_2);
         }
 };
+inline double get_time_sec(void){
+    return static_cast<double>(duration_cast<nanoseconds>(steady_clock::now().time_since_epoch()).count())/1000000000;
+}
 int main(){
+    double timer_start = 0;
+    double timer_end = 0;
     double body_length = 5;
     SnakeRobot snake(body_length);
-    snake.Update();
-    snake.Animation();
-    snake.Clear();
+    while(1){
+        timer_start = get_time_sec();
+        snake.Update();
+        snake.Animation();
+        snake.Clear();
+        timer_end = get_time_sec();
+        if(timer_end - timer_start > 5){
+            break;
+        }
+    }
 }
