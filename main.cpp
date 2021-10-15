@@ -35,13 +35,13 @@ class SnakeRobot{
         }
         void Animation(){
             //matplotlibで表示
-            std::map<std::string, std::string> keywords;
-            keywords.insert(std::pair<std::string, std::string>("label", "parametric curve") );
-            plt::plot(C_x, C_y, keywords);
-            plt::xlabel("x label");
-            plt::ylabel("y label");
+            plt::clf();
+            plt::plot(C_x, C_y);
+            plt::named_plot("snake", C_x, C_y);
+            plt::xlim(0, 300);
+            plt::ylim(-10, 10);
             plt::legend();
-            plt::show();
+            plt::pause(0.01);
         }
         void Clear(){
             C_x.clear();
@@ -64,8 +64,8 @@ class SnakeRobot{
         double theta_pitch = -alpha_pitch;
         double theta_yaw = alpha_yaw;
         std::vector<double> C_x, C_y, C_z;
-            
-        void SolveDE(){
+        
+
             //４次ルンゲクッタで連立微分方程式を解く
             //http://skomo.o.oo7.jp/f20/hp20_4-3.htm
             Eigen::Matrix<double, 3, 1> K_a_c;
@@ -88,10 +88,11 @@ class SnakeRobot{
             Eigen::Matrix<double, 3, 1> K_d_2;
             Eigen::Matrix<double, 3, 1> K_d_3;
 
-            double s_long = 20;
+            double s_long = 5;
             double s = 0;
             double h = 0.05;
             double n = s_long / h;
+        void SolveDE(){
             for(int i = 0; i < n; ++i){
                 K_a_c = h * Func_c(s, E_1);
                 K_a_1 = h * Func_1(s, E_2, E_3);
@@ -156,13 +157,12 @@ inline double get_time_sec(void){
 int main(){
     double timer_start = 0;
     double timer_end = 0;
-    double body_length = 5;
-    SnakeRobot snake(body_length);
+    double length_one_quarter = 8;
+    SnakeRobot snake(length_one_quarter);
+    timer_start = get_time_sec();
     while(1){
-        timer_start = get_time_sec();
         snake.Update();
         snake.Animation();
-        snake.Clear();
         timer_end = get_time_sec();
         if(timer_end - timer_start > 5){
             break;
