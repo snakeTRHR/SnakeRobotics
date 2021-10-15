@@ -146,7 +146,7 @@ int main(){
     //plt::plot(C_x, C_y);
     plt::xlabel("x label");
     plt::ylabel("y label");
-    //plt::set_zlabel("z label"); // set_zlabel rather than just zlabel, in accordance with the Axes3D method
+    plt::set_zlabel("z label"); // set_zlabel rather than just zlabel, in accordance with the Axes3D method
     plt::legend();
     plt::show();
 }

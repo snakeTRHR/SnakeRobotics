@@ -14,16 +14,14 @@ double alpha_yaw = M_PI / 4;
 double alpha_pitch = 0;
 double bias_yaw = 0;
 double bias_pitch = 0;
-double l = 2;
+double l = 5;
 
 double curvature_yaw(double _s){
-    //return 0;
+    //横うねり推進(岡山大学論文参照)
     return alpha_yaw * M_PI * sin(_s * M_PI/ (2 * l))/ (2 * l) + bias_yaw;
-    //return alpha_yaw * M_PI * sin(M_PI * _s / (2 * l))/ (2 * l) + bias_yaw;
 }
 double curvature_pitch(double _s){
     return 0;
-    //return alpha_pitch * M_PI * sin(_s * M_PI / (2 * l))/ (2 * l) + bias_pitch;
 }
 double torsion(double _s){
     return 0;
@@ -46,7 +44,7 @@ int main(){
     Eigen::Matrix<double, 3, 1> E_1;
     Eigen::Matrix<double, 3, 1> E_2;
     Eigen::Matrix<double, 3, 1> E_3;
-    //set initial value
+    //初期値の設定
     C << 0, 0, 0;
 
     Eigen::Matrix<double, 3, 3> Identity_Matrix;
@@ -55,7 +53,7 @@ int main(){
                        0,  0, -1;
 
     double theta_roll = 0;
-    double theta_pitch = alpha_pitch;
+    double theta_pitch = -alpha_pitch;
     double theta_yaw = alpha_yaw;
 
     Eigen::Matrix<double, 3, 3> Rotation_Matrix;
@@ -75,7 +73,8 @@ int main(){
     std::cout << "E_2" << std::endl << E_2 << std::endl; 
     std::cout << "E_3" << std::endl << E_3 << std::endl; 
     
-    //RungeKutta
+    //４次ルンゲクッタで連立微分方程式を解く
+    //http://skomo.o.oo7.jp/f20/hp20_4-3.htm
     Eigen::Matrix<double, 3, 1> K_a_c;
     Eigen::Matrix<double, 3, 1> K_a_1;
     Eigen::Matrix<double, 3, 1> K_a_2;
@@ -151,15 +150,12 @@ int main(){
         E_3_z.push_back(E_3(2, 0));
     }
     
-    //matplotlib
+    //matplotlibで表示
     std::map<std::string, std::string> keywords;
     keywords.insert(std::pair<std::string, std::string>("label", "parametric curve") );
-    plt::plot3(C_x, C_y, C_z, keywords);
-    plt::plot3(E_1_x, E_1_y, E_1_z, keywords);
-    plt::plot(E_1_x, E_1_y);
+    plt::plot(C_x, C_y, keywords);
     plt::xlabel("x label");
     plt::ylabel("y label");
-    plt::set_zlabel("z label"); 
     plt::legend();
     plt::show();
 }
