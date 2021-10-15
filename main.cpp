@@ -4,11 +4,14 @@
 #include<iomanip>
 #include<vector>
 #include<chrono>
+#include<fstream>
+#include<iomanip>
 #include "/usr/include/eigen3/Eigen/Dense"
 #include "/usr/include/eigen3/Eigen/Sparse"
 #include "/usr/include/eigen3/Eigen/Core"
 #include "/usr/include/eigen3/Eigen/LU"
 #include "matplotlibcpp.h"
+#include"joystick.h"
 
 using namespace std::chrono;
 namespace plt = matplotlibcpp;
@@ -155,18 +158,81 @@ class SnakeRobot{
 inline double get_time_sec(void){
     return static_cast<double>(duration_cast<nanoseconds>(steady_clock::now().time_since_epoch()).count())/1000000000;
 }
+void keyboard(unsigned char key, int x, int y){
+    std::cout << key << " : down" <<  std::endl;
+}
+
+void keyup(unsigned char key, int x, int y){
+    std::cout << key << " : up" << std::endl;
+}
+
+void display(){}
+
 int main(){
     double timer_start = 0;
     double timer_end = 0;
     double length_one_quarter = 8;
     SnakeRobot snake(length_one_quarter);
     timer_start = get_time_sec();
-    while(1){
-        snake.Update();
-        snake.Animation();
-        timer_end = get_time_sec();
-        if(timer_end - timer_start > 5){
-            break;
+    Joystick joystick("/dev/input/js0");
+    if(!joystick.isFound()){
+        std::cerr << "open failed" << std::endl;
+    }
+    bool stop_loop = false;
+    bool forth = false;
+    bool back = false;
+    bool right = false;
+    bool left = false;
+    while(!stop_loop){
+        //usleep(1000);
+        JoystickEvent event;
+        if(joystick.sample(&event)){
+            if(event.isButton() && event.number == 8 && event.value == 1){
+                stop_loop = true;
+                std::cout << "exit" << std::endl;
+            }
+            usleep(1000);
+            if(event.isAxis()){
+                int key_num = event.number;
+                int key_val = event.value;
+                switch(key_num){
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                        if(key_val > 0){
+                            right = true;
+                        }else if(key_val < 0){
+                            left = true;
+                        }else{
+                            right = false;
+                            left = false;
+                        }
+                    case 7:
+                        if(key_val < 0){
+                            forth = true;
+                        }else{
+                            forth = false;
+                        }
+                        break;
+                    default:
+                        break;
+
+                }
+            }
         }
+        if(forth == true){
+            snake.Update();
+        }
+        if(right == true){
+            std::cout << "right" << std::endl;
+        }
+        if(left == true){
+            std::cout << "left" << std::endl;
+        }
+        snake.Animation();
     }
 }

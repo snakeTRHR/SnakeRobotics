@@ -3,8 +3,10 @@ project(snake)
  
 set(CMAKE_CXX_STANDARD 11)
  
-add_executable(snake main.cpp)
-
 find_package(PythonLibs 2.7 REQUIRED)
+
 include_directories(${PYTHON_INCLUDE_DIRS})
+include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
+
+add_executable(snake main.cpp joystick.cpp)
 target_link_libraries(snake ${PYTHON_LIBRARIES})

@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/tsuruharakota/SnakeRobotics/joystick.cpp" "/home/tsuruharakota/SnakeRobotics/build/CMakeFiles/snake.dir/joystick.cpp.o"
   "/home/tsuruharakota/SnakeRobotics/main.cpp" "/home/tsuruharakota/SnakeRobotics/build/CMakeFiles/snake.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

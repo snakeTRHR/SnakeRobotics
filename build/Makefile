@@ -123,6 +123,33 @@ snake/fast:
 	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/build
 .PHONY : snake/fast
 
+joystick.o: joystick.cpp.o
+
+.PHONY : joystick.o
+
+# target to build an object file
+joystick.cpp.o:
+	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/joystick.cpp.o
+.PHONY : joystick.cpp.o
+
+joystick.i: joystick.cpp.i
+
+.PHONY : joystick.i
+
+# target to preprocess a source file
+joystick.cpp.i:
+	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/joystick.cpp.i
+.PHONY : joystick.cpp.i
+
+joystick.s: joystick.cpp.s
+
+.PHONY : joystick.s
+
+# target to generate assembly for a file
+joystick.cpp.s:
+	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/joystick.cpp.s
+.PHONY : joystick.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... snake"
 	@echo "... edit_cache"
+	@echo "... joystick.o"
+	@echo "... joystick.i"
+	@echo "... joystick.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
