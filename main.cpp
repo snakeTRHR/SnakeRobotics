@@ -17,9 +17,18 @@ class SnakeRobot{
             Identity_Matrix << 1,  0,  0,
                                0, -1,  0,
                                0,  0, -1;
+            Eigen::Matrix<double, 3, 3> Rotation_Matrix;
+            Rotation_Matrix <<  cos(theta_pitch) * cos(theta_yaw) + sin(theta_pitch) * sin(theta_roll) * sin(theta_yaw), -cos(theta_pitch) * sin(theta_yaw) + sin(theta_pitch) * sin(theta_roll) * cos(theta_yaw),  sin(theta_pitch) * cos(theta_roll),
+                                cos(theta_roll)  * sin(theta_yaw)                                                      ,  cos(theta_roll)  * cos(theta_yaw)                                                      , -sin(theta_roll)                   ,
+                               -sin(theta_pitch) * cos(theta_yaw) + cos(theta_pitch) * sin(theta_roll) * sin(theta_yaw),  sin(theta_pitch) * sin(theta_yaw) + cos(theta_pitch) * sin(theta_roll) * cos(theta_yaw),  cos(theta_pitch) * cos(theta_roll);
+            Initial_Matrix = Rotation_Matrix * Identity_Matrix;
+            Initial_Matrix.transposeInPlace();
+            E_1 = Initial_Matrix.row(0);
+            E_2 = Initial_Matrix.row(1);
+            E_3 = Initial_Matrix.row(2);
         }  
         void Update(){
-
+            SolveDE();
         }
         void Animation(){
             //matplotlibで表示
@@ -30,6 +39,11 @@ class SnakeRobot{
             plt::ylabel("y label");
             plt::legend();
             plt::show();
+        }
+        void Clear(){
+            C_x.clear();
+            C_y.clear();
+            C_z.clear();
         }
     private:
         Eigen::Matrix<double, 3, 1> C;
@@ -46,17 +60,8 @@ class SnakeRobot{
         double theta_roll = 0;
         double theta_pitch = -alpha_pitch;
         double theta_yaw = alpha_yaw;
-        void SetInitialMatrix(double _theta_roll, double _theta_pitch, double _theta_yaw){
-            Eigen::Matrix<double, 3, 3> Rotation_Matrix;
-            Rotation_Matrix <<  cos(_theta_pitch) * cos(_theta_yaw) + sin(_theta_pitch) * sin(_theta_roll) * sin(_theta_yaw), -cos(_theta_pitch) * sin(_theta_yaw) + sin(_theta_pitch) * sin(_theta_roll) * cos(_theta_yaw),  sin(_theta_pitch) * cos(_theta_roll),
-                                cos(_theta_roll)  * sin(_theta_yaw)                                                         ,  cos(_theta_roll)  * cos(_theta_yaw)                                                         , -sin(_theta_roll)                    ,
-                               -sin(_theta_pitch) * cos(_theta_yaw) + cos(_theta_pitch) * sin(_theta_roll) * sin(_theta_yaw),  sin(_theta_pitch) * sin(_theta_yaw) + cos(_theta_pitch) * sin(_theta_roll) * cos(_theta_yaw),  cos(_theta_pitch) * cos(_theta_roll);
-            Initial_Matrix = Rotation_Matrix * Identity_Matrix;
-            Initial_Matrix.transposeInPlace();
-            E_1 = Initial_Matrix.row(0);
-            E_2 = Initial_Matrix.row(1);
-            E_3 = Initial_Matrix.row(2);
-        }
+        std::vector<double> C_x, C_y, C_z;
+            
         void SolveDE(){
             //４次ルンゲクッタで連立微分方程式を解く
             //http://skomo.o.oo7.jp/f20/hp20_4-3.htm
@@ -84,11 +89,7 @@ class SnakeRobot{
             double s = 0;
             double h = 0.05;
             double n = s_long / h;
-            std::vector<double> C_x, C_y, C_z;
-            std::vector<double> E_1_x, E_1_y, E_1_z;
-            std::vector<double> E_2_x, E_2_y, E_2_z;
-            std::vector<double> E_3_x, E_3_y, E_3_z;
-
+           
             for(int i = 0; i < n; ++i){
                 K_a_c = h * Func_c(s, E_1);
                 K_a_1 = h * Func_1(s, E_2, E_3);
@@ -121,23 +122,12 @@ class SnakeRobot{
                 C_x.push_back(C(0, 0));
                 C_y.push_back(C(1, 0));
                 C_z.push_back(C(2, 0));
-
-                E_1_x.push_back(E_1(0, 0));
-                E_1_y.push_back(E_1(1, 0));
-                E_1_z.push_back(E_1(2, 0));
-        
-                E_2_x.push_back(E_2(0, 0));
-                E_2_y.push_back(E_2(1, 0));
-                E_2_z.push_back(E_2(2, 0));
-        
-                E_3_x.push_back(E_3(0, 0));
-                E_3_y.push_back(E_3(1, 0));
-                E_3_z.push_back(E_3(2, 0));
             }
         }
         double curvature_yaw(double _s){
             //横うねり推進(岡山大学論文参照)
             return alpha_yaw * M_PI * sin(_s * M_PI/ (2 * length))/ (2 * length) + bias_yaw;
+            return 0;
         }
         double curvature_pitch(double _s){
             return 0;
@@ -160,7 +150,8 @@ class SnakeRobot{
 };
 int main(){
     double body_length = 5;
-    SnakeRobot snake(body_lengeth);
+    SnakeRobot snake(body_length);
     snake.Update();
     snake.Animation();
+    snake.Clear();
 }
