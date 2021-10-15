@@ -1,0 +1,3 @@
+/home/tsuruharakota/SnakeRobotics/build/CMakeFiles/rebuild_cache.dir
+/home/tsuruharakota/SnakeRobotics/build/CMakeFiles/snake.dir
+/home/tsuruharakota/SnakeRobotics/build/CMakeFiles/edit_cache.dir
