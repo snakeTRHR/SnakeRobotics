@@ -111,17 +111,57 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named snake
+# Target rules for targets named snake_joy
 
 # Build rule for target.
-snake: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 snake
-.PHONY : snake
+snake_joy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 snake_joy
+.PHONY : snake_joy
 
 # fast build rule for target.
-snake/fast:
-	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/build
-.PHONY : snake/fast
+snake_joy/fast:
+	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/build
+.PHONY : snake_joy/fast
+
+#=============================================================================
+# Target rules for targets named snake_key
+
+# Build rule for target.
+snake_key: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 snake_key
+.PHONY : snake_key
+
+# fast build rule for target.
+snake_key/fast:
+	$(MAKE) -f CMakeFiles/snake_key.dir/build.make CMakeFiles/snake_key.dir/build
+.PHONY : snake_key/fast
+
+control_keyboard.o: control_keyboard.cpp.o
+
+.PHONY : control_keyboard.o
+
+# target to build an object file
+control_keyboard.cpp.o:
+	$(MAKE) -f CMakeFiles/snake_key.dir/build.make CMakeFiles/snake_key.dir/control_keyboard.cpp.o
+.PHONY : control_keyboard.cpp.o
+
+control_keyboard.i: control_keyboard.cpp.i
+
+.PHONY : control_keyboard.i
+
+# target to preprocess a source file
+control_keyboard.cpp.i:
+	$(MAKE) -f CMakeFiles/snake_key.dir/build.make CMakeFiles/snake_key.dir/control_keyboard.cpp.i
+.PHONY : control_keyboard.cpp.i
+
+control_keyboard.s: control_keyboard.cpp.s
+
+.PHONY : control_keyboard.s
+
+# target to generate assembly for a file
+control_keyboard.cpp.s:
+	$(MAKE) -f CMakeFiles/snake_key.dir/build.make CMakeFiles/snake_key.dir/control_keyboard.cpp.s
+.PHONY : control_keyboard.cpp.s
 
 joystick.o: joystick.cpp.o
 
@@ -129,7 +169,7 @@ joystick.o: joystick.cpp.o
 
 # target to build an object file
 joystick.cpp.o:
-	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/joystick.cpp.o
+	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/joystick.cpp.o
 .PHONY : joystick.cpp.o
 
 joystick.i: joystick.cpp.i
@@ -138,7 +178,7 @@ joystick.i: joystick.cpp.i
 
 # target to preprocess a source file
 joystick.cpp.i:
-	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/joystick.cpp.i
+	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/joystick.cpp.i
 .PHONY : joystick.cpp.i
 
 joystick.s: joystick.cpp.s
@@ -147,7 +187,7 @@ joystick.s: joystick.cpp.s
 
 # target to generate assembly for a file
 joystick.cpp.s:
-	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/joystick.cpp.s
+	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/joystick.cpp.s
 .PHONY : joystick.cpp.s
 
 main.o: main.cpp.o
@@ -156,7 +196,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -165,7 +205,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -174,7 +214,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -184,8 +224,12 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... snake"
 	@echo "... edit_cache"
+	@echo "... snake_joy"
+	@echo "... snake_key"
+	@echo "... control_keyboard.o"
+	@echo "... control_keyboard.i"
+	@echo "... control_keyboard.s"
 	@echo "... joystick.o"
 	@echo "... joystick.i"
 	@echo "... joystick.s"

@@ -6,7 +6,31 @@
 
 #IncludeRegexTransform: 
 
-/home/tsuruharakota/SnakeRobotics/control_keyboard.cpp
+/home/tsuruharakota/SnakeRobotics/joystick.cpp
+joystick.h
+/home/tsuruharakota/SnakeRobotics/joystick.h
+sys/types.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+iostream
+-
+string
+-
+sstream
+-
+unistd.h
+/home/tsuruharakota/SnakeRobotics/unistd.h
+
+/home/tsuruharakota/SnakeRobotics/joystick.h
+string
+-
+iostream
+-
+
+/home/tsuruharakota/SnakeRobotics/main.cpp
 iostream
 -
 cmath
@@ -23,20 +47,6 @@ fstream
 -
 iomanip
 -
-cassert
--
-fcntl.h
--
-linux/input.h
--
-sys/time.h
--
-unistd.h
--
-string
--
-vector
--
 /usr/include/eigen3/Eigen/Dense
 -
 /usr/include/eigen3/Eigen/Sparse
@@ -47,6 +57,8 @@ vector
 -
 matplotlibcpp.h
 /home/tsuruharakota/SnakeRobotics/matplotlibcpp.h
+joystick.h
+/home/tsuruharakota/SnakeRobotics/joystick.h
 
 /home/tsuruharakota/SnakeRobotics/matplotlibcpp.h
 Python.h

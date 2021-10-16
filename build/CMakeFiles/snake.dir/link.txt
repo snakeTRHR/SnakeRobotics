@@ -1,1 +1,1 @@
-/usr/bin/c++     CMakeFiles/snake.dir/main.cpp.o CMakeFiles/snake.dir/joystick.cpp.o  -o snake /usr/lib/x86_64-linux-gnu/libpython2.7.so 
+/usr/bin/c++     CMakeFiles/snake.dir/control_keyboard.cpp.o  -o snake /usr/lib/x86_64-linux-gnu/libpython2.7.so 

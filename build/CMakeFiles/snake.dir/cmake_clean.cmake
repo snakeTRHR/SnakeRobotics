@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/snake.dir/main.cpp.o"
-  "CMakeFiles/snake.dir/joystick.cpp.o"
+  "CMakeFiles/snake.dir/control_keyboard.cpp.o"
   "snake.pdb"
   "snake"
 )

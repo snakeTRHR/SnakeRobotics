@@ -57,68 +57,42 @@ include CMakeFiles/snake.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/snake.dir/flags.make
 
-CMakeFiles/snake.dir/main.cpp.o: CMakeFiles/snake.dir/flags.make
-CMakeFiles/snake.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tsuruharakota/SnakeRobotics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/snake.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/snake.dir/main.cpp.o -c /home/tsuruharakota/SnakeRobotics/main.cpp
+CMakeFiles/snake.dir/control_keyboard.cpp.o: CMakeFiles/snake.dir/flags.make
+CMakeFiles/snake.dir/control_keyboard.cpp.o: ../control_keyboard.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tsuruharakota/SnakeRobotics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/snake.dir/control_keyboard.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/snake.dir/control_keyboard.cpp.o -c /home/tsuruharakota/SnakeRobotics/control_keyboard.cpp
 
-CMakeFiles/snake.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/snake.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/main.cpp > CMakeFiles/snake.dir/main.cpp.i
+CMakeFiles/snake.dir/control_keyboard.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/snake.dir/control_keyboard.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/control_keyboard.cpp > CMakeFiles/snake.dir/control_keyboard.cpp.i
 
-CMakeFiles/snake.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/snake.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/main.cpp -o CMakeFiles/snake.dir/main.cpp.s
+CMakeFiles/snake.dir/control_keyboard.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/snake.dir/control_keyboard.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/control_keyboard.cpp -o CMakeFiles/snake.dir/control_keyboard.cpp.s
 
-CMakeFiles/snake.dir/main.cpp.o.requires:
+CMakeFiles/snake.dir/control_keyboard.cpp.o.requires:
 
-.PHONY : CMakeFiles/snake.dir/main.cpp.o.requires
+.PHONY : CMakeFiles/snake.dir/control_keyboard.cpp.o.requires
 
-CMakeFiles/snake.dir/main.cpp.o.provides: CMakeFiles/snake.dir/main.cpp.o.requires
-	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/main.cpp.o.provides.build
-.PHONY : CMakeFiles/snake.dir/main.cpp.o.provides
+CMakeFiles/snake.dir/control_keyboard.cpp.o.provides: CMakeFiles/snake.dir/control_keyboard.cpp.o.requires
+	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/control_keyboard.cpp.o.provides.build
+.PHONY : CMakeFiles/snake.dir/control_keyboard.cpp.o.provides
 
-CMakeFiles/snake.dir/main.cpp.o.provides.build: CMakeFiles/snake.dir/main.cpp.o
-
-
-CMakeFiles/snake.dir/joystick.cpp.o: CMakeFiles/snake.dir/flags.make
-CMakeFiles/snake.dir/joystick.cpp.o: ../joystick.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tsuruharakota/SnakeRobotics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/snake.dir/joystick.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/snake.dir/joystick.cpp.o -c /home/tsuruharakota/SnakeRobotics/joystick.cpp
-
-CMakeFiles/snake.dir/joystick.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/snake.dir/joystick.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/joystick.cpp > CMakeFiles/snake.dir/joystick.cpp.i
-
-CMakeFiles/snake.dir/joystick.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/snake.dir/joystick.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/joystick.cpp -o CMakeFiles/snake.dir/joystick.cpp.s
-
-CMakeFiles/snake.dir/joystick.cpp.o.requires:
-
-.PHONY : CMakeFiles/snake.dir/joystick.cpp.o.requires
-
-CMakeFiles/snake.dir/joystick.cpp.o.provides: CMakeFiles/snake.dir/joystick.cpp.o.requires
-	$(MAKE) -f CMakeFiles/snake.dir/build.make CMakeFiles/snake.dir/joystick.cpp.o.provides.build
-.PHONY : CMakeFiles/snake.dir/joystick.cpp.o.provides
-
-CMakeFiles/snake.dir/joystick.cpp.o.provides.build: CMakeFiles/snake.dir/joystick.cpp.o
+CMakeFiles/snake.dir/control_keyboard.cpp.o.provides.build: CMakeFiles/snake.dir/control_keyboard.cpp.o
 
 
 # Object files for target snake
 snake_OBJECTS = \
-"CMakeFiles/snake.dir/main.cpp.o" \
-"CMakeFiles/snake.dir/joystick.cpp.o"
+"CMakeFiles/snake.dir/control_keyboard.cpp.o"
 
 # External object files for target snake
 snake_EXTERNAL_OBJECTS =
 
-snake: CMakeFiles/snake.dir/main.cpp.o
-snake: CMakeFiles/snake.dir/joystick.cpp.o
+snake: CMakeFiles/snake.dir/control_keyboard.cpp.o
 snake: CMakeFiles/snake.dir/build.make
 snake: /usr/lib/x86_64-linux-gnu/libpython2.7.so
 snake: CMakeFiles/snake.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tsuruharakota/SnakeRobotics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable snake"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tsuruharakota/SnakeRobotics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable snake"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/snake.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -126,8 +100,7 @@ CMakeFiles/snake.dir/build: snake
 
 .PHONY : CMakeFiles/snake.dir/build
 
-CMakeFiles/snake.dir/requires: CMakeFiles/snake.dir/main.cpp.o.requires
-CMakeFiles/snake.dir/requires: CMakeFiles/snake.dir/joystick.cpp.o.requires
+CMakeFiles/snake.dir/requires: CMakeFiles/snake.dir/control_keyboard.cpp.o.requires
 
 .PHONY : CMakeFiles/snake.dir/requires
 
