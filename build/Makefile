@@ -111,19 +111,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named snake_joy
-
-# Build rule for target.
-snake_joy: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 snake_joy
-.PHONY : snake_joy
-
-# fast build rule for target.
-snake_joy/fast:
-	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/build
-.PHONY : snake_joy/fast
-
-#=============================================================================
 # Target rules for targets named snake_key
 
 # Build rule for target.
@@ -135,6 +122,32 @@ snake_key: cmake_check_build_system
 snake_key/fast:
 	$(MAKE) -f CMakeFiles/snake_key.dir/build.make CMakeFiles/snake_key.dir/build
 .PHONY : snake_key/fast
+
+#=============================================================================
+# Target rules for targets named frenet_serret
+
+# Build rule for target.
+frenet_serret: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 frenet_serret
+.PHONY : frenet_serret
+
+# fast build rule for target.
+frenet_serret/fast:
+	$(MAKE) -f CMakeFiles/frenet_serret.dir/build.make CMakeFiles/frenet_serret.dir/build
+.PHONY : frenet_serret/fast
+
+#=============================================================================
+# Target rules for targets named snake_joy
+
+# Build rule for target.
+snake_joy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 snake_joy
+.PHONY : snake_joy
+
+# fast build rule for target.
+snake_joy/fast:
+	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/build
+.PHONY : snake_joy/fast
 
 control_keyboard.o: control_keyboard.cpp.o
 
@@ -162,6 +175,33 @@ control_keyboard.s: control_keyboard.cpp.s
 control_keyboard.cpp.s:
 	$(MAKE) -f CMakeFiles/snake_key.dir/build.make CMakeFiles/snake_key.dir/control_keyboard.cpp.s
 .PHONY : control_keyboard.cpp.s
+
+frenet_serret.o: frenet_serret.cpp.o
+
+.PHONY : frenet_serret.o
+
+# target to build an object file
+frenet_serret.cpp.o:
+	$(MAKE) -f CMakeFiles/frenet_serret.dir/build.make CMakeFiles/frenet_serret.dir/frenet_serret.cpp.o
+.PHONY : frenet_serret.cpp.o
+
+frenet_serret.i: frenet_serret.cpp.i
+
+.PHONY : frenet_serret.i
+
+# target to preprocess a source file
+frenet_serret.cpp.i:
+	$(MAKE) -f CMakeFiles/frenet_serret.dir/build.make CMakeFiles/frenet_serret.dir/frenet_serret.cpp.i
+.PHONY : frenet_serret.cpp.i
+
+frenet_serret.s: frenet_serret.cpp.s
+
+.PHONY : frenet_serret.s
+
+# target to generate assembly for a file
+frenet_serret.cpp.s:
+	$(MAKE) -f CMakeFiles/frenet_serret.dir/build.make CMakeFiles/frenet_serret.dir/frenet_serret.cpp.s
+.PHONY : frenet_serret.cpp.s
 
 joystick.o: joystick.cpp.o
 
@@ -225,11 +265,15 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... snake_joy"
 	@echo "... snake_key"
+	@echo "... frenet_serret"
+	@echo "... snake_joy"
 	@echo "... control_keyboard.o"
 	@echo "... control_keyboard.i"
 	@echo "... control_keyboard.s"
+	@echo "... frenet_serret.o"
+	@echo "... frenet_serret.i"
+	@echo "... frenet_serret.s"
 	@echo "... joystick.o"
 	@echo "... joystick.i"
 	@echo "... joystick.s"
