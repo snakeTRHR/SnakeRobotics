@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named dwa
+
+# Build rule for target.
+dwa: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 dwa
+.PHONY : dwa
+
+# fast build rule for target.
+dwa/fast:
+	$(MAKE) -f CMakeFiles/dwa.dir/build.make CMakeFiles/dwa.dir/build
+.PHONY : dwa/fast
+
+#=============================================================================
 # Target rules for targets named snake_key
 
 # Build rule for target.
@@ -175,6 +188,33 @@ control_keyboard.s: control_keyboard.cpp.s
 control_keyboard.cpp.s:
 	$(MAKE) -f CMakeFiles/snake_key.dir/build.make CMakeFiles/snake_key.dir/control_keyboard.cpp.s
 .PHONY : control_keyboard.cpp.s
+
+dwa.o: dwa.cpp.o
+
+.PHONY : dwa.o
+
+# target to build an object file
+dwa.cpp.o:
+	$(MAKE) -f CMakeFiles/dwa.dir/build.make CMakeFiles/dwa.dir/dwa.cpp.o
+.PHONY : dwa.cpp.o
+
+dwa.i: dwa.cpp.i
+
+.PHONY : dwa.i
+
+# target to preprocess a source file
+dwa.cpp.i:
+	$(MAKE) -f CMakeFiles/dwa.dir/build.make CMakeFiles/dwa.dir/dwa.cpp.i
+.PHONY : dwa.cpp.i
+
+dwa.s: dwa.cpp.s
+
+.PHONY : dwa.s
+
+# target to generate assembly for a file
+dwa.cpp.s:
+	$(MAKE) -f CMakeFiles/dwa.dir/build.make CMakeFiles/dwa.dir/dwa.cpp.s
+.PHONY : dwa.cpp.s
 
 frenet_serret.o: frenet_serret.cpp.o
 
@@ -265,12 +305,16 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... dwa"
 	@echo "... snake_key"
 	@echo "... frenet_serret"
 	@echo "... snake_joy"
 	@echo "... control_keyboard.o"
 	@echo "... control_keyboard.i"
 	@echo "... control_keyboard.s"
+	@echo "... dwa.o"
+	@echo "... dwa.i"
+	@echo "... dwa.s"
 	@echo "... frenet_serret.o"
 	@echo "... frenet_serret.i"
 	@echo "... frenet_serret.s"

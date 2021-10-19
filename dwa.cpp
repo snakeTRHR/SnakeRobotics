@@ -11,7 +11,7 @@ using path_tuple = std::tuple<double, double, double, double, double>;
 //x, y, size
 using obs_tuple = std::tuple<double, double, double>;
 //x, y
-using info_tuple = std::tuple<double, double, double>
+using info_tuple = std::tuple<double, double, double>;
 
 //myenigma参考
 class DWA{
@@ -19,11 +19,12 @@ class DWA{
         DWA(double _g_x, double _g_y){
             g_x = _g_x;
             g_y = _g_y;
+            TwoWheelRobot(0, 0, 0);
         }
         void runToGoal(std::vector<obs_tuple> _obs_pos){
             bool goal_flag = false;
             double time_step = 0;
-            while(goal_flag == 0){
+            while(goal_flag == false){
                 obs.clear();
                 obs = _obs_pos;
 
@@ -31,38 +32,74 @@ class DWA{
 
                 double u_th = std::get<4>(opt_path);
                 double u_v = std::get<3>(opt_path);
-
-                robot.updateState(u_th, u_v, sampling_time);
-                double dis_to_goal = std::sqrt(std::pow(g_x - robot.x, 2) + std::pow(g_y - robot.y, 2));
+                robotUpdateState(u_th, u_v, sampling_time);
+                double dis_to_goal = std::sqrt(std::pow(g_x - robot_x, 2) + std::pow(g_y - robot_y, 2));
                 if(dis_to_goal < 0.5){
-                    goal_flag = True;
+                    goal_flag = true;
                 }
                 time_step += 1;
+                std::cout << robot_x << " " << robot_y << std::endl;
             }            
         }
+        void TwoWheelRobot(double _init_x, double _init_y, double _init_th){
+            robot_x = _init_x;
+            robot_y = _init_y;
+            robot_th = _init_th;
+            robot_u_v = 0.0;
+            robot_u_th = 0.0;
+            robot_traj_x.push_back(robot_x);
+            robot_traj_y.push_back(robot_y);
+            robot_traj_th.push_back(robot_th);
+            robot_traj_u_v.push_back(robot_u_v);
+            robot_traj_u_th.push_back(robot_u_th);
+        }
+        void robotUpdateState(double _u_th, double _u_v, double _dt){
+            robot_u_th = _u_th;
+            robot_u_v = _u_v;
+
+            double robot_next_x = robot_u_v * cos(robot_th) * _dt + robot_x;
+            double robot_next_y = robot_u_v * sin(robot_th) * _dt + robot_y;
+            double robot_next_th = robot_u_th * _dt + robot_th;
+
+            robot_traj_x.push_back(robot_next_x);
+            robot_traj_y.push_back(robot_next_y);
+            robot_traj_th.push_back(robot_next_th);
+
+            robot_x = robot_next_x;
+            robot_y = robot_next_y;
+            robot_th = robot_next_th;        
+        }
+        double robot_x;
+        double robot_y;
+        double robot_th;
+        double robot_u_v;
+        double robot_u_th;
+        std::vector<double> robot_traj_x;
+        std::vector<double> robot_traj_y;
+        std::vector<double> robot_traj_th;
+        std::vector<double> robot_traj_u_v;
+        std::vector<double> robot_traj_u_th;
     private:
-        TwoWheelRobot robot;
         //パラメータ
-        double max_ang_accelation;
-        double max_accelation;
-        double range_ang_velo;
-        double lim_min_ang_velo;
-        double lim_max_ang_velo;
-        double lim_min_velo;
-        double lim_max_velo;
+        const double max_ang_accelation = 100 * M_PI / 180;
+        const double max_accelation = 1.0;
+        const double lim_min_ang_velo = -M_PI;
+        const double lim_max_ang_velo = M_PI;
+        const double lim_min_velo = 0.0;
+        const double lim_max_velo = 1.0;
 
         //予測時間(s)
-        double pre_time;
-        double pre_step;
+        const double pre_time = 3;
+        const double pre_step = 30;
         //探索時の刻み幅
-        double delta_velo;
-        double delta_ang_velo;
+        const double delta_velo = 0.02;
+        const double delta_ang_velo = 0.02;
         //サンプリングタイム
-        double sampling_time;
+        const double sampling_time = 0.1;
         //重み付け
-        double weight_angle;
-        double weight_velo;
-        double weight_obs;
+        const double weight_angle = 0.04;
+        const double weight_velo = 0.2;
+        const double weight_obs = 0.1;
         std::vector<double> traj_paths;
         std::vector<double> traj_opt;
 
@@ -109,8 +146,8 @@ class DWA{
                 min_ang_velo = lim_min_ang_velo;
             }
             //最大値
-            if(max_ang_velo > lim_min_ang_velo){
-                max_ang_velo = lim_min_ang_velo;
+            if(max_ang_velo > lim_max_ang_velo){
+                max_ang_velo = lim_max_ang_velo;
             }
 
             //速度            
@@ -143,6 +180,7 @@ class DWA{
         void makePath(){
             //角度と速度の組み合わせを全探索
             path.clear();
+            calcRangeVelos();
             for(double ang_velo = min_ang_velo; ang_velo < max_ang_velo; ang_velo += delta_ang_velo){
                 for(double velo = min_velo; velo < max_velo; velo += delta_velo){
                     double temp_x, temp_y, temp_th;
@@ -205,7 +243,7 @@ class DWA{
             double temp_dis_to_obs = 0.0;
             
             //違う
-            for(int i = 0; i < std::get<0>(_path), ++i){
+            for(int i = 0; i < std::get<0>(_path); ++i){
                 for(int k = 0; k < nearest_obs.size(); ++k){
                     obs_tuple temp_obs = nearest_obs[k];
                     temp_dis_to_obs = std::sqrt(std::pow(std::get<0>(_path) - std::get<0>(temp_obs), 2) + std::pow(std::get<1>(_path) - std::get<1>(temp_obs), 2));
@@ -225,7 +263,7 @@ class DWA{
             double min_data = std::min({_angle, _velo, _obs});            
             if(max_data - min_data == 0){
                 _angle = 0;
-                _velp = 0;
+                _velo = 0;
                 _obs = 0;
             }else{
                 _angle = (_angle - min_data) / (max_data - min_data);
@@ -234,6 +272,8 @@ class DWA{
             }
         }
         void evalPath(){
+            calcNearestObs();
+            
             std::vector<double> score_heading_angles;
             std::vector<double> score_heading_velos;
             std::vector<double> score_obstacles;
@@ -241,7 +281,7 @@ class DWA{
             for(int i = 0; i < path.size(); ++i){
                 score_heading_angles.push_back(headingAngle(path[i], g_x, g_y));
                 score_heading_velos.push_back(headingVelo(path[i]));
-                score_obstacles.push_back(obstacleCheck());
+                score_obstacles.push_back(obstacleCheck(path[i]));
             }
             //正規化
             for(int i = 0; i < path.size(); ++i){
@@ -262,7 +302,7 @@ class DWA{
             }
         }
 };
-
+/*
 class TwoWheelRobot{
     public:
         TwoWheelRobot(double _init_x, double _init_y, double _init_th){
@@ -281,8 +321,8 @@ class TwoWheelRobot{
             u_th = _u_th;
             u_v = _u_v;
 
-            double next_x = u_v * cos(th) * dt + x;
-            double next_y = u_v * sin(th) * dt + y;
+            double next_x = u_v * cos(th) * _dt + x;
+            double next_y = u_v * sin(th) * _dt + y;
             double next_th = u_th * dt + th;
 
             traj_x.push_back(next_x);
@@ -305,8 +345,8 @@ class TwoWheelRobot{
         std::vector<double> traj_th;
         std::vector<double> traj_u_v;
         std::vector<double> traj_u_th;
-};
-
+};*/
+/*
 void Animation(double _x, double _y){
     plt::clf();
     plt::xlim(-12, 12);
@@ -314,12 +354,14 @@ void Animation(double _x, double _y){
     plt::plot(_x, _y);
     plt::legend();
     plt::pause(0.01);
-}
+}*/
 int main(){
     std::vector<obs_tuple> obsPos;
-    obsPos.push_back(obs_tuple(1, 1, 0.5));
-    obsPos.push_back(obs_tuple(2, 2, 0.5));
-    obsPos.push_back(obs_tuple(2, 1, 0.5));
+    obsPos.push_back(obs_tuple(4, 1, 0.25));
+    obsPos.push_back(obs_tuple(0, 4.5, 0.25));
+    obsPos.push_back(obs_tuple(3, 4.5, 0.25));
+    obsPos.push_back(obs_tuple(5, 3.5, 0.25));
+    obsPos.push_back(obs_tuple(7.5, 9.0, 0.25));
 
     double goal_x = 10;
     double goal_y = 10;
