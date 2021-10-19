@@ -11,21 +11,37 @@ using path_tuple = std::tuple<double, double, double, double, double>;
 //x, y, size
 using obs_tuple = std::tuple<double, double, double>;
 //x, y
-using info_tuple = std::tuple<double, double>
+using info_tuple = std::tuple<double, double, double>
 
 //myenigma参考
 class DWA{
     public:
-        DWA(){
-
+        DWA(double _g_x, double _g_y){
+            g_x = _g_x;
+            g_y = _g_y;
         }
-        void update(std::vector<obs_tuple> _obs_pos){
+        void runToGoal(std::vector<obs_tuple> _obs_pos){
+            bool goal_flag = false;
+            double time_step = 0;
+            while(goal_flag == 0){
+                obs.clear();
+                obs = _obs_pos;
 
-        }
-        info_tuple getInfo(){
-            return info_tuple(std::get<0>(opt_path), std::get<1>opt_path);
+                calcInput();
+
+                double u_th = std::get<4>(opt_path);
+                double u_v = std::get<3>(opt_path);
+
+                robot.updateState(u_th, u_v, sampling_time);
+                double dis_to_goal = std::sqrt(std::pow(g_x - robot.x, 2) + std::pow(g_y - robot.y, 2));
+                if(dis_to_goal < 0.5){
+                    goal_flag = True;
+                }
+                time_step += 1;
+            }            
         }
     private:
+        TwoWheelRobot robot;
         //パラメータ
         double max_ang_accelation;
         double max_accelation;
@@ -77,6 +93,12 @@ class DWA{
         std::vector<obs_tuple> obs;
         std::vector<obs_tuple> nearest_obs;
 
+        void calcInput(){
+            //path作成
+            makePath();
+            //path評価
+            evalPath();
+        }
         void calcRangeVelos(){
             //角速度
             double range_ang_velo = sampling_time * max_ang_accelation;
@@ -118,7 +140,7 @@ class DWA{
                 next_th.push_back(temp_th);
             }
         }
-        double makePath(){
+        void makePath(){
             //角度と速度の組み合わせを全探索
             path.clear();
             for(double ang_velo = min_ang_velo; ang_velo < max_ang_velo; ang_velo += delta_ang_velo){
@@ -198,8 +220,18 @@ class DWA{
             }
             return score_obstacle;
         }
-        void minMaxNormalize(){
-
+        void minMaxNormalize(double &_angle, double &_velo, double &_obs){
+            double max_data = std::max({_angle, _velo, _obs});
+            double min_data = std::min({_angle, _velo, _obs});            
+            if(max_data - min_data == 0){
+                _angle = 0;
+                _velp = 0;
+                _obs = 0;
+            }else{
+                _angle = (_angle - min_data) / (max_data - min_data);
+                _velo = (_velo - min_data) / (max_data - min_data);
+                _obs = (_obs - min_data) / (max_data - min_data);
+            }
         }
         void evalPath(){
             std::vector<double> score_heading_angles;
@@ -231,21 +263,54 @@ class DWA{
         }
 };
 
-class TwoWheelRobot(){
+class TwoWheelRobot{
     public:
         TwoWheelRobot(double _init_x, double _init_y, double _init_th){
             x = _init_x;
             y = _init_y;
             th = _init_th;
+            u_v = 0.0;
+            u_th = 0.0;
+            traj_x.push_back(x);
+            traj_y.push_back(y);
+            traj_th.push_back(th);
+            traj_u_v.push_back(u_v);
+            traj_u_th.push_back(u_th);
         }
-    private:
+        info_tuple updateState(double _u_th, double _u_v, _dt){
+            u_th = _u_th;
+            u_v = _u_v;
+
+            double next_x = u_v * cos(th) * dt + x;
+            double next_y = u_v * sin(th) * dt + y;
+            double next_th = u_th * dt + th;
+
+            traj_x.push_back(next_x);
+            traj_y.push_back(next_y);
+            traj_th.push_back(next_th);
+
+            x = next_x;
+            y = next_y;
+            th = next_th;
+
+            return info_tuple(x, y, th);            
+        }
         double x;
         double y;
         double th;
-}
+        double u_v;
+        double u_th;
+        std::vector<double> traj_x;
+        std::vector<double> traj_y;
+        std::vector<double> traj_th;
+        std::vector<double> traj_u_v;
+        std::vector<double> traj_u_th;
+};
 
 void Animation(double _x, double _y){
     plt::clf();
+    plt::xlim(-12, 12);
+    plt::xlim(-12, 12);
     plt::plot(_x, _y);
     plt::legend();
     plt::pause(0.01);
@@ -256,15 +321,9 @@ int main(){
     obsPos.push_back(obs_tuple(2, 2, 0.5));
     obsPos.push_back(obs_tuple(2, 1, 0.5));
 
-    DWA dwa;
-    while(1){
-        info_tuple temp_info;
-        dwa.update(obsPos);
-        temp_info = dwa.getInfo();
-        
-        double pos_x = std::get<0>temp_info;
-        double pos_y = std::get<1>temp_info;
-        
-        Animation(pos_x, pos_y);
-    }
+    double goal_x = 10;
+    double goal_y = 10;
+
+    DWA dwa(goal_x, goal_y);
+    dwa.runToGoal(obsPos);
 }
