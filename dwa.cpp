@@ -6,7 +6,7 @@
 #include"matplotlibcpp.h"
 
 namespace plt = matplotlibcpp;
-//x, y, th, ang_velo, velo
+//x, y, th, u_v, u_th
 using path_tuple = std::tuple<std::vector<double>, std::vector<double>, std::vector<double>, double, double>;
 //x, y, size
 using obs_tuple = std::tuple<double, double, double>;
@@ -45,10 +45,10 @@ class DWA{
 
                 path_tuple opt_path = calcInput();
 
-                double u_th = std::get<3>(opt_path);
-                double u_v = std::get<4>(opt_path);
+                double u_v = std::get<3>(opt_path);
+                double u_th = std::get<4>(opt_path);
                 robotUpdateState(u_th, u_v, sampling_time);
-                double dis_to_goal = std::sqrt(std::pow(g_x - robot_x, 2) + std::pow(g_y - robot_y, 2));
+                double dis_to_goal = std::sqrt(std::pow((g_x - robot_x), 2) + std::pow((g_y - robot_y), 2));
                 if(dis_to_goal < 0.5){
                     goal_flag = true;
                 }
@@ -139,7 +139,6 @@ class DWA{
             double min_ang_velo = robot_u_th - range_ang_velo;
             double max_ang_velo = robot_u_th + range_ang_velo;
 
-            //std::cout << min_ang_velo << " " << max_ang_velo << std::endl;
 
             //最小値
             if(min_ang_velo < lim_min_ang_velo){
@@ -154,6 +153,7 @@ class DWA{
             double range_velo = sampling_time * max_accelation;
             double min_velo = robot_u_v - range_velo;
             double max_velo = robot_u_v + range_velo;
+            std::cout << robot_x << " " << robot_y << std::endl;
             //最小値
             if(min_velo < lim_min_velo){
                 min_velo = lim_min_velo;
@@ -201,7 +201,7 @@ class DWA{
                     double temp_x, temp_y, temp_th;
                     next_tuple next_path = predictState(ang_velo, velo, robot_x, robot_y, robot_th, sampling_time, pre_step);
                     path_tuple path;
-                    path = path_tuple(std::get<0>(next_path), std::get<1>(next_path), std::get<2>(next_path), ang_velo, velo);
+                    path = path_tuple(std::get<0>(next_path), std::get<1>(next_path), std::get<2>(next_path), velo, ang_velo);
                     paths.push_back(path);
                 }
             }
@@ -211,11 +211,11 @@ class DWA{
         double angleRangeCorrector(double _angle){
             if(_angle > M_PI){
                 while(_angle > M_PI){
-                    _angle -= 2 * M_PI;
+                    _angle -= (2 * M_PI);
                 }
             }else if(_angle < -M_PI){
                 while(_angle < -M_PI){
-                    _angle += 2 * M_PI;
+                    _angle += (2 * M_PI);
                 }
             }
             return _angle;
@@ -229,7 +229,7 @@ class DWA{
             double last_th = temp_th.back();
 
             //角度計算
-            double angle_to_goal = atan2(_g_y - last_y, _g_x - last_x);
+            double angle_to_goal = atan2((_g_y - last_y), (_g_x - last_x));
 
             //score計算
             double score_angle = angle_to_goal - last_th;
@@ -243,8 +243,8 @@ class DWA{
             return score_angle;
         }
         double headingVelo(path_tuple _path){
-            std::vector<double> temp_path_th = std::get<2>(_path);
-            double score_heading_velo = temp_path_th.back();
+            double temp_path_u_v = std::get<3>(_path);
+            double score_heading_velo = temp_path_u_v;
             return score_heading_velo;
         }
         std::vector<obs_tuple> calcNearestObs(std::vector<obs_tuple> _obstacles){
@@ -273,12 +273,13 @@ class DWA{
                     if(temp_dis_to_obs < score_obstacle){
                         score_obstacle = temp_dis_to_obs;
                     }
-                    if(temp_dis_to_obs < std::get<2>(temp_obs) + 0.75){
-                        score_obstacle = -99999999;
-                    }
                 }
             }
-            return score_obstacle;
+            if(score_obstacle < 1){
+                return -INFINITY;
+            }else{
+                return score_obstacle;
+            }
         }
         void minMaxNormalize(double &_angle, double &_velo, double &_obs){
             double max_data = std::max({_angle, _velo, _obs});
@@ -307,7 +308,6 @@ class DWA{
             }
             //正規化
             for(int i = 0; i < _paths.size(); ++i){
-                std::cout << score_heading_angles[i] << " " << score_heading_velos[i] << " " << score_obstacles[i] << std::endl;
                 minMaxNormalize(score_heading_angles[i], score_heading_velos[i], score_obstacles[i]);
             }
             double score = 0.0;
@@ -331,11 +331,11 @@ class DWA{
 
 int main(){
     std::vector<obs_tuple> obsPos;
-    obsPos.push_back(obs_tuple(4, 1, 0.25));
-    obsPos.push_back(obs_tuple(0, 4.5, 0.25));
-    obsPos.push_back(obs_tuple(3, 4.5, 0.25));
-    obsPos.push_back(obs_tuple(5, 3.5, 0.25));
-    obsPos.push_back(obs_tuple(7.5, 9.0, 0.25));
+    //obsPos.push_back(obs_tuple(4, 1, 0.25));
+    //obsPos.push_back(obs_tuple(0, 4.5, 0.25));
+    //obsPos.push_back(obs_tuple(3, 4.5, 0.25));
+    //obsPos.push_back(obs_tuple(5, 3.5, 0.25));
+    //obsPos.push_back(obs_tuple(7.5, 9.0, 0.25));
 
     double goal_x = 10;
     double goal_y = 10;
