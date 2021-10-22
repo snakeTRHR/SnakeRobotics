@@ -113,16 +113,15 @@ class DWA{
 
                 PathSet optPath = calcInput();
 
-                double u_v = optPath.u_v;
-                double u_th = optPath.u_th;
-                robotUpdateState(u_th, u_v, sampling_time);
+                double opt_u_v = optPath.u_v;
+                double opt_u_th = optPath.u_th;
+                robotUpdateState(opt_u_th, opt_u_v, sampling_time);
                 double dis_to_goal = std::sqrt(std::pow((g_x - robot_x), 2) + std::pow((g_y - robot_y), 2));
                 if(dis_to_goal < 0.5){
                     goal_flag = true;
                 }
                 time_step += 1;
                 Animation(robot_x, robot_y, obs);
-                //std::cout << robot_x << " " << robot_y << std::endl;
             }            
         }
         void TwoWheelRobot(double _init_x, double _init_y, double _init_th){
@@ -181,7 +180,7 @@ class DWA{
         //サンプリングタイム
         const double sampling_time = 0.1;
         //重み付け
-        const double weight_angle = 0.4;
+        const double weight_angle = 0.05;
         const double weight_velo = 0.2;
         const double weight_obs = 0.1;
 
@@ -327,8 +326,8 @@ class DWA{
         }
         std::vector<ObsSet> calcNearestObs(std::vector<ObsSet> _obstacles){
             std::vector<ObsSet> nearestObs;
-            //double area_dis_to_obs = 5;
-            double area_dis_to_obs = 2;
+            double area_dis_to_obs = 5;
+            //double area_dis_to_obs = 2;
             for(int i = 0; i < _obstacles.size(); ++i){
                 ObsSet tempObs = _obstacles[i];
                 double temp_dis_to_obs = std::sqrt(std::pow(robot_x - tempObs.x, 2) + std::pow(robot_y - tempObs.y, 2));
@@ -365,17 +364,16 @@ class DWA{
                 return score_obstacle;
             }*/
         }
-        void minMaxNormalize(double &_angle, double &_velo, double &_obs){
-            double max_data = std::max({_angle, _velo, _obs});
-            double min_data = std::min({_angle, _velo, _obs});
+        std::vector<double> minMaxNormalize(std::vector<double> val){
+            double max_data = *std::max_element(val.begin(), val.end());
+            double min_data = *std::min_element(val.begin(), val.end());
             if((max_data - min_data) == 0){
-                _angle = 0;
-                _velo = 0;
-                _obs = 0;
+                return std::vector<double>(val.size(), 0);
             }else{
-                _angle = (_angle - min_data) / (max_data - min_data);
-                _velo = (_velo - min_data) / (max_data - min_data);
-                _obs = (_obs - min_data) / (max_data - min_data);
+                for(int i = 0; i < val.size(); ++i){
+                    val[i] = (val[i] - min_data) / (max_data - min_data);
+                }
+                return val;
             }
         }
         PathSet evalPath(std::vector<PathSet> _paths){
@@ -391,11 +389,9 @@ class DWA{
                 score_obstacles.push_back(obstacleCheck(_paths[i], nearestObs));
             }
             //正規化
-            for(int i = 0; i < _paths.size(); ++i){
-                //std::cout << score_heading_angles[i] << " " << score_heading_velos[i] << " " << score_obstacles[i] << std::endl;
-                minMaxNormalize(score_heading_angles[i], score_heading_velos[i], score_obstacles[i]);
-                //std::cout << score_heading_angles[i] << " " << score_heading_velos[i] << " " << score_obstacles[i] << std::endl;
-            }
+            minMaxNormalize(score_heading_angles);
+            minMaxNormalize(score_heading_velos);
+            minMaxNormalize(score_obstacles);
             double score = 0.0;
             double temp_score = 0.0;
             
@@ -404,7 +400,7 @@ class DWA{
                 temp_score = weight_angle * score_heading_angles[i] +
                              weight_velo * score_heading_velos[i] +
                              weight_obs * score_obstacles[i];
-                //std::cout << score_obstacles[i] << std::endl;
+                //std::cout << score_heading_angles[i] << " " << score_heading_velos[i] << " " << score_obstacles[i] << std::endl;
                 if(temp_score > score){
                     optPath = _paths[i];
                     score = temp_score;
@@ -417,9 +413,48 @@ class DWA{
 
 int main(){
     std::vector<ObsSet> obsPos;
+
+    ObsSet temp_obs1;
+    temp_obs1.x = 7.5;
+    temp_obs1.y = 9.0;
+    temp_obs1.r = 0.25;
+    obsPos.push_back(temp_obs1);
+
+    ObsSet temp_obs2;
+    temp_obs2.x = 7.5;
+    temp_obs2.y = 6;
+    temp_obs2.r = 0.25;
+    obsPos.push_back(temp_obs2);
+
+    ObsSet temp_obs3;
+    temp_obs3.x = 5;
+    temp_obs3.y = 3.5;
+    temp_obs3.r = 0.25;
+    obsPos.push_back(temp_obs3);
+    
+   
+    ObsSet temp_obs4;
+    temp_obs4.x = 1;
+    temp_obs4.y = 4.5;
+    temp_obs4.r = 0.25;
+    obsPos.push_back(temp_obs4);
+
+
+    ObsSet temp_obs5;
+    temp_obs5.x = 0;
+    temp_obs5.y = 4.5;
+    temp_obs5.r = 0.25;
+    obsPos.push_back(temp_obs5);
+
+    ObsSet temp_obs6;
+    temp_obs6.x = 4;
+    temp_obs6.y = 1;
+    temp_obs6.r = 0.25;
+    obsPos.push_back(temp_obs6);
+    
     double goal_x = 10;
     double goal_y = 10;
-
+    
     DWA dwa(goal_x, goal_y);
     dwa.runToGoal(obsPos);
 }
