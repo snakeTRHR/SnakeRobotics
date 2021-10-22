@@ -316,7 +316,6 @@ class DWA{
 
             //最大と最小をひっくり返す
             score_angle = M_PI - score_angle;
-            std::cout << "score " << score_angle * 180 / M_PI << std::endl;
             return score_angle;
         }
         double headingVelo(PathSet _path){
@@ -354,7 +353,6 @@ class DWA{
                     if(temp_dis_to_obs < temp_obs.r + 0.75){
                         score_obstacle = -INFINITY;
                     }
-                    std::cout << "999999" << std::endl;
                 }
             }
             return score_obstacle;
