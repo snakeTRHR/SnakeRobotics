@@ -164,9 +164,9 @@ class DWA{
         //サンプリングタイム
         const double sampling_time = 0.1;
         //重み付け
-        const double weight_angle = 0.1;
+        const double weight_angle = 500.0;
         const double weight_velo = 0.2;
-        const double weight_obs = 0.1;
+        const double weight_obs = 0.01;
 
         std::vector<std::vector<path_tuple>> traj_paths;
         std::vector<path_tuple> traj_opt;
@@ -279,18 +279,22 @@ class DWA{
             double last_th = temp_th.back();
 
             //角度計算
+            //std::cout << "robot_th " << robot_th * 180 / M_PI<< std::endl;
+            std::cout << "th " << last_th * 180 / M_PI << std::endl;
             //std::cout << "val:" << _g_y << " " << last_y << " " << _g_x << " " << last_x << std::endl;
             double angle_to_goal = atan2((_g_y - last_y), (_g_x - last_x));
-            //std::cout << angle_to_goal * 180.0 / M_PI << std::endl;
+            //double angle_to_goal = atan2((_g_x - last_x), (_g_y - last_y));
+            std::cout << "goal " << angle_to_goal * 180.0 / M_PI << std::endl;
             //score計算
             double score_angle = angle_to_goal - last_th;
+            //std::cout << "score " << score_angle << std::endl;
 
             //ぐるぐる防止
             score_angle = abs(angleRangeCorrector(score_angle));
 
             //最大と最小をひっくり返す
             score_angle = M_PI - score_angle;
-            std::cout << "score " << score_angle << std::endl;
+            std::cout << "score " << score_angle * 180 / M_PI << std::endl;
             return score_angle;
         }
         double headingVelo(path_tuple _path){
@@ -301,8 +305,8 @@ class DWA{
         }
         std::vector<obs_tuple> calcNearestObs(std::vector<obs_tuple> _obstacles){
             std::vector<obs_tuple> nearest_obs;
-            double area_dis_to_obs = 5;
-            //double area_dis_to_obs = 2;
+            //double area_dis_to_obs = 5;
+            double area_dis_to_obs = 2;
             for(int i = 0; i < _obstacles.size(); ++i){
                 obs_tuple temp_obs = _obstacles[i];
                 double temp_dis_to_obs = std::sqrt(std::pow(robot_x - std::get<0>(temp_obs), 2) + std::pow(robot_y - std::get<1>(temp_obs), 2));
@@ -378,28 +382,30 @@ class DWA{
                 temp_score = weight_angle * score_heading_angles[i] +
                              weight_velo * score_heading_velos[i] +
                              weight_obs * score_obstacles[i];
+                //std::cout << score_obstacles[i] << std::endl;
                 if(temp_score > score){
                     opt_path = _paths[i];
                     score = temp_score;
                 }
             }
+            //std::cout << "score " << score << std::endl;
             return opt_path;
         }
 };
 
 int main(){
     std::vector<obs_tuple> obsPos;
-    /*obsPos.push_back(obs_tuple(4, 1, 0.25));
+    obsPos.push_back(obs_tuple(-4, 1, 0.25));
     obsPos.push_back(obs_tuple(0, 4.5, 0.25));
     obsPos.push_back(obs_tuple(3, 4.5, 0.25));
     obsPos.push_back(obs_tuple(5, 3.5, 0.25));
     obsPos.push_back(obs_tuple(7.5, 9.0, 0.25));
     obsPos.push_back(obs_tuple(6, 6, 0.25));
-    obsPos.push_back(obs_tuple(7, 9.0, 0.25));*/
-    /*obsPos.push_back(obs_tuple(10, 2.0, 0.25));
+    obsPos.push_back(obs_tuple(7, 9.0, 0.25));
+    obsPos.push_back(obs_tuple(10, 2.0, 0.25));
     obsPos.push_back(obs_tuple(10, 1.0, 0.25));
     obsPos.push_back(obs_tuple(10, 0.0, 0.25));
-    obsPos.push_back(obs_tuple(11, -1.0, 0.25));*/
+    obsPos.push_back(obs_tuple(11, -1.0, 0.25));
     double goal_x = 10;
     double goal_y = 10;
 
