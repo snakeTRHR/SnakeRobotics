@@ -59,7 +59,7 @@ class DWA{
                 plt::plot(temp_path_x, temp_path_y, "y");
             }
             //write_area
-            double area_radius = 5.0;
+            /*double area_radius = 5.0;
             std::vector<double> area_write_x;
             std::vector<double> area_write_y;
             for(int k = 0; k < 100; ++k){
@@ -68,7 +68,7 @@ class DWA{
                 area_write_y.push_back(robot_y + area_radius * sin(area_theta));
             }
             plt::plot(area_write_x, area_write_y, "r");
-            
+            */
             //write circle
             for(int i = 0; i < _obsPos.size(); ++i){
                 ObsSet tempObs = _obsPos[i];
