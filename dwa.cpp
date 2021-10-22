@@ -3,9 +3,17 @@
 #include<vector>
 #include<tuple>
 #include<string>
+#include<array>
 #include"matplotlibcpp.h"
 
 namespace plt = matplotlibcpp;
+
+struct GoalSet{
+    GoalSet(double _x, double _y):x(_x), y(_y){
+    };
+    double x;
+    double y;
+};
 
 struct PathSet{
     std::vector<double> x;
@@ -29,16 +37,22 @@ struct Range{
 };
 
 struct ObsSet{
+    ObsSet(){
+    }
+    ObsSet(double _x, double _y, double _r):x(_x), y(_y), r(_r){
+        flag = false;
+    }
     double x;
     double y;
     double r;
+    bool flag;
 };
 
 class DWA{
     public:
-        DWA(double _g_x, double _g_y){
-            g_x = _g_x;
-            g_y = _g_y;
+        DWA(GoalSet _goal){
+            g_x = _goal.x;
+            g_y = _goal.y;
             TwoWheelRobot(0, 0, 0);
         }
         std::vector<double> plot_x;
@@ -47,8 +61,8 @@ class DWA{
             plot_x.push_back(_x);
             plot_y.push_back(_y);
             plt::clf();
-            plt::xlim(-12, 12);
-            plt::ylim(-12, 12);
+            plt::xlim(0, 12);
+            plt::ylim(0, 12);
             plt::plot(plot_x, plot_y);
             
             std::vector<PathSet> paths = traj_paths.back();
@@ -105,24 +119,27 @@ class DWA{
             plt::legend();
             plt::pause(0.01);
         }
-        void runToGoal(std::vector<ObsSet> _obs_pos){
-            bool goal_flag = false;
+        void runToGoal(GoalSet _goal, std::vector<ObsSet> _obs_pos){
+            g_x = _goal.x;
+            g_y = _goal.y;
             double time_step = 0;
-            while(goal_flag == false){
-                obs = _obs_pos;
+            obs = _obs_pos;
 
-                PathSet optPath = calcInput();
+            PathSet optPath = calcInput();
 
-                double opt_u_v = optPath.u_v;
-                double opt_u_th = optPath.u_th;
-                robotUpdateState(opt_u_th, opt_u_v, sampling_time);
-                double dis_to_goal = std::sqrt(std::pow((g_x - robot_x), 2) + std::pow((g_y - robot_y), 2));
-                if(dis_to_goal < 0.5){
-                    goal_flag = true;
-                }
-                time_step += 1;
-                Animation(robot_x, robot_y, obs);
-            }            
+            double opt_u_v = optPath.u_v;
+            double opt_u_th = optPath.u_th;
+            robotUpdateState(opt_u_th, opt_u_v, sampling_time);
+            time_step += 1;
+            Animation(robot_x, robot_y, obs);
+        }
+        bool goalCheck(){
+            double dis_to_goal = std::sqrt(std::pow((g_x - robot_x), 2) + std::pow((g_y - robot_y), 2));
+            if(dis_to_goal < 0.5){
+                return true;
+            }else{
+                return false;
+            }
         }
         void TwoWheelRobot(double _init_x, double _init_y, double _init_th){
             robot_x = _init_x;
@@ -409,50 +426,55 @@ class DWA{
         }
 };
 
+ObsSet changeObsPos(ObsSet _prevObs){
+    ObsSet nextObs;
+    nextObs.x = _prevObs.x;
+    nextObs.r = _prevObs.r;
+    if(_prevObs.flag == false){
+        nextObs.y = _prevObs.y + 0.1;
+    }else if(_prevObs.flag == true){
+        nextObs.y = _prevObs.y -0.1;
+    }
+    if(nextObs.y > 11){
+        nextObs.flag = true;
+    }else if(nextObs.y < -11){
+        nextObs.flag = false;
+    }else{
+        nextObs.flag = _prevObs.flag;
+    }
+    return nextObs;
+}
+
 int main(){
     std::vector<ObsSet> obsPos;
+    ObsSet obs[6]{ObsSet(7.5, -1.0, 0.25),
+                  ObsSet(8.5, 3.0, 0.25),
+                  ObsSet(5.0, 6.5, 0.25),
+                  ObsSet(11.0, -1.5, 0.25),
+                  ObsSet(9.0, -4.5, 0.25),
+                  ObsSet(4.0, 3.0, 0.25)};
+    /*ObsSet obs[6]{ObsSet(7.5, 1.0, 0.25),
+                  ObsSet(7.5, 4.0, 0.25),
+                  ObsSet(5.0, 12.5, 0.25),
+                  ObsSet(11.0, -1.5, 0.25),
+                  ObsSet(9.0, -4.5, 0.25),
+                  ObsSet(4.0, 8.0, 0.25)};
+    */
+    for(int i = 0; i < 6; ++i){
+        obsPos.push_back(obs[i]);
+    }
 
-    ObsSet temp_obs1;
-    temp_obs1.x = 7.5;
-    temp_obs1.y = 9.0;
-    temp_obs1.r = 0.25;
-    obsPos.push_back(temp_obs1);
+    GoalSet goalPos(10, 10);
 
-    ObsSet temp_obs2;
-    temp_obs2.x = 7.5;
-    temp_obs2.y = 6;
-    temp_obs2.r = 0.25;
-    obsPos.push_back(temp_obs2);
-
-    ObsSet temp_obs3;
-    temp_obs3.x = 5;
-    temp_obs3.y = 3.5;
-    temp_obs3.r = 0.25;
-    obsPos.push_back(temp_obs3);
-    
-   
-    ObsSet temp_obs4;
-    temp_obs4.x = 1;
-    temp_obs4.y = 4.5;
-    temp_obs4.r = 0.25;
-    obsPos.push_back(temp_obs4);
-
-
-    ObsSet temp_obs5;
-    temp_obs5.x = 0;
-    temp_obs5.y = 4.5;
-    temp_obs5.r = 0.25;
-    obsPos.push_back(temp_obs5);
-
-    ObsSet temp_obs6;
-    temp_obs6.x = 4;
-    temp_obs6.y = 1;
-    temp_obs6.r = 0.25;
-    obsPos.push_back(temp_obs6);
-    
-    double goal_x = 10;
-    double goal_y = 10;
-    
-    DWA dwa(goal_x, goal_y);
-    dwa.runToGoal(obsPos);
+    DWA dwa(goalPos);
+    bool finish = false;
+    while(finish == false){
+        obsPos.clear();
+        for(int i = 0; i < 6; ++i){
+            obs[i] = changeObsPos(obs[i]);
+            obsPos.push_back(obs[i]);
+        }
+        dwa.runToGoal(goalPos, obsPos);
+        finish = dwa.goalCheck();
+    }
 }

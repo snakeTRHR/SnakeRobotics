@@ -17,6 +17,8 @@ tuple
 -
 string
 -
+array
+-
 matplotlibcpp.h
 /home/tsuruharakota/SnakeRobotics/matplotlibcpp.h
 
