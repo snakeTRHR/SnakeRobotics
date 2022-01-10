@@ -12,7 +12,7 @@
 //
 // Copyright Drew Noakes 2013-2016
 
-#include "joystick.h"
+#include "include/joystick.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
