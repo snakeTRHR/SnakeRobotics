@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /home/tsuruharakota/SnakeRobotics/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -77,6 +66,17 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -148,6 +148,19 @@ snake_key: cmake_check_build_system
 snake_key/fast:
 	$(MAKE) -f CMakeFiles/snake_key.dir/build.make CMakeFiles/snake_key.dir/build
 .PHONY : snake_key/fast
+
+#=============================================================================
+# Target rules for targets named snake_dwa
+
+# Build rule for target.
+snake_dwa: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 snake_dwa
+.PHONY : snake_dwa
+
+# fast build rule for target.
+snake_dwa/fast:
+	$(MAKE) -f CMakeFiles/snake_dwa.dir/build.make CMakeFiles/snake_dwa.dir/build
+.PHONY : snake_dwa/fast
 
 #=============================================================================
 # Target rules for targets named dwa
@@ -337,19 +350,47 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+snake_dwa.o: snake_dwa.cpp.o
+
+.PHONY : snake_dwa.o
+
+# target to build an object file
+snake_dwa.cpp.o:
+	$(MAKE) -f CMakeFiles/snake_dwa.dir/build.make CMakeFiles/snake_dwa.dir/snake_dwa.cpp.o
+.PHONY : snake_dwa.cpp.o
+
+snake_dwa.i: snake_dwa.cpp.i
+
+.PHONY : snake_dwa.i
+
+# target to preprocess a source file
+snake_dwa.cpp.i:
+	$(MAKE) -f CMakeFiles/snake_dwa.dir/build.make CMakeFiles/snake_dwa.dir/snake_dwa.cpp.i
+.PHONY : snake_dwa.cpp.i
+
+snake_dwa.s: snake_dwa.cpp.s
+
+.PHONY : snake_dwa.s
+
+# target to generate assembly for a file
+snake_dwa.cpp.s:
+	$(MAKE) -f CMakeFiles/snake_dwa.dir/build.make CMakeFiles/snake_dwa.dir/snake_dwa.cpp.s
+.PHONY : snake_dwa.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
+	@echo "... edit_cache"
 	@echo "... snake_joy"
 	@echo "... frenet_serret"
 	@echo "... snake_key"
+	@echo "... rebuild_cache"
+	@echo "... snake_dwa"
 	@echo "... dwa"
 	@echo "... circle"
-	@echo "... edit_cache"
 	@echo "... circle.o"
 	@echo "... circle.i"
 	@echo "... circle.s"
@@ -368,6 +409,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... snake_dwa.o"
+	@echo "... snake_dwa.i"
+	@echo "... snake_dwa.s"
 .PHONY : help
 
 

@@ -1,1 +1,1 @@
-/usr/bin/c++     CMakeFiles/snake_key.dir/control_keyboard.cpp.o  -o snake_key /usr/lib/x86_64-linux-gnu/libpython2.7.so 
+/usr/bin/x86_64-linux-gnu-g++-7     CMakeFiles/snake_key.dir/control_keyboard.cpp.o  -o snake_key /usr/lib/x86_64-linux-gnu/libpython2.7.so 

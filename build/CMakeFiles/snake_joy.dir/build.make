@@ -60,15 +60,15 @@ include CMakeFiles/snake_joy.dir/flags.make
 CMakeFiles/snake_joy.dir/main.cpp.o: CMakeFiles/snake_joy.dir/flags.make
 CMakeFiles/snake_joy.dir/main.cpp.o: ../main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tsuruharakota/SnakeRobotics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/snake_joy.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/snake_joy.dir/main.cpp.o -c /home/tsuruharakota/SnakeRobotics/main.cpp
+	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/snake_joy.dir/main.cpp.o -c /home/tsuruharakota/SnakeRobotics/main.cpp
 
 CMakeFiles/snake_joy.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/snake_joy.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/main.cpp > CMakeFiles/snake_joy.dir/main.cpp.i
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/main.cpp > CMakeFiles/snake_joy.dir/main.cpp.i
 
 CMakeFiles/snake_joy.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/snake_joy.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/main.cpp -o CMakeFiles/snake_joy.dir/main.cpp.s
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/main.cpp -o CMakeFiles/snake_joy.dir/main.cpp.s
 
 CMakeFiles/snake_joy.dir/main.cpp.o.requires:
 
@@ -84,15 +84,15 @@ CMakeFiles/snake_joy.dir/main.cpp.o.provides.build: CMakeFiles/snake_joy.dir/mai
 CMakeFiles/snake_joy.dir/joystick.cpp.o: CMakeFiles/snake_joy.dir/flags.make
 CMakeFiles/snake_joy.dir/joystick.cpp.o: ../joystick.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tsuruharakota/SnakeRobotics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/snake_joy.dir/joystick.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/snake_joy.dir/joystick.cpp.o -c /home/tsuruharakota/SnakeRobotics/joystick.cpp
+	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/snake_joy.dir/joystick.cpp.o -c /home/tsuruharakota/SnakeRobotics/joystick.cpp
 
 CMakeFiles/snake_joy.dir/joystick.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/snake_joy.dir/joystick.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/joystick.cpp > CMakeFiles/snake_joy.dir/joystick.cpp.i
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/joystick.cpp > CMakeFiles/snake_joy.dir/joystick.cpp.i
 
 CMakeFiles/snake_joy.dir/joystick.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/snake_joy.dir/joystick.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/joystick.cpp -o CMakeFiles/snake_joy.dir/joystick.cpp.s
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/joystick.cpp -o CMakeFiles/snake_joy.dir/joystick.cpp.s
 
 CMakeFiles/snake_joy.dir/joystick.cpp.o.requires:
 

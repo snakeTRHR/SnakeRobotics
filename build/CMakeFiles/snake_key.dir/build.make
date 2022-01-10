@@ -60,15 +60,15 @@ include CMakeFiles/snake_key.dir/flags.make
 CMakeFiles/snake_key.dir/control_keyboard.cpp.o: CMakeFiles/snake_key.dir/flags.make
 CMakeFiles/snake_key.dir/control_keyboard.cpp.o: ../control_keyboard.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tsuruharakota/SnakeRobotics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/snake_key.dir/control_keyboard.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/snake_key.dir/control_keyboard.cpp.o -c /home/tsuruharakota/SnakeRobotics/control_keyboard.cpp
+	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/snake_key.dir/control_keyboard.cpp.o -c /home/tsuruharakota/SnakeRobotics/control_keyboard.cpp
 
 CMakeFiles/snake_key.dir/control_keyboard.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/snake_key.dir/control_keyboard.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/control_keyboard.cpp > CMakeFiles/snake_key.dir/control_keyboard.cpp.i
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/control_keyboard.cpp > CMakeFiles/snake_key.dir/control_keyboard.cpp.i
 
 CMakeFiles/snake_key.dir/control_keyboard.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/snake_key.dir/control_keyboard.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/control_keyboard.cpp -o CMakeFiles/snake_key.dir/control_keyboard.cpp.s
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/control_keyboard.cpp -o CMakeFiles/snake_key.dir/control_keyboard.cpp.s
 
 CMakeFiles/snake_key.dir/control_keyboard.cpp.o.requires:
 

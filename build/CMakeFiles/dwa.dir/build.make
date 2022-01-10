@@ -60,15 +60,15 @@ include CMakeFiles/dwa.dir/flags.make
 CMakeFiles/dwa.dir/dwa.cpp.o: CMakeFiles/dwa.dir/flags.make
 CMakeFiles/dwa.dir/dwa.cpp.o: ../dwa.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tsuruharakota/SnakeRobotics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/dwa.dir/dwa.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/dwa.dir/dwa.cpp.o -c /home/tsuruharakota/SnakeRobotics/dwa.cpp
+	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/dwa.dir/dwa.cpp.o -c /home/tsuruharakota/SnakeRobotics/dwa.cpp
 
 CMakeFiles/dwa.dir/dwa.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/dwa.dir/dwa.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/dwa.cpp > CMakeFiles/dwa.dir/dwa.cpp.i
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/dwa.cpp > CMakeFiles/dwa.dir/dwa.cpp.i
 
 CMakeFiles/dwa.dir/dwa.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/dwa.dir/dwa.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/dwa.cpp -o CMakeFiles/dwa.dir/dwa.cpp.s
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/dwa.cpp -o CMakeFiles/dwa.dir/dwa.cpp.s
 
 CMakeFiles/dwa.dir/dwa.cpp.o.requires:
 

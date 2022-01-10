@@ -60,15 +60,15 @@ include CMakeFiles/circle.dir/flags.make
 CMakeFiles/circle.dir/circle.cpp.o: CMakeFiles/circle.dir/flags.make
 CMakeFiles/circle.dir/circle.cpp.o: ../circle.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tsuruharakota/SnakeRobotics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/circle.dir/circle.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/circle.dir/circle.cpp.o -c /home/tsuruharakota/SnakeRobotics/circle.cpp
+	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/circle.dir/circle.cpp.o -c /home/tsuruharakota/SnakeRobotics/circle.cpp
 
 CMakeFiles/circle.dir/circle.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/circle.dir/circle.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/circle.cpp > CMakeFiles/circle.dir/circle.cpp.i
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/circle.cpp > CMakeFiles/circle.dir/circle.cpp.i
 
 CMakeFiles/circle.dir/circle.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/circle.dir/circle.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/circle.cpp -o CMakeFiles/circle.dir/circle.cpp.s
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/circle.cpp -o CMakeFiles/circle.dir/circle.cpp.s
 
 CMakeFiles/circle.dir/circle.cpp.o.requires:
 
