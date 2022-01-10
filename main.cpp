@@ -14,15 +14,11 @@
 #include"include/joystick.h"
 #include"include/snake.h"
 
-using namespace std::chrono;
 namespace plt = matplotlibcpp;
 
 int main(){
-    double timer_start = 0;
-    double timer_end = 0;
     double length_one_quarter = 8;
     SnakeRobot snake(length_one_quarter);
-    timer_start = get_time_sec();
     Joystick joystick("/dev/input/js0");
     if(!joystick.isFound()){
         std::cerr << "open failed" << std::endl;

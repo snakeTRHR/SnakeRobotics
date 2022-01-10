@@ -1,4 +1,5 @@
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/edit_cache.dir
+/home/tsuruharakota/SnakeRobotics/build/CMakeFiles/serpenoid.dir
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/snake_joy.dir
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/frenet_serret.dir
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/snake_key.dir

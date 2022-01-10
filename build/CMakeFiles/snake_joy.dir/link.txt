@@ -1,1 +1,1 @@
-/usr/bin/x86_64-linux-gnu-g++-7     CMakeFiles/snake_joy.dir/main.cpp.o CMakeFiles/snake_joy.dir/joystick.cpp.o  -o snake_joy /usr/lib/x86_64-linux-gnu/libpython2.7.so 
+/usr/bin/x86_64-linux-gnu-g++-7  -g   CMakeFiles/snake_joy.dir/main.cpp.o CMakeFiles/snake_joy.dir/joystick.cpp.o  -o snake_joy /usr/lib/x86_64-linux-gnu/libpython2.7.so 

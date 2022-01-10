@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named serpenoid
+
+# Build rule for target.
+serpenoid: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 serpenoid
+.PHONY : serpenoid
+
+# fast build rule for target.
+serpenoid/fast:
+	$(MAKE) -f CMakeFiles/serpenoid.dir/build.make CMakeFiles/serpenoid.dir/build
+.PHONY : serpenoid/fast
+
+#=============================================================================
 # Target rules for targets named snake_joy
 
 # Build rule for target.
@@ -350,6 +363,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+serpenoid.o: serpenoid.cpp.o
+
+.PHONY : serpenoid.o
+
+# target to build an object file
+serpenoid.cpp.o:
+	$(MAKE) -f CMakeFiles/serpenoid.dir/build.make CMakeFiles/serpenoid.dir/serpenoid.cpp.o
+.PHONY : serpenoid.cpp.o
+
+serpenoid.i: serpenoid.cpp.i
+
+.PHONY : serpenoid.i
+
+# target to preprocess a source file
+serpenoid.cpp.i:
+	$(MAKE) -f CMakeFiles/serpenoid.dir/build.make CMakeFiles/serpenoid.dir/serpenoid.cpp.i
+.PHONY : serpenoid.cpp.i
+
+serpenoid.s: serpenoid.cpp.s
+
+.PHONY : serpenoid.s
+
+# target to generate assembly for a file
+serpenoid.cpp.s:
+	$(MAKE) -f CMakeFiles/serpenoid.dir/build.make CMakeFiles/serpenoid.dir/serpenoid.cpp.s
+.PHONY : serpenoid.cpp.s
+
 snake_dwa.o: snake_dwa.cpp.o
 
 .PHONY : snake_dwa.o
@@ -384,6 +424,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... serpenoid"
 	@echo "... snake_joy"
 	@echo "... frenet_serret"
 	@echo "... snake_key"
@@ -409,6 +450,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... serpenoid.o"
+	@echo "... serpenoid.i"
+	@echo "... serpenoid.s"
 	@echo "... snake_dwa.o"
 	@echo "... snake_dwa.i"
 	@echo "... snake_dwa.s"
