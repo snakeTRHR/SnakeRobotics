@@ -11,7 +11,7 @@
 #include"/usr/include/eigen3/Eigen/Core"
 #include"/usr/include/eigen3/Eigen/LU"
 #include"include/matplotlibcpp.h"
-#include"include/snake.h"
+#include"include/serpenoid.h"
 
 namespace plt = matplotlibcpp;
 

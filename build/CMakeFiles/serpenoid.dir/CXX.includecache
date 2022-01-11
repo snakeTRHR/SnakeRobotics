@@ -34,7 +34,7 @@ numpy/arrayobject.h
 opencv2/opencv.hpp
 -
 
-/home/tsuruharakota/SnakeRobotics/include/snake.h
+/home/tsuruharakota/SnakeRobotics/include/serpenoid.h
 iostream
 -
 cmath
@@ -89,8 +89,8 @@ iomanip
 -
 include/matplotlibcpp.h
 /home/tsuruharakota/SnakeRobotics/include/matplotlibcpp.h
-include/snake.h
-/home/tsuruharakota/SnakeRobotics/include/snake.h
+include/serpenoid.h
+/home/tsuruharakota/SnakeRobotics/include/serpenoid.h
 
 /usr/include/eigen3/Eigen/Cholesky
 Core
