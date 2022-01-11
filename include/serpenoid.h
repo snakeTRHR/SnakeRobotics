@@ -48,6 +48,12 @@ class SnakeRobot{
         void Update(){
             SolveDE();
         }
+        void changeBiasYaw(double _bias){
+            bias_yaw = _bias;
+        }
+        void changeVel(double _s_vel){
+            s_vel = _s_vel;
+        }
         void Animation(){
             //matplotlibで表示
             plt::clf();
@@ -78,6 +84,7 @@ class SnakeRobot{
         double theta_roll = 0;
         double theta_pitch = -alpha_pitch;
         double theta_yaw = alpha_yaw;
+        double s_vel = 1;
         std::vector<double> C_x, C_y, C_z;
 
         //４次ルンゲクッタで連立微分方程式を解く
@@ -104,11 +111,13 @@ class SnakeRobot{
 
         double s_long = 5;
         double s = 0;
-        double h = 0.05;
+        //double h = 0.05;
+        double h = 1.0;
         double n = s_long / h;
 
         void SolveDE(){
-            for(int i = 0; i < n; ++i){
+            double n = s_long / h;
+//            for(int i = 0; i < n; ++i){
                 K_a_c = h * Func_c(s, E_1);
                 K_a_1 = h * Func_1(s, E_2, E_3);
                 K_a_2 = h * Func_2(s, E_1, E_3);
@@ -130,8 +139,8 @@ class SnakeRobot{
                 K_d_2 = h * Func_2(s + h, E_1 + K_c_1, E_3 + K_c_3);
                 K_d_3 = h * Func_3(s + h, E_1 + K_c_1, E_2 + K_c_2);
 
-                s += h;
-
+//                s += h;
+                s++;
                 C   += (K_a_c + 2 * K_b_c + 2 * K_c_c + K_d_c) / 6;
                 E_1 += (K_a_1 + 2 * K_b_1 + 2 * K_c_1 + K_d_1) / 6;
                 E_2 += (K_a_2 + 2 * K_b_2 + 2 * K_c_2 + K_d_2) / 6;
@@ -140,12 +149,11 @@ class SnakeRobot{
                 C_x.push_back(C(0, 0));
                 C_y.push_back(C(1, 0));
                 C_z.push_back(C(2, 0));
-            }
+//            }
         }
         double curvature_yaw(double _s){
             //横うねり推進(岡山大学論文参照)
             return alpha_yaw * M_PI * sin(_s * M_PI/ (2 * length))/ (2 * length) + bias_yaw;
-            return 0;
         }
         double curvature_pitch(double _s){
             return 0;
