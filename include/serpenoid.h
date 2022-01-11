@@ -69,6 +69,17 @@ class SnakeRobot{
             C_y.clear();
             C_z.clear();
         }
+        double calL(){
+            double L = 0;
+            for(int i = 0; i < 4 * length; ++i){
+                Update();
+                double temp_x = C_x.back();
+                double temp_y = C_y.back();
+                L += std::sqrt(temp_x*temp_x+temp_y*temp_y);
+            }
+            Clear();
+            return L;
+        }
     private:
         Eigen::Matrix<double, 3, 1> C;
         Eigen::Matrix<double, 3, 1> E_1;
@@ -140,7 +151,7 @@ class SnakeRobot{
                 K_d_3 = h * Func_3(s + h, E_1 + K_c_1, E_2 + K_c_2);
 
 //                s += h;
-                s++;
+                s+=s_vel;
                 C   += (K_a_c + 2 * K_b_c + 2 * K_c_c + K_d_c) / 6;
                 E_1 += (K_a_1 + 2 * K_b_1 + 2 * K_c_1 + K_d_1) / 6;
                 E_2 += (K_a_2 + 2 * K_b_2 + 2 * K_c_2 + K_d_2) / 6;

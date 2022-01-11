@@ -111,19 +111,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named serpenoid
-
-# Build rule for target.
-serpenoid: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 serpenoid
-.PHONY : serpenoid
-
-# fast build rule for target.
-serpenoid/fast:
-	$(MAKE) -f CMakeFiles/serpenoid.dir/build.make CMakeFiles/serpenoid.dir/build
-.PHONY : serpenoid/fast
-
-#=============================================================================
 # Target rules for targets named snake_joy
 
 # Build rule for target.
@@ -163,6 +150,19 @@ snake_key/fast:
 .PHONY : snake_key/fast
 
 #=============================================================================
+# Target rules for targets named serpenoid
+
+# Build rule for target.
+serpenoid: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 serpenoid
+.PHONY : serpenoid
+
+# fast build rule for target.
+serpenoid/fast:
+	$(MAKE) -f CMakeFiles/serpenoid.dir/build.make CMakeFiles/serpenoid.dir/build
+.PHONY : serpenoid/fast
+
+#=============================================================================
 # Target rules for targets named snake_dwa
 
 # Build rule for target.
@@ -187,46 +187,6 @@ dwa: cmake_check_build_system
 dwa/fast:
 	$(MAKE) -f CMakeFiles/dwa.dir/build.make CMakeFiles/dwa.dir/build
 .PHONY : dwa/fast
-
-#=============================================================================
-# Target rules for targets named circle
-
-# Build rule for target.
-circle: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 circle
-.PHONY : circle
-
-# fast build rule for target.
-circle/fast:
-	$(MAKE) -f CMakeFiles/circle.dir/build.make CMakeFiles/circle.dir/build
-.PHONY : circle/fast
-
-circle.o: circle.cpp.o
-
-.PHONY : circle.o
-
-# target to build an object file
-circle.cpp.o:
-	$(MAKE) -f CMakeFiles/circle.dir/build.make CMakeFiles/circle.dir/circle.cpp.o
-.PHONY : circle.cpp.o
-
-circle.i: circle.cpp.i
-
-.PHONY : circle.i
-
-# target to preprocess a source file
-circle.cpp.i:
-	$(MAKE) -f CMakeFiles/circle.dir/build.make CMakeFiles/circle.dir/circle.cpp.i
-.PHONY : circle.cpp.i
-
-circle.s: circle.cpp.s
-
-.PHONY : circle.s
-
-# target to generate assembly for a file
-circle.cpp.s:
-	$(MAKE) -f CMakeFiles/circle.dir/build.make CMakeFiles/circle.dir/circle.cpp.s
-.PHONY : circle.cpp.s
 
 control_keyboard.o: control_keyboard.cpp.o
 
@@ -424,17 +384,13 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... serpenoid"
 	@echo "... snake_joy"
 	@echo "... frenet_serret"
 	@echo "... snake_key"
+	@echo "... serpenoid"
 	@echo "... rebuild_cache"
 	@echo "... snake_dwa"
 	@echo "... dwa"
-	@echo "... circle"
-	@echo "... circle.o"
-	@echo "... circle.i"
-	@echo "... circle.s"
 	@echo "... control_keyboard.o"
 	@echo "... control_keyboard.i"
 	@echo "... control_keyboard.s"

@@ -1,11 +1,6 @@
 [
 {
   "directory": "/home/tsuruharakota/SnakeRobotics/build",
-  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/python2.7  -g   -std=gnu++11 -o CMakeFiles/serpenoid.dir/serpenoid.cpp.o -c /home/tsuruharakota/SnakeRobotics/serpenoid.cpp",
-  "file": "/home/tsuruharakota/SnakeRobotics/serpenoid.cpp"
-},
-{
-  "directory": "/home/tsuruharakota/SnakeRobotics/build",
   "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/python2.7  -g   -std=gnu++11 -o CMakeFiles/snake_joy.dir/main.cpp.o -c /home/tsuruharakota/SnakeRobotics/main.cpp",
   "file": "/home/tsuruharakota/SnakeRobotics/main.cpp"
 },
@@ -26,6 +21,11 @@
 },
 {
   "directory": "/home/tsuruharakota/SnakeRobotics/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/python2.7  -g   -std=gnu++11 -o CMakeFiles/serpenoid.dir/serpenoid.cpp.o -c /home/tsuruharakota/SnakeRobotics/serpenoid.cpp",
+  "file": "/home/tsuruharakota/SnakeRobotics/serpenoid.cpp"
+},
+{
+  "directory": "/home/tsuruharakota/SnakeRobotics/build",
   "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/python2.7  -g   -std=gnu++11 -o CMakeFiles/snake_dwa.dir/snake_dwa.cpp.o -c /home/tsuruharakota/SnakeRobotics/snake_dwa.cpp",
   "file": "/home/tsuruharakota/SnakeRobotics/snake_dwa.cpp"
 },
@@ -33,10 +33,5 @@
   "directory": "/home/tsuruharakota/SnakeRobotics/build",
   "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/python2.7  -g   -std=gnu++11 -o CMakeFiles/dwa.dir/dwa.cpp.o -c /home/tsuruharakota/SnakeRobotics/dwa.cpp",
   "file": "/home/tsuruharakota/SnakeRobotics/dwa.cpp"
-},
-{
-  "directory": "/home/tsuruharakota/SnakeRobotics/build",
-  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/python2.7  -g   -std=gnu++11 -o CMakeFiles/circle.dir/circle.cpp.o -c /home/tsuruharakota/SnakeRobotics/circle.cpp",
-  "file": "/home/tsuruharakota/SnakeRobotics/circle.cpp"
 }
 ]
