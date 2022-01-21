@@ -17,7 +17,11 @@ namespace plt = matplotlibcpp;
 
 class SnakeRobot{
     public:
-        SnakeRobot(double _length):length(_length){
+        SnakeRobot(double _length, double _alpha_yaw, double _alpha_pitch):length(_length), alpha_yaw(_alpha_yaw), alpha_pitch(_alpha_pitch){
+            //alpha_yawは初めの角度(普通はM_PI/4)(平面の場合はalpha_pitchは0)
+            double theta_roll = 0;
+            double theta_pitch = -alpha_pitch;
+            double theta_yaw = alpha_yaw;
             C << 0, 0, 0;
             Identity_Matrix << 1,  0,  0,
                                0, -1,  0,
@@ -84,6 +88,7 @@ class SnakeRobot{
             Clear();
             return L;
         }
+        std::vector<double> C_x, C_y, C_z;
     private:
         Eigen::Matrix<double, 3, 1> C;
         Eigen::Matrix<double, 3, 1> E_1;
@@ -92,15 +97,11 @@ class SnakeRobot{
         Eigen::Matrix<double, 3, 3> Initial_Matrix;
         Eigen::Matrix<double, 3, 3> Identity_Matrix;
         double length;
-        double alpha_yaw = M_PI / 4;
-        double alpha_pitch = 0;
+        double alpha_yaw;
+        double alpha_pitch;
         double bias_yaw = 0;
         double bias_pitch = 0;
-        double theta_roll = 0;
-        double theta_pitch = -alpha_pitch;
-        double theta_yaw = alpha_yaw;
         double s_vel = 1;
-        std::vector<double> C_x, C_y, C_z;
 
         //４次ルンゲクッタで連立微分方程式を解く
         //http://skomo.o.oo7.jp/f20/hp20_4-3.htm
