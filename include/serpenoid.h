@@ -47,6 +47,7 @@ class SnakeRobot{
         }  
         void Update(){
             SolveDE();
+            std::cout<<bias_yaw<<std::endl;
         }
         void changeBiasYaw(double _bias){
             bias_yaw = _bias;
@@ -58,6 +59,8 @@ class SnakeRobot{
             //matplotlibで表示
             plt::clf();
             plt::plot(C_x, C_y);
+            std::cout<<C_x.size()<<" "<<C_y.size()<<std::endl;
+            std::cout<<C_x.back()<<" "<<C_y.back()<<std::endl;
             plt::named_plot("snake", C_x, C_y);
             //plt::xlim(0, 300);
             //plt::ylim(-10, 10);
@@ -65,6 +68,8 @@ class SnakeRobot{
             plt::pause(0.01);
         }
         void Clear(){
+            s=0;
+            C=Eigen::Vector3d::Zero();;
             C_x.clear();
             C_y.clear();
             C_z.clear();
@@ -73,6 +78,7 @@ class SnakeRobot{
             double L = 0;
             for(int i = 0; i < 4 * length; ++i){
                 Update();
+                Animation();
             }
             L=C_x.back();
             Clear();

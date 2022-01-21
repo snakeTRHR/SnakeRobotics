@@ -50,7 +50,39 @@ int main(){
     std::vector<double> curvature_yaw;
     double count=0;
     std::cout<<L<<std::endl;
-    while(finish == false){
+
+    std::vector<std::tuple<double, double>> data;
+    double theta=0;
+    while(theta<=2*M_PI){
+        double temp_data_x=std::cos(theta);
+        double temp_data_y=std::sin(theta);
+        data.push_back(std::make_tuple(temp_data_x, temp_data_y));
+        theta+=0.05;
+    }
+    double v=5;
+    for(int i=2; i<data.size(); ++i){
+        /*std::tuple<double, double> temp0=data.at(i-2);
+        std::tuple<double, double> temp1=data.at(i-1);
+        std::tuple<double, double> temp2=data.at(i);
+        double tempx0=std::get<0>(temp0);
+        double tempx1=std::get<0>(temp1);
+        double tempx2=std::get<0>(temp2);
+        double tempy0=std::get<1>(temp0);
+        double tempy1=std::get<1>(temp1);
+        double tempy2=std::get<1>(temp2);
+        curvature_yaw.push_back(calCurvantureYaw(tempx0, tempx1, tempx2, tempy0, tempy1, tempy2));
+        //snake.changeBiasYaw(curvature_yaw.back());
+        snake.changeVel(calSerpenVel(v, length_one_quarter, L));
+        snake.Update();
+        snake.Animation();
+        std::cout<<data.size()<<" "<<i<<std::endl;*/
+        snake.Update();
+        while(1){
+            snake.Animation();
+        }
+    }
+
+    /*while(finish == false){
         ++count;
         obsPos.clear();
         for(int i=0; i<obsnum; ++i){
@@ -76,7 +108,7 @@ int main(){
             snake.Update();
             snake.Animation();
         }
-    }
+    }*/
     for(int i=0; i<curvature_yaw.size(); ++i){
         std::cout<<curvature_yaw[i]<<std::endl;
     }
