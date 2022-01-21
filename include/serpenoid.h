@@ -73,10 +73,8 @@ class SnakeRobot{
             double L = 0;
             for(int i = 0; i < 4 * length; ++i){
                 Update();
-                double temp_x = C_x.back();
-                double temp_y = C_y.back();
-                L += std::sqrt(temp_x*temp_x+temp_y*temp_y);
             }
+            L=C_x.back();
             Clear();
             return L;
         }

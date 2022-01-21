@@ -3,7 +3,7 @@
 #include<vector>
 #include<tuple>
 
-double calCurvantureYaw3(double x0, double x1, double x2, double y0, double y1, double y2){
+double calCurvantureYaw(double x0, double x1, double x2, double y0, double y1, double y2){
     double dxn=x1-x0;
     double dxp=x2-x1;
     double dyn=y1-y0;
@@ -45,7 +45,7 @@ int main(){
             double tempy0=std::get<1>(temp0);
             double tempy1=std::get<1>(temp1);
             double tempy2=std::get<1>(temp2);
-            curvature_yaw3.push_back(calCurvantureYaw3(tempx0, tempx1, tempx2, tempy0, tempy1, tempy2));
+            curvature_yaw3.push_back(calCurvantureYaw(tempx0, tempx1, tempx2, tempy0, tempy1, tempy2));
             //std::cout<<tempx0<<" "<<tempx1<<" "<<tempx2<<" "<<tempy0<<" "<<tempy1<<" "<<tempy2<<std::endl;
         }
     }

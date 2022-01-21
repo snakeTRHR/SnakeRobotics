@@ -131,7 +131,7 @@ class DWA{
             double opt_u_th = optPath.u_th;
             robotUpdateState(opt_u_th, opt_u_v, sampling_time);
             time_step += 1;
-            Animation(robot_x, robot_y, obs);
+            //Animation(robot_x, robot_y, obs);
         }
         bool goalCheck(){
             double dis_to_goal = std::sqrt(std::pow((g_x - robot_x), 2) + std::pow((g_y - robot_y), 2));
@@ -140,6 +140,12 @@ class DWA{
             }else{
                 return false;
             }
+        }
+        double getPositionX(){
+            return robot_x;
+        }
+        double getPositionY(){
+            return robot_y;
         }
         void TwoWheelRobot(double _init_x, double _init_y, double _init_th){
             robot_x = _init_x;
