@@ -59,6 +59,9 @@ class SnakeRobot{
         void changeVel(double _s_vel){
             s_vel = _s_vel;
         }
+        void changeAlphaYaw(double _alpha_yaw){
+            alpha_yaw = _alpha_yaw;
+        }
         void Animation(){
             //matplotlibで表示
             plt::clf();
