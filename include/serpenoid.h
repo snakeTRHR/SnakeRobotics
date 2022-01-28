@@ -104,7 +104,7 @@ class SnakeRobot{
         double alpha_pitch;
         double bias_yaw = 0;
         double bias_pitch = 0;
-        double s_vel = 1;
+        double s_vel = 10;
 
         //４次ルンゲクッタで連立微分方程式を解く
         //http://skomo.o.oo7.jp/f20/hp20_4-3.htm
@@ -128,36 +128,30 @@ class SnakeRobot{
         Eigen::Matrix<double, 3, 1> K_d_2;
         Eigen::Matrix<double, 3, 1> K_d_3;
 
-        //double s_long = 5;
         double s = 0;
-        //double h = 0.05;
-        double h = 1.0;
-        //double n = s_long / h;
 
         void SolveDE(){
-            //double n = s_long / h;
             double n=s_vel/0.1;
-            //for(int i = 0; i < n; ++i){
-                K_a_c = h * Func_c(s, E_1);
-                K_a_1 = h * Func_1(s, E_2, E_3);
-                K_a_2 = h * Func_2(s, E_1, E_3);
-                K_a_3 = h * Func_3(s, E_1, E_2);
+                K_a_c = s_vel * Func_c(s, E_1);
+                K_a_1 = s_vel * Func_1(s, E_2, E_3);
+                K_a_2 = s_vel * Func_2(s, E_1, E_3);
+                K_a_3 = s_vel * Func_3(s, E_1, E_2);
 
-                K_b_c = h * Func_c(s + h / 2, E_1 + K_a_1 / 2);
-                K_b_1 = h * Func_1(s + h / 2, E_2 + K_a_2 / 2, E_3 + K_a_3 / 2);
-                K_b_2 = h * Func_2(s + h / 2, E_1 + K_a_1 / 2, E_3 + K_a_3 / 2);
-                K_b_3 = h * Func_3(s + h / 2, E_1 + K_a_1 / 2, E_2 + K_a_2 / 2);
+                K_b_c = s_vel * Func_c(s + s_vel / 2, E_1 + K_a_1 / 2);
+                K_b_1 = s_vel * Func_1(s + s_vel / 2, E_2 + K_a_2 / 2, E_3 + K_a_3 / 2);
+                K_b_2 = s_vel * Func_2(s + s_vel / 2, E_1 + K_a_1 / 2, E_3 + K_a_3 / 2);
+                K_b_3 = s_vel * Func_3(s + s_vel / 2, E_1 + K_a_1 / 2, E_2 + K_a_2 / 2);
 
 
-                K_c_c = h * Func_c(s + h / 2, E_1 + K_b_1 / 2);
-                K_c_1 = h * Func_1(s + h / 2, E_2 + K_b_2 / 2, E_3 + K_b_3 / 2);
-                K_c_2 = h * Func_2(s + h / 2, E_1 + K_b_1 / 2, E_3 + K_b_3 / 2);
-                K_c_3 = h * Func_3(s + h / 2, E_1 + K_a_1 / 2, E_2 + K_b_2 / 2);
+                K_c_c = s_vel * Func_c(s + s_vel / 2, E_1 + K_b_1 / 2);
+                K_c_1 = s_vel * Func_1(s + s_vel / 2, E_2 + K_b_2 / 2, E_3 + K_b_3 / 2);
+                K_c_2 = s_vel * Func_2(s + s_vel / 2, E_1 + K_b_1 / 2, E_3 + K_b_3 / 2);
+                K_c_3 = s_vel * Func_3(s + s_vel / 2, E_1 + K_a_1 / 2, E_2 + K_b_2 / 2);
 
-                K_d_c = h * Func_c(s + h, E_1 + K_c_1);
-                K_d_1 = h * Func_1(s + h, E_2 + K_c_2, E_3 + K_c_3);
-                K_d_2 = h * Func_2(s + h, E_1 + K_c_1, E_3 + K_c_3);
-                K_d_3 = h * Func_3(s + h, E_1 + K_c_1, E_2 + K_c_2);
+                K_d_c = s_vel * Func_c(s + s_vel, E_1 + K_c_1);
+                K_d_1 = s_vel * Func_1(s + s_vel, E_2 + K_c_2, E_3 + K_c_3);
+                K_d_2 = s_vel * Func_2(s + s_vel, E_1 + K_c_1, E_3 + K_c_3);
+                K_d_3 = s_vel * Func_3(s + s_vel, E_1 + K_c_1, E_2 + K_c_2);
 
 //                s += h;
                 s+=s_vel;
