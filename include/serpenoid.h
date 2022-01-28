@@ -128,15 +128,16 @@ class SnakeRobot{
         Eigen::Matrix<double, 3, 1> K_d_2;
         Eigen::Matrix<double, 3, 1> K_d_3;
 
-        double s_long = 5;
+        //double s_long = 5;
         double s = 0;
         //double h = 0.05;
         double h = 1.0;
-        double n = s_long / h;
+        //double n = s_long / h;
 
         void SolveDE(){
-            double n = s_long / h;
-//            for(int i = 0; i < n; ++i){
+            //double n = s_long / h;
+            double n=s_vel/0.1;
+            //for(int i = 0; i < n; ++i){
                 K_a_c = h * Func_c(s, E_1);
                 K_a_1 = h * Func_1(s, E_2, E_3);
                 K_a_2 = h * Func_2(s, E_1, E_3);
@@ -168,7 +169,7 @@ class SnakeRobot{
                 C_x.push_back(C(0, 0));
                 C_y.push_back(C(1, 0));
                 C_z.push_back(C(2, 0));
-//            }
+            //}
         }
         double curvature_yaw(double _s){
             //横うねり推進(岡山大学論文参照)

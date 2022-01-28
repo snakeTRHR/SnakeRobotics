@@ -18,7 +18,7 @@ namespace plt=matplotlibcpp;
 int main(){
     double length_one_quarter = 20;
     SnakeRobot snake(length_one_quarter, M_PI/4, 0.0);
-    for(int i=0; i <4*length_one_quarter; ++i){
+    for(int i=0; i<4*length_one_quarter; ++i){
         snake.Update();
         snake.Animation();
     }

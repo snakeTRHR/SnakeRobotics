@@ -21,6 +21,11 @@
 },
 {
   "directory": "/home/tsuruharakota/SnakeRobotics/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/python2.7  -g   -std=gnu++11 -o CMakeFiles/snake_straight.dir/snake_straight.cpp.o -c /home/tsuruharakota/SnakeRobotics/snake_straight.cpp",
+  "file": "/home/tsuruharakota/SnakeRobotics/snake_straight.cpp"
+},
+{
+  "directory": "/home/tsuruharakota/SnakeRobotics/build",
   "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/python2.7  -g   -std=gnu++11 -o CMakeFiles/serpenoid.dir/serpenoid.cpp.o -c /home/tsuruharakota/SnakeRobotics/serpenoid.cpp",
   "file": "/home/tsuruharakota/SnakeRobotics/serpenoid.cpp"
 },

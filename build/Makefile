@@ -150,6 +150,19 @@ snake_key/fast:
 .PHONY : snake_key/fast
 
 #=============================================================================
+# Target rules for targets named snake_straight
+
+# Build rule for target.
+snake_straight: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 snake_straight
+.PHONY : snake_straight
+
+# fast build rule for target.
+snake_straight/fast:
+	$(MAKE) -f CMakeFiles/snake_straight.dir/build.make CMakeFiles/snake_straight.dir/build
+.PHONY : snake_straight/fast
+
+#=============================================================================
 # Target rules for targets named serpenoid
 
 # Build rule for target.
@@ -377,6 +390,33 @@ snake_dwa.cpp.s:
 	$(MAKE) -f CMakeFiles/snake_dwa.dir/build.make CMakeFiles/snake_dwa.dir/snake_dwa.cpp.s
 .PHONY : snake_dwa.cpp.s
 
+snake_straight.o: snake_straight.cpp.o
+
+.PHONY : snake_straight.o
+
+# target to build an object file
+snake_straight.cpp.o:
+	$(MAKE) -f CMakeFiles/snake_straight.dir/build.make CMakeFiles/snake_straight.dir/snake_straight.cpp.o
+.PHONY : snake_straight.cpp.o
+
+snake_straight.i: snake_straight.cpp.i
+
+.PHONY : snake_straight.i
+
+# target to preprocess a source file
+snake_straight.cpp.i:
+	$(MAKE) -f CMakeFiles/snake_straight.dir/build.make CMakeFiles/snake_straight.dir/snake_straight.cpp.i
+.PHONY : snake_straight.cpp.i
+
+snake_straight.s: snake_straight.cpp.s
+
+.PHONY : snake_straight.s
+
+# target to generate assembly for a file
+snake_straight.cpp.s:
+	$(MAKE) -f CMakeFiles/snake_straight.dir/build.make CMakeFiles/snake_straight.dir/snake_straight.cpp.s
+.PHONY : snake_straight.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -387,6 +427,7 @@ help:
 	@echo "... snake_joy"
 	@echo "... frenet_serret"
 	@echo "... snake_key"
+	@echo "... snake_straight"
 	@echo "... serpenoid"
 	@echo "... rebuild_cache"
 	@echo "... snake_dwa"
@@ -412,6 +453,9 @@ help:
 	@echo "... snake_dwa.o"
 	@echo "... snake_dwa.i"
 	@echo "... snake_dwa.s"
+	@echo "... snake_straight.o"
+	@echo "... snake_straight.i"
+	@echo "... snake_straight.s"
 .PHONY : help
 
 

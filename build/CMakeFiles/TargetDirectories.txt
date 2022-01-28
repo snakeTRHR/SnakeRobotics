@@ -2,6 +2,7 @@
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/snake_joy.dir
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/frenet_serret.dir
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/snake_key.dir
+/home/tsuruharakota/SnakeRobotics/build/CMakeFiles/snake_straight.dir
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/serpenoid.dir
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/rebuild_cache.dir
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/snake_dwa.dir
