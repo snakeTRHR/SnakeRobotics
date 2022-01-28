@@ -164,6 +164,7 @@ class SnakeRobot{
         }
         double curvature_yaw(double _s){
             //横うねり推進(岡山大学論文参照)
+            //std::cout<<"alphayaw:"<<alpha_yaw*180/M_PI<<std::endl;
             return alpha_yaw * M_PI * sin(_s * M_PI/ (2 * length))/ (2 * length) + bias_yaw;
         }
         double curvature_pitch(double _s){

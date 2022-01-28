@@ -23,7 +23,7 @@ int main(){
         orbit_x.push_back(v*(i+1));
         orbit_y.push_back(0);
         double vel=calSerpenVel(v, length_one_quarter, L);
-        std::cout<<vel<<std::endl;
+        std::cout<<"vel"<<vel<<std::endl;
         snake.changeVel(vel);
         snake.Update();
         plt::clf();
@@ -31,17 +31,4 @@ int main(){
         plt::plot(orbit_x, orbit_y);
         plt::pause(0.01);
     }
-    /*for(int i=0; i<250; i++){
-        orbit_x.push_back(v*(i+1));
-        orbit_y.push_back(0);
-        double vel=calSerpenVel(v, length_one_quarter, L);
-        std::cout<<"vel : "<<vel<<std::endl;
-        snake.changeVel(vel);
-        snake.Update();
-        plt::clf();
-        plt::plot(snake.C_x, snake.C_y);
-        plt::plot(orbit_x, orbit_y);
-        plt::legend();
-        plt::pause(0.01);
-    }*/
 }
