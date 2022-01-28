@@ -104,7 +104,7 @@ class SnakeRobot{
         double alpha_pitch;
         double bias_yaw = 0;
         double bias_pitch = 0;
-        double s_vel = 10;
+        double s_vel = 1;
 
         //４次ルンゲクッタで連立微分方程式を解く
         //http://skomo.o.oo7.jp/f20/hp20_4-3.htm
@@ -131,39 +131,36 @@ class SnakeRobot{
         double s = 0;
 
         void SolveDE(){
-            double n=s_vel/0.1;
-                K_a_c = s_vel * Func_c(s, E_1);
-                K_a_1 = s_vel * Func_1(s, E_2, E_3);
-                K_a_2 = s_vel * Func_2(s, E_1, E_3);
-                K_a_3 = s_vel * Func_3(s, E_1, E_2);
+            K_a_c = s_vel * Func_c(s, E_1);
+            K_a_1 = s_vel * Func_1(s, E_2, E_3);
+            K_a_2 = s_vel * Func_2(s, E_1, E_3);
+            K_a_3 = s_vel * Func_3(s, E_1, E_2);
 
-                K_b_c = s_vel * Func_c(s + s_vel / 2, E_1 + K_a_1 / 2);
-                K_b_1 = s_vel * Func_1(s + s_vel / 2, E_2 + K_a_2 / 2, E_3 + K_a_3 / 2);
-                K_b_2 = s_vel * Func_2(s + s_vel / 2, E_1 + K_a_1 / 2, E_3 + K_a_3 / 2);
-                K_b_3 = s_vel * Func_3(s + s_vel / 2, E_1 + K_a_1 / 2, E_2 + K_a_2 / 2);
+            K_b_c = s_vel * Func_c(s + s_vel / 2, E_1 + K_a_1 / 2);
+            K_b_1 = s_vel * Func_1(s + s_vel / 2, E_2 + K_a_2 / 2, E_3 + K_a_3 / 2);
+            K_b_2 = s_vel * Func_2(s + s_vel / 2, E_1 + K_a_1 / 2, E_3 + K_a_3 / 2);
+            K_b_3 = s_vel * Func_3(s + s_vel / 2, E_1 + K_a_1 / 2, E_2 + K_a_2 / 2);
 
 
-                K_c_c = s_vel * Func_c(s + s_vel / 2, E_1 + K_b_1 / 2);
-                K_c_1 = s_vel * Func_1(s + s_vel / 2, E_2 + K_b_2 / 2, E_3 + K_b_3 / 2);
-                K_c_2 = s_vel * Func_2(s + s_vel / 2, E_1 + K_b_1 / 2, E_3 + K_b_3 / 2);
-                K_c_3 = s_vel * Func_3(s + s_vel / 2, E_1 + K_a_1 / 2, E_2 + K_b_2 / 2);
+            K_c_c = s_vel * Func_c(s + s_vel / 2, E_1 + K_b_1 / 2);
+            K_c_1 = s_vel * Func_1(s + s_vel / 2, E_2 + K_b_2 / 2, E_3 + K_b_3 / 2);
+            K_c_2 = s_vel * Func_2(s + s_vel / 2, E_1 + K_b_1 / 2, E_3 + K_b_3 / 2);
+            K_c_3 = s_vel * Func_3(s + s_vel / 2, E_1 + K_a_1 / 2, E_2 + K_b_2 / 2);
 
-                K_d_c = s_vel * Func_c(s + s_vel, E_1 + K_c_1);
-                K_d_1 = s_vel * Func_1(s + s_vel, E_2 + K_c_2, E_3 + K_c_3);
-                K_d_2 = s_vel * Func_2(s + s_vel, E_1 + K_c_1, E_3 + K_c_3);
-                K_d_3 = s_vel * Func_3(s + s_vel, E_1 + K_c_1, E_2 + K_c_2);
+            K_d_c = s_vel * Func_c(s + s_vel, E_1 + K_c_1);
+            K_d_1 = s_vel * Func_1(s + s_vel, E_2 + K_c_2, E_3 + K_c_3);
+            K_d_2 = s_vel * Func_2(s + s_vel, E_1 + K_c_1, E_3 + K_c_3);
+            K_d_3 = s_vel * Func_3(s + s_vel, E_1 + K_c_1, E_2 + K_c_2);
 
-//                s += h;
-                s+=s_vel;
-                C   += (K_a_c + 2 * K_b_c + 2 * K_c_c + K_d_c) / 6;
-                E_1 += (K_a_1 + 2 * K_b_1 + 2 * K_c_1 + K_d_1) / 6;
-                E_2 += (K_a_2 + 2 * K_b_2 + 2 * K_c_2 + K_d_2) / 6;
-                E_3 += (K_a_3 + 2 * K_b_3 + 2 * K_c_3 + K_d_3) / 6;
+            s+=s_vel;
+            C   += (K_a_c + 2 * K_b_c + 2 * K_c_c + K_d_c) / 6;
+            E_1 += (K_a_1 + 2 * K_b_1 + 2 * K_c_1 + K_d_1) / 6;
+            E_2 += (K_a_2 + 2 * K_b_2 + 2 * K_c_2 + K_d_2) / 6;
+            E_3 += (K_a_3 + 2 * K_b_3 + 2 * K_c_3 + K_d_3) / 6;
         
-                C_x.push_back(C(0, 0));
-                C_y.push_back(C(1, 0));
-                C_z.push_back(C(2, 0));
-            //}
+            C_x.push_back(C(0, 0));
+            C_y.push_back(C(1, 0));
+            C_z.push_back(C(2, 0));
         }
         double curvature_yaw(double _s){
             //横うねり推進(岡山大学論文参照)
