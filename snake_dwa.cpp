@@ -28,7 +28,7 @@ double calCurvantureYaw(double x0, double x1, double x2, double y0, double y1, d
     return curvature_yaw;
 }
 int main(){
-    double length_one_quarter=20;
+    double length_one_quarter=5;
     //SnakeRobot snake(length_one_quarter, 0.0, 0.0);
     SnakeRobot snake(length_one_quarter, M_PI/4, 0.0);
 
@@ -46,18 +46,18 @@ int main(){
     DWA dwa(goalPos);
     bool finish=false;
     //double L=snake.calL();
-    double L=68.1306;
+    double L=17.0325;
     std::vector<double> robot_x;
     std::vector<double> robot_y;
     std::vector<double> curvature_yaw;
  
     std::vector<std::tuple<double, double>> data;
     double theta=0;
-    constexpr double r=10;
-    constexpr double cycle=0.1;
+    constexpr double r=100;
+    constexpr double dtheta=1.0/r;
     //double dtheta=2.0*M_PI/0.05;
     //double v=r*dtheta;
-    double v=r*cycle;
+    double v=r*dtheta;
     int count=0;
 
     std::vector<double> orbit_x;
@@ -96,45 +96,33 @@ int main(){
         plt::plot(orbit_x, orbit_y);
         plt::pause(0.01);
     }*/
-
-    while(theta<=1.5*M_PI){
+    double circumference=0;
+    while(circumference<2*M_PI*r){
         double temp_data_x=r*std::cos(theta);
         double temp_data_y=r*std::sin(theta)+r;
         data.push_back(std::make_tuple(temp_data_x, temp_data_y));
         orbit_x.push_back(temp_data_x);
         orbit_y.push_back(temp_data_y);
-        //if(count>=2){
-            /*
-            std::tuple<double, double> temp0=data.at(count-2);
-            std::tuple<double, double> temp1=data.at(count-1);
-            std::tuple<double, double> temp2=data.at(count);
-            double tempx0=std::get<0>(temp0);
-            double tempx1=std::get<0>(temp1);
-            double tempx2=std::get<0>(temp2);
-            double tempy0=std::get<1>(temp0);
-            double tempy1=std::get<1>(temp1);
-            double tempy2=std::get<1>(temp2);
-            curvature_yaw.push_back(-calCurvantureYaw(tempx0, tempx1, tempx2, tempy0, tempy1, tempy2));
-            snake.changeBiasYaw(curvature_yaw.back());
-            */
 
-            snake.changeBiasYaw(-0.1);
-            double snake_v=calSerpenVel(v, length_one_quarter, L);
-            std::cout<<"snake_v="<<snake_v<<std::endl;
-            snake.changeVel(snake_v);
-            //snake.changeAlphaYaw(M_PI/4);
-            snake.Update();
-            plt::clf();
-            plt::plot(snake.C_x, snake.C_y);
-            plt::plot(orbit_x, orbit_y);
-            plt::legend();
-            plt::pause(0.01);
-        //}
+        snake.changeBiasYaw(-0.01);
+        double snake_v=calSerpenVel(v, length_one_quarter, L);
+        std::cout<<"snake_v="<<snake_v<<std::endl;
+        snake.changeVel(snake_v);
+        //snake.changeAlphaYaw(M_PI/4);
+        snake.Update();
+        plt::clf();
+        plt::plot(snake.C_x, snake.C_y);
+        plt::plot(orbit_x, orbit_y);
+        plt::legend();
+        plt::pause(0.01);
+
         std::cout<<theta*360/M_PI<<std::endl;
-        theta+=cycle;
+        theta+=dtheta;
         ++count;
+        circumference+=v;
+        std::cout<<"count="<<count<<std::endl;
     }
-
+    std::cout<<"result:"<<circumference<<std::endl;
     /*while(finish == false){
         ++count;
         obsPos.clear();
