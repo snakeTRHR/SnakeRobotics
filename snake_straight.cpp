@@ -18,7 +18,7 @@ int main(){
     std::vector<double> orbit_x;
     std::vector<double> orbit_y;
 
-    double v=1;
+    double v=1.0;
     for(int i=0; i<static_cast<int>(L); ++i){
         orbit_x.push_back(v*(i+1));
         orbit_y.push_back(0);

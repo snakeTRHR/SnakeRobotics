@@ -22,8 +22,8 @@ int main(){
     std::vector<std::tuple<double, double>> data;
     double theta=0;
     while(theta<=2*M_PI){
-        double temp_data_x=0.1*std::cos(theta);
-        double temp_data_y=0.1*std::sin(theta);
+        double temp_data_x=100*std::cos(theta);
+        double temp_data_y=100*std::sin(theta);
         data.push_back(std::make_tuple(temp_data_x, temp_data_y));
         theta+=0.001;
     }
