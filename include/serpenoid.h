@@ -51,7 +51,7 @@ class SnakeRobot{
         }  
         void Update(){
             SolveDE();
-            std::cout<<bias_yaw<<std::endl;
+            //std::cout<<bias_yaw<<std::endl;
         }
         void changeBiasYaw(double _bias){
             bias_yaw = _bias;

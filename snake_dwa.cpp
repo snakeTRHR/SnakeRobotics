@@ -180,16 +180,18 @@ int main(){
         curvature_yaw.push_back(calCurvantureYaw2(tempx0, tempx1, tempx2, tempy0, tempy1, tempy2));
         double dwa_vel=dwa.robot_u_v;
         double dwa_ang_velo=dwa.robot_u_th;
-        std::cout<<robot_x.back()<<" "<<robot_y.back()<<std::endl;
-        snake.changeBiasYaw(calSerpenBiasYaw(L, length_one_quarter, curvature_yaw.back()));
-        snake.changeVel(calSerpenVel(dwa_vel, length_one_quarter, L));
+        //std::cout<<robot_x.back()<<" "<<robot_y.back()<<std::endl;
+        snake.changeBiasYaw(-1*calSerpenBiasYaw(L, length_one_quarter, curvature_yaw.back()));
+        double serpen_vel=calSerpenVel(dwa_vel, length_one_quarter, L);
+        std::cout<<dwa_vel<<" "<<serpen_vel<<std::endl;
+        snake.changeVel(serpen_vel);
         snake.changeAlphaYaw(M_PI/4);
         snake.Update();
         plt::clf();
         plt::plot(snake.C_x, snake.C_y);
         plt::plot(robot_x, robot_y);
         plt::legend();
-        plt::pause(0.01);   
+        plt::pause(0.01);
     }
     for(int i=0; i<curvature_yaw.size(); ++i){
         std::cout<<curvature_yaw[i]<<std::endl;

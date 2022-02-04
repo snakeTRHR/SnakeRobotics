@@ -188,11 +188,11 @@ class DWA{
     private:
         //パラメータ
         const double max_ang_accelation = 100 * M_PI / 180;
-        const double max_accelation = 1.0;
+        const double max_accelation = 0.3;
         const double lim_min_ang_velo = -M_PI;
         const double lim_max_ang_velo = M_PI;
         const double lim_min_velo = 0.0;
-        const double lim_max_velo = 2.6;
+        const double lim_max_velo = 1.0;
 
         //予測時間(s)
         const double pre_time = 3;
