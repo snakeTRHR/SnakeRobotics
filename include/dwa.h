@@ -61,8 +61,8 @@ class DWA{
             plot_x.push_back(_x);
             plot_y.push_back(_y);
             plt::clf();
-            plt::xlim(0, 12);
-            plt::ylim(0, 12);
+            plt::xlim(0, 60);
+            plt::ylim(0, 60);
             plt::plot(plot_x, plot_y);
             
             std::vector<PathSet> paths = traj_paths.back();
@@ -192,7 +192,7 @@ class DWA{
         const double lim_min_ang_velo = -M_PI;
         const double lim_max_ang_velo = M_PI;
         const double lim_min_velo = 0.0;
-        const double lim_max_velo = 1.6;
+        const double lim_max_velo = 2.6;
 
         //予測時間(s)
         const double pre_time = 3;
@@ -348,7 +348,7 @@ class DWA{
         }
         std::vector<ObsSet> calcNearestObs(std::vector<ObsSet> _obstacles){
             std::vector<ObsSet> nearestObs;
-            double area_dis_to_obs = 5;
+            double area_dis_to_obs = 15;
             //double area_dis_to_obs = 2;
             for(int i = 0; i < _obstacles.size(); ++i){
                 ObsSet tempObs = _obstacles[i];
