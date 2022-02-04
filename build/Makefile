@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named sinus_lifting
+
+# Build rule for target.
+sinus_lifting: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sinus_lifting
+.PHONY : sinus_lifting
+
+# fast build rule for target.
+sinus_lifting/fast:
+	$(MAKE) -f CMakeFiles/sinus_lifting.dir/build.make CMakeFiles/sinus_lifting.dir/build
+.PHONY : sinus_lifting/fast
+
+#=============================================================================
 # Target rules for targets named snake_joy
 
 # Build rule for target.
@@ -363,6 +376,33 @@ serpenoid.cpp.s:
 	$(MAKE) -f CMakeFiles/serpenoid.dir/build.make CMakeFiles/serpenoid.dir/serpenoid.cpp.s
 .PHONY : serpenoid.cpp.s
 
+sinus_lifting.o: sinus_lifting.cpp.o
+
+.PHONY : sinus_lifting.o
+
+# target to build an object file
+sinus_lifting.cpp.o:
+	$(MAKE) -f CMakeFiles/sinus_lifting.dir/build.make CMakeFiles/sinus_lifting.dir/sinus_lifting.cpp.o
+.PHONY : sinus_lifting.cpp.o
+
+sinus_lifting.i: sinus_lifting.cpp.i
+
+.PHONY : sinus_lifting.i
+
+# target to preprocess a source file
+sinus_lifting.cpp.i:
+	$(MAKE) -f CMakeFiles/sinus_lifting.dir/build.make CMakeFiles/sinus_lifting.dir/sinus_lifting.cpp.i
+.PHONY : sinus_lifting.cpp.i
+
+sinus_lifting.s: sinus_lifting.cpp.s
+
+.PHONY : sinus_lifting.s
+
+# target to generate assembly for a file
+sinus_lifting.cpp.s:
+	$(MAKE) -f CMakeFiles/sinus_lifting.dir/build.make CMakeFiles/sinus_lifting.dir/sinus_lifting.cpp.s
+.PHONY : sinus_lifting.cpp.s
+
 snake_dwa.o: snake_dwa.cpp.o
 
 .PHONY : snake_dwa.o
@@ -424,6 +464,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... sinus_lifting"
 	@echo "... snake_joy"
 	@echo "... frenet_serret"
 	@echo "... snake_key"
@@ -450,6 +491,9 @@ help:
 	@echo "... serpenoid.o"
 	@echo "... serpenoid.i"
 	@echo "... serpenoid.s"
+	@echo "... sinus_lifting.o"
+	@echo "... sinus_lifting.i"
+	@echo "... sinus_lifting.s"
 	@echo "... snake_dwa.o"
 	@echo "... snake_dwa.i"
 	@echo "... snake_dwa.s"
