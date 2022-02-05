@@ -61,8 +61,8 @@ class DWA{
             plot_x.push_back(_x);
             plot_y.push_back(_y);
             plt::clf();
-            plt::xlim(0, 60);
-            plt::ylim(0, 60);
+            plt::xlim(0, 110);
+            plt::ylim(0, 110);
             plt::plot(plot_x, plot_y);
             
             std::vector<PathSet> paths = traj_paths.back();
@@ -99,7 +99,7 @@ class DWA{
                 plt::plot(write_x, write_y, "b");
             }
             //write goal
-            double goal_radius = 0.5;
+            double goal_radius = 15;
             std::vector<double> goal_write_x;
             std::vector<double> goal_write_y;
             for(int k = 0; k < 100; ++k){
@@ -188,7 +188,7 @@ class DWA{
     private:
         //パラメータ
         const double max_ang_accelation = 100 * M_PI / 180;
-        const double max_accelation = 0.3;
+        const double max_accelation = 0.5;
         const double lim_min_ang_velo = -M_PI;
         const double lim_max_ang_velo = M_PI;
         const double lim_min_velo = 0.0;

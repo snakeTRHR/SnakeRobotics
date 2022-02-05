@@ -10,9 +10,9 @@ double calSerpenVel(double _vel, double _length, double _L){
     double vel=4*_length*_vel/_L;
     return vel;
 }
-double calSerpenBiasYaw(double _bias_yaw, double _length, double _L){
-    double bias_yaw=_L*_bias_yaw/4*_length;
-    return bias_yaw;
+double calSerpenBiasYaw(double _L, double _length_one_quarter, double _bias_yaw_center){
+    double serpen_bias_yaw=_bias_yaw_center*_L/(4*_length_one_quarter);
+    return serpen_bias_yaw;
 }
 int main(){
     double length_one_quarter=5;
@@ -29,18 +29,13 @@ int main(){
         orbit_y.push_back(0);
         double vel=calSerpenVel(v, length_one_quarter, L);
         std::cout<<"vel"<<vel<<std::endl;
-        //double bias_yaw_=calSerpenBiasYaw(-0.01, length_one_quarter, L);
-        //std::cout<<"bias_yaw_"<<bias_yaw_<<std::endl;
-        //snake.changeBiasYaw(calSerpenBiasYaw(-0.01, length_one_quarter, L));
-        snake.changeBiasYaw(-0.01);
+        snake.changeBiasYaw(calSerpenBiasYaw(L, length_one_quarter, -0.01));
         snakeCenter.changeBiasYaw(-0.01);
         snake.changeVel(vel);
         snakeCenter.changeVel(v);
         snake.Update();
         snakeCenter.Update();
         plt::clf();
-        plt::xlim(-5, 40);
-        plt::ylim(-5, 40);
         plt::plot(snake.C_x, snake.C_y);
         plt::plot(snakeCenter.C_x, snakeCenter.C_y);
         //plt::plot(orbit_x, orbit_y);

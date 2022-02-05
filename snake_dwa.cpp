@@ -41,6 +41,7 @@ double calCurvantureYaw2(double x0, double x1, double x2, double y0, double y1, 
 }
 int main(){
     std::vector<ObsSet> obsPos;
+    //障害物位置情報
     ObsSet obs[obsnum]{ObsSet(10, 20, 2),
                        ObsSet(25, 40, 2),
                        ObsSet(30, 30, 2),
@@ -49,14 +50,15 @@ int main(){
         obsPos.push_back(obs[i]);
     }
 
-    GoalSet goalPos(50, 50);
+    GoalSet goalPos(100, 100);
 
     DWA dwa(goalPos);
     bool finish=false;
     std::vector<double> robot_x;
     std::vector<double> robot_y;
     std::vector<double> curvature_yaw;
- 
+
+    //DWAでの障害物設定
     for(int i=0; i<3; ++i){
         obsPos.clear();
         for(int i=0; i<obsnum; ++i){
@@ -67,6 +69,7 @@ int main(){
         robot_x.push_back(dwa.getPositionX());
         robot_y.push_back(dwa.getPositionY());
     }
+
     double ini_theta=atan2(robot_y.at(1)-robot_y.at(0), robot_x.at(1)-robot_x.at(0));
     double length_one_quarter=5;
     SnakeRobot snake(length_one_quarter, ini_theta+M_PI/4, 0.0);
@@ -84,14 +87,7 @@ int main(){
         finish=dwa.goalCheck();
         robot_x.push_back(dwa.getPositionX());
         robot_y.push_back(dwa.getPositionY());
-    
-        /*plt::clf();
-        plt::xlim(0, 55);
-        plt::ylim(0, 55);
-        plt::plot(robot_x, robot_y);
-        plt::legend();
-        plt::pause(0.01);*/
-
+       
         //calc curvature
         double tempx0=robot_x[robot_x.size()-3];
         double tempx1=robot_x[robot_x.size()-2];
