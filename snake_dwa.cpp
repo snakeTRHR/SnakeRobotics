@@ -42,10 +42,10 @@ double calCurvantureYaw2(double x0, double x1, double x2, double y0, double y1, 
 int main(){
     std::vector<ObsSet> obsPos;
     //障害物位置情報
-    ObsSet obs[obsnum]{ObsSet(10, 20, 2),
-                       ObsSet(25, 40, 2),
-                       ObsSet(30, 30, 2),
-                       ObsSet(40, 35, 2)};
+    ObsSet obs[obsnum]{ObsSet(140, 140, 2),
+                       ObsSet(125, 140, 2),
+                       ObsSet(130, 130, 2),
+                       ObsSet(130, 135, 2)};
     for(int i=0; i<obsnum; ++i){
         obsPos.push_back(obs[i]);
     }
@@ -76,18 +76,27 @@ int main(){
     double L=17.0325;
     std::vector<double> orbit_x;
     std::vector<double> orbit_y;
+    int count=0;
+    double prev_robot_x=0;
+    double prev_robot_y=0;
     while(finish == false){
+        ++count;
         obsPos.clear();
         for(int i=0; i<obsnum; ++i){
             //obs[i] = changeObsPos(obs[i]);
             obsPos.push_back(obs[i]);
         }
         dwa.runToGoal(goalPos, obsPos);
-        //dwa.Animation(dwa.getPositionX(), dwa.getPositionY(), obsPos);
+        dwa.Animation(dwa.getPositionX(), dwa.getPositionY(), obsPos);
         finish=dwa.goalCheck();
         robot_x.push_back(dwa.getPositionX());
         robot_y.push_back(dwa.getPositionY());
-       
+        double diff_x=dwa.getPositionX()-prev_robot_x;
+        double diff_y=dwa.getPositionY()-prev_robot_y;
+        std::cout<<count<<" "<<dwa.robot_u_v<<" "<<std::sqrt(diff_x*diff_x+diff_y*diff_y)<<std::endl;
+        prev_robot_x=dwa.getPositionX();
+        prev_robot_y=dwa.getPositionY();
+       /*
         //calc curvature
         double tempx0=robot_x[robot_x.size()-3];
         double tempx1=robot_x[robot_x.size()-2];
@@ -102,7 +111,8 @@ int main(){
         //std::cout<<robot_x.back()<<" "<<robot_y.back()<<std::endl;
         snake.changeBiasYaw(-1*calSerpenBiasYaw(L, length_one_quarter, curvature_yaw.back()));
         double serpen_vel=calSerpenVel(dwa_vel, length_one_quarter, L);
-        std::cout<<dwa_vel<<" "<<serpen_vel<<std::endl;
+        //std::cout<<dwa_vel<<" "<<serpen_vel<<std::endl;
+        std::cout<<count<<" "<<dwa_vel<<" "<<robot_x.back()<<" "<<robot_y.back()<<std::endl;
         snake.changeVel(serpen_vel);
         snake.changeAlphaYaw(M_PI/4);
         snake.Update();
@@ -110,7 +120,7 @@ int main(){
         plt::plot(snake.C_x, snake.C_y);
         plt::plot(robot_x, robot_y);
         plt::legend();
-        plt::pause(0.01);
+        plt::pause(0.01);*/
     }
     for(int i=0; i<curvature_yaw.size(); ++i){
         std::cout<<curvature_yaw[i]<<std::endl;
