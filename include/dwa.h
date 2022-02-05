@@ -198,13 +198,13 @@ class DWA{
         const double pre_time = 3;
         const double pre_step = 30;
         //探索時の刻み幅
-        //const double delta_velo = 0.02;
-        //const double delta_ang_velo = 0.02;
-        const double delta_velo = 0.5;
-        const double delta_ang_velo = 0.1;
+        const double delta_velo = 0.02;
+        const double delta_ang_velo = 0.02;
+        //const double delta_velo = 0.5;
+        //const double delta_ang_velo = 0.1;
         //サンプリングタイム
-        //const double sampling_time = 0.1;
-        const double sampling_time = 1;
+        const double sampling_time = 0.1;
+        //const double sampling_time = 1;
         //重み付け
         const double weight_angle = 0.05;
         const double weight_velo = 0.2;

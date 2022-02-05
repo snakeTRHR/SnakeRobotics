@@ -87,7 +87,7 @@ int main(){
             obsPos.push_back(obs[i]);
         }
         dwa.runToGoal(goalPos, obsPos);
-        dwa.Animation(dwa.getPositionX(), dwa.getPositionY(), obsPos);
+        //dwa.Animation(dwa.getPositionX(), dwa.getPositionY(), obsPos);
         finish=dwa.goalCheck();
         robot_x.push_back(dwa.getPositionX());
         robot_y.push_back(dwa.getPositionY());
@@ -96,7 +96,7 @@ int main(){
         std::cout<<count<<" "<<dwa.robot_u_v<<" "<<std::sqrt(diff_x*diff_x+diff_y*diff_y)<<std::endl;
         prev_robot_x=dwa.getPositionX();
         prev_robot_y=dwa.getPositionY();
-       /*
+       
         //calc curvature
         double tempx0=robot_x[robot_x.size()-3];
         double tempx1=robot_x[robot_x.size()-2];
@@ -106,13 +106,14 @@ int main(){
         double tempy2=robot_y[robot_y.size()-1];
         //curvature_yaw.push_back(calCurvantureYaw(tempx0, tempx1, tempx2, tempy0, tempy1, tempy2));
         curvature_yaw.push_back(calCurvantureYaw2(tempx0, tempx1, tempx2, tempy0, tempy1, tempy2));
-        double dwa_vel=dwa.robot_u_v;
+        //double dwa_vel=dwa.robot_u_v;
+        double dwa_vel=std::sqrt(diff_x*diff_x+diff_y*diff_y);
         double dwa_ang_velo=dwa.robot_u_th;
         //std::cout<<robot_x.back()<<" "<<robot_y.back()<<std::endl;
         snake.changeBiasYaw(-1*calSerpenBiasYaw(L, length_one_quarter, curvature_yaw.back()));
         double serpen_vel=calSerpenVel(dwa_vel, length_one_quarter, L);
         //std::cout<<dwa_vel<<" "<<serpen_vel<<std::endl;
-        std::cout<<count<<" "<<dwa_vel<<" "<<robot_x.back()<<" "<<robot_y.back()<<std::endl;
+        //std::cout<<count<<" "<<dwa_vel<<" "<<robot_x.back()<<" "<<robot_y.back()<<std::endl;
         snake.changeVel(serpen_vel);
         snake.changeAlphaYaw(M_PI/4);
         snake.Update();
@@ -120,7 +121,7 @@ int main(){
         plt::plot(snake.C_x, snake.C_y);
         plt::plot(robot_x, robot_y);
         plt::legend();
-        plt::pause(0.01);*/
+        plt::pause(0.01);
     }
     for(int i=0; i<curvature_yaw.size(); ++i){
         std::cout<<curvature_yaw[i]<<std::endl;
