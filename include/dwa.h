@@ -53,7 +53,8 @@ class DWA{
         DWA(GoalSet _goal){
             g_x = _goal.x;
             g_y = _goal.y;
-            TwoWheelRobot(0, 0, 0);
+            //TwoWheelRobot(0, 0, 0);
+            TwoWheelRobot(0, 0, M_PI/4);
         }
         std::vector<double> plot_x;
         std::vector<double> plot_y;

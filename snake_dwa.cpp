@@ -93,7 +93,7 @@ int main(){
         robot_y.push_back(dwa.getPositionY());
         double diff_x=dwa.getPositionX()-prev_robot_x;
         double diff_y=dwa.getPositionY()-prev_robot_y;
-        std::cout<<count<<" "<<dwa.robot_u_v<<" "<<std::sqrt(diff_x*diff_x+diff_y*diff_y)<<std::endl;
+        //std::cout<<count<<" "<<dwa.robot_u_v<<" "<<std::sqrt(diff_x*diff_x+diff_y*diff_y)<<std::endl;
         prev_robot_x=dwa.getPositionX();
         prev_robot_y=dwa.getPositionY();
        
@@ -105,12 +105,17 @@ int main(){
         double tempy1=robot_y[robot_y.size()-2];
         double tempy2=robot_y[robot_y.size()-1];
         //curvature_yaw.push_back(calCurvantureYaw(tempx0, tempx1, tempx2, tempy0, tempy1, tempy2));
-        curvature_yaw.push_back(calCurvantureYaw2(tempx0, tempx1, tempx2, tempy0, tempy1, tempy2));
+        //curvature_yaw.push_back(calCurvantureYaw2(tempx0, tempx1, tempx2, tempy0, tempy1, tempy2));
         //double dwa_vel=dwa.robot_u_v;
         double dwa_vel=std::sqrt(diff_x*diff_x+diff_y*diff_y);
         double dwa_ang_velo=dwa.robot_u_th;
         //std::cout<<robot_x.back()<<" "<<robot_y.back()<<std::endl;
-        snake.changeBiasYaw(-1*calSerpenBiasYaw(L, length_one_quarter, curvature_yaw.back()));
+        double serpen_bias_yaw=-1*calSerpenBiasYaw(L, length_one_quarter, calCurvantureYaw(tempx0, tempx1, tempx2, tempy0, tempy1, tempy2));
+        serpen_bias_yaw*=100;
+        serpen_bias_yaw=round(serpen_bias_yaw);
+        serpen_bias_yaw/=100;
+        curvature_yaw.push_back(serpen_bias_yaw);
+        snake.changeBiasYaw(serpen_bias_yaw);
         double serpen_vel=calSerpenVel(dwa_vel, length_one_quarter, L);
         //std::cout<<dwa_vel<<" "<<serpen_vel<<std::endl;
         //std::cout<<count<<" "<<dwa_vel<<" "<<robot_x.back()<<" "<<robot_y.back()<<std::endl;
