@@ -41,6 +41,11 @@
 },
 {
   "directory": "/home/tsuruharakota/SnakeRobotics/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/python2.7  -g   -std=gnu++11 -o CMakeFiles/snake_circle2.dir/snake_circle2.cpp.o -c /home/tsuruharakota/SnakeRobotics/snake_circle2.cpp",
+  "file": "/home/tsuruharakota/SnakeRobotics/snake_circle2.cpp"
+},
+{
+  "directory": "/home/tsuruharakota/SnakeRobotics/build",
   "command": "/usr/bin/x86_64-linux-gnu-g++-7   -I/usr/include/python2.7  -g   -std=gnu++11 -o CMakeFiles/snake_dwa.dir/snake_dwa.cpp.o -c /home/tsuruharakota/SnakeRobotics/snake_dwa.cpp",
   "file": "/home/tsuruharakota/SnakeRobotics/snake_dwa.cpp"
 },

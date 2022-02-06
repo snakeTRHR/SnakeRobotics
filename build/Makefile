@@ -202,6 +202,19 @@ serpenoid/fast:
 .PHONY : serpenoid/fast
 
 #=============================================================================
+# Target rules for targets named snake_circle2
+
+# Build rule for target.
+snake_circle2: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 snake_circle2
+.PHONY : snake_circle2
+
+# fast build rule for target.
+snake_circle2/fast:
+	$(MAKE) -f CMakeFiles/snake_circle2.dir/build.make CMakeFiles/snake_circle2.dir/build
+.PHONY : snake_circle2/fast
+
+#=============================================================================
 # Target rules for targets named snake_dwa
 
 # Build rule for target.
@@ -443,6 +456,33 @@ snake_circle.cpp.s:
 	$(MAKE) -f CMakeFiles/snake_circle.dir/build.make CMakeFiles/snake_circle.dir/snake_circle.cpp.s
 .PHONY : snake_circle.cpp.s
 
+snake_circle2.o: snake_circle2.cpp.o
+
+.PHONY : snake_circle2.o
+
+# target to build an object file
+snake_circle2.cpp.o:
+	$(MAKE) -f CMakeFiles/snake_circle2.dir/build.make CMakeFiles/snake_circle2.dir/snake_circle2.cpp.o
+.PHONY : snake_circle2.cpp.o
+
+snake_circle2.i: snake_circle2.cpp.i
+
+.PHONY : snake_circle2.i
+
+# target to preprocess a source file
+snake_circle2.cpp.i:
+	$(MAKE) -f CMakeFiles/snake_circle2.dir/build.make CMakeFiles/snake_circle2.dir/snake_circle2.cpp.i
+.PHONY : snake_circle2.cpp.i
+
+snake_circle2.s: snake_circle2.cpp.s
+
+.PHONY : snake_circle2.s
+
+# target to generate assembly for a file
+snake_circle2.cpp.s:
+	$(MAKE) -f CMakeFiles/snake_circle2.dir/build.make CMakeFiles/snake_circle2.dir/snake_circle2.cpp.s
+.PHONY : snake_circle2.cpp.s
+
 snake_dwa.o: snake_dwa.cpp.o
 
 .PHONY : snake_dwa.o
@@ -512,6 +552,7 @@ help:
 	@echo "... snake_straight"
 	@echo "... serpenoid"
 	@echo "... rebuild_cache"
+	@echo "... snake_circle2"
 	@echo "... snake_dwa"
 	@echo "... dwa"
 	@echo "... control_keyboard.o"
@@ -538,6 +579,9 @@ help:
 	@echo "... snake_circle.o"
 	@echo "... snake_circle.i"
 	@echo "... snake_circle.s"
+	@echo "... snake_circle2.o"
+	@echo "... snake_circle2.i"
+	@echo "... snake_circle2.s"
 	@echo "... snake_dwa.o"
 	@echo "... snake_dwa.i"
 	@echo "... snake_dwa.s"

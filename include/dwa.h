@@ -53,8 +53,8 @@ class DWA{
         DWA(GoalSet _goal){
             g_x = _goal.x;
             g_y = _goal.y;
-            //TwoWheelRobot(0, 0, 0);
-            TwoWheelRobot(0, 0, M_PI/4);
+            TwoWheelRobot(0, 0, 0);
+            //TwoWheelRobot(0, 0, M_PI/4);
         }
         std::vector<double> plot_x;
         std::vector<double> plot_y;
@@ -172,9 +172,15 @@ class DWA{
             robot_traj_y.push_back(robot_next_y);
             robot_traj_th.push_back(robot_next_th);
 
-            robot_x = robot_next_x;
-            robot_y = robot_next_y;
-            robot_th = robot_next_th;        
+            robot_x = posRound(robot_next_x);
+            robot_y = posRound(robot_next_y);
+            robot_th = posRound(robot_next_th);
+        }
+        double posRound(double val){
+            val*=1000;
+            val=round(val);
+            val/=1000;
+            return val;
         }
         double robot_x;
         double robot_y;

@@ -7,5 +7,6 @@
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/snake_straight.dir
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/serpenoid.dir
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/rebuild_cache.dir
+/home/tsuruharakota/SnakeRobotics/build/CMakeFiles/snake_circle2.dir
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/snake_dwa.dir
 /home/tsuruharakota/SnakeRobotics/build/CMakeFiles/dwa.dir

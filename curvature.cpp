@@ -21,11 +21,16 @@ double calCurvantureYaw(double x0, double x1, double x2, double y0, double y1, d
 int main(){
     std::vector<std::tuple<double, double>> data;
     double theta=0;
-    while(theta<=2*M_PI){
+    /*while(theta<=2*M_PI){
         double temp_data_x=100*std::cos(theta);
         double temp_data_y=100*std::sin(theta);
         data.push_back(std::make_tuple(temp_data_x, temp_data_y));
         theta+=0.001;
+    }*/
+    for(int i=0; i<100; ++i){
+        double x=i*0.01;
+        double y=i*0.01;
+        data.push_back(std::make_tuple(x, y));
     }
     for(int i=0; i<data.size(); i++){
         std::tuple<double, double> temp_tuple=data[i];
