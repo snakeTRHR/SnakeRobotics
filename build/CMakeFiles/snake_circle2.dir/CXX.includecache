@@ -6,20 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/tsuruharakota/SnakeRobotics/include/dwa.h
-cmath
--
-vector
--
-tuple
--
-string
--
-array
--
-matplotlibcpp.h
-/home/tsuruharakota/SnakeRobotics/include/matplotlibcpp.h
-
 /home/tsuruharakota/SnakeRobotics/include/matplotlibcpp.h
 Python.h
 -
@@ -91,8 +77,6 @@ array
 -
 include/serpenoid.h
 /home/tsuruharakota/SnakeRobotics/include/serpenoid.h
-include/dwa.h
-/home/tsuruharakota/SnakeRobotics/include/dwa.h
 
 /usr/include/eigen3/Eigen/Cholesky
 Core
