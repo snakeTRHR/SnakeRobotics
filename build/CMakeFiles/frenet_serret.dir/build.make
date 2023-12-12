@@ -60,15 +60,15 @@ include CMakeFiles/frenet_serret.dir/flags.make
 CMakeFiles/frenet_serret.dir/frenet_serret.cpp.o: CMakeFiles/frenet_serret.dir/flags.make
 CMakeFiles/frenet_serret.dir/frenet_serret.cpp.o: ../frenet_serret.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tsuruharakota/SnakeRobotics/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/frenet_serret.dir/frenet_serret.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/frenet_serret.dir/frenet_serret.cpp.o -c /home/tsuruharakota/SnakeRobotics/frenet_serret.cpp
+	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/frenet_serret.dir/frenet_serret.cpp.o -c /home/tsuruharakota/SnakeRobotics/frenet_serret.cpp
 
 CMakeFiles/frenet_serret.dir/frenet_serret.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/frenet_serret.dir/frenet_serret.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/frenet_serret.cpp > CMakeFiles/frenet_serret.dir/frenet_serret.cpp.i
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tsuruharakota/SnakeRobotics/frenet_serret.cpp > CMakeFiles/frenet_serret.dir/frenet_serret.cpp.i
 
 CMakeFiles/frenet_serret.dir/frenet_serret.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/frenet_serret.dir/frenet_serret.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/frenet_serret.cpp -o CMakeFiles/frenet_serret.dir/frenet_serret.cpp.s
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tsuruharakota/SnakeRobotics/frenet_serret.cpp -o CMakeFiles/frenet_serret.dir/frenet_serret.cpp.s
 
 CMakeFiles/frenet_serret.dir/frenet_serret.cpp.o.requires:
 

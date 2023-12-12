@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /home/tsuruharakota/SnakeRobotics/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -77,6 +66,17 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -111,17 +111,43 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named snake_key
+# Target rules for targets named snake_circle
 
 # Build rule for target.
-snake_key: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 snake_key
-.PHONY : snake_key
+snake_circle: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 snake_circle
+.PHONY : snake_circle
 
 # fast build rule for target.
-snake_key/fast:
-	$(MAKE) -f CMakeFiles/snake_key.dir/build.make CMakeFiles/snake_key.dir/build
-.PHONY : snake_key/fast
+snake_circle/fast:
+	$(MAKE) -f CMakeFiles/snake_circle.dir/build.make CMakeFiles/snake_circle.dir/build
+.PHONY : snake_circle/fast
+
+#=============================================================================
+# Target rules for targets named sinus_lifting
+
+# Build rule for target.
+sinus_lifting: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sinus_lifting
+.PHONY : sinus_lifting
+
+# fast build rule for target.
+sinus_lifting/fast:
+	$(MAKE) -f CMakeFiles/sinus_lifting.dir/build.make CMakeFiles/sinus_lifting.dir/build
+.PHONY : sinus_lifting/fast
+
+#=============================================================================
+# Target rules for targets named snake_joy
+
+# Build rule for target.
+snake_joy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 snake_joy
+.PHONY : snake_joy
+
+# fast build rule for target.
+snake_joy/fast:
+	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/build
+.PHONY : snake_joy/fast
 
 #=============================================================================
 # Target rules for targets named frenet_serret
@@ -137,17 +163,82 @@ frenet_serret/fast:
 .PHONY : frenet_serret/fast
 
 #=============================================================================
-# Target rules for targets named snake_joy
+# Target rules for targets named snake_key
 
 # Build rule for target.
-snake_joy: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 snake_joy
-.PHONY : snake_joy
+snake_key: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 snake_key
+.PHONY : snake_key
 
 # fast build rule for target.
-snake_joy/fast:
-	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/build
-.PHONY : snake_joy/fast
+snake_key/fast:
+	$(MAKE) -f CMakeFiles/snake_key.dir/build.make CMakeFiles/snake_key.dir/build
+.PHONY : snake_key/fast
+
+#=============================================================================
+# Target rules for targets named snake_straight
+
+# Build rule for target.
+snake_straight: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 snake_straight
+.PHONY : snake_straight
+
+# fast build rule for target.
+snake_straight/fast:
+	$(MAKE) -f CMakeFiles/snake_straight.dir/build.make CMakeFiles/snake_straight.dir/build
+.PHONY : snake_straight/fast
+
+#=============================================================================
+# Target rules for targets named serpenoid
+
+# Build rule for target.
+serpenoid: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 serpenoid
+.PHONY : serpenoid
+
+# fast build rule for target.
+serpenoid/fast:
+	$(MAKE) -f CMakeFiles/serpenoid.dir/build.make CMakeFiles/serpenoid.dir/build
+.PHONY : serpenoid/fast
+
+#=============================================================================
+# Target rules for targets named snake_circle2
+
+# Build rule for target.
+snake_circle2: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 snake_circle2
+.PHONY : snake_circle2
+
+# fast build rule for target.
+snake_circle2/fast:
+	$(MAKE) -f CMakeFiles/snake_circle2.dir/build.make CMakeFiles/snake_circle2.dir/build
+.PHONY : snake_circle2/fast
+
+#=============================================================================
+# Target rules for targets named snake_dwa
+
+# Build rule for target.
+snake_dwa: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 snake_dwa
+.PHONY : snake_dwa
+
+# fast build rule for target.
+snake_dwa/fast:
+	$(MAKE) -f CMakeFiles/snake_dwa.dir/build.make CMakeFiles/snake_dwa.dir/build
+.PHONY : snake_dwa/fast
+
+#=============================================================================
+# Target rules for targets named dwa
+
+# Build rule for target.
+dwa: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 dwa
+.PHONY : dwa
+
+# fast build rule for target.
+dwa/fast:
+	$(MAKE) -f CMakeFiles/dwa.dir/build.make CMakeFiles/dwa.dir/build
+.PHONY : dwa/fast
 
 control_keyboard.o: control_keyboard.cpp.o
 
@@ -175,6 +266,33 @@ control_keyboard.s: control_keyboard.cpp.s
 control_keyboard.cpp.s:
 	$(MAKE) -f CMakeFiles/snake_key.dir/build.make CMakeFiles/snake_key.dir/control_keyboard.cpp.s
 .PHONY : control_keyboard.cpp.s
+
+dwa.o: dwa.cpp.o
+
+.PHONY : dwa.o
+
+# target to build an object file
+dwa.cpp.o:
+	$(MAKE) -f CMakeFiles/dwa.dir/build.make CMakeFiles/dwa.dir/dwa.cpp.o
+.PHONY : dwa.cpp.o
+
+dwa.i: dwa.cpp.i
+
+.PHONY : dwa.i
+
+# target to preprocess a source file
+dwa.cpp.i:
+	$(MAKE) -f CMakeFiles/dwa.dir/build.make CMakeFiles/dwa.dir/dwa.cpp.i
+.PHONY : dwa.cpp.i
+
+dwa.s: dwa.cpp.s
+
+.PHONY : dwa.s
+
+# target to generate assembly for a file
+dwa.cpp.s:
+	$(MAKE) -f CMakeFiles/dwa.dir/build.make CMakeFiles/dwa.dir/dwa.cpp.s
+.PHONY : dwa.cpp.s
 
 frenet_serret.o: frenet_serret.cpp.o
 
@@ -257,20 +375,192 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/snake_joy.dir/build.make CMakeFiles/snake_joy.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+serpenoid.o: serpenoid.cpp.o
+
+.PHONY : serpenoid.o
+
+# target to build an object file
+serpenoid.cpp.o:
+	$(MAKE) -f CMakeFiles/serpenoid.dir/build.make CMakeFiles/serpenoid.dir/serpenoid.cpp.o
+.PHONY : serpenoid.cpp.o
+
+serpenoid.i: serpenoid.cpp.i
+
+.PHONY : serpenoid.i
+
+# target to preprocess a source file
+serpenoid.cpp.i:
+	$(MAKE) -f CMakeFiles/serpenoid.dir/build.make CMakeFiles/serpenoid.dir/serpenoid.cpp.i
+.PHONY : serpenoid.cpp.i
+
+serpenoid.s: serpenoid.cpp.s
+
+.PHONY : serpenoid.s
+
+# target to generate assembly for a file
+serpenoid.cpp.s:
+	$(MAKE) -f CMakeFiles/serpenoid.dir/build.make CMakeFiles/serpenoid.dir/serpenoid.cpp.s
+.PHONY : serpenoid.cpp.s
+
+sinus_lifting.o: sinus_lifting.cpp.o
+
+.PHONY : sinus_lifting.o
+
+# target to build an object file
+sinus_lifting.cpp.o:
+	$(MAKE) -f CMakeFiles/sinus_lifting.dir/build.make CMakeFiles/sinus_lifting.dir/sinus_lifting.cpp.o
+.PHONY : sinus_lifting.cpp.o
+
+sinus_lifting.i: sinus_lifting.cpp.i
+
+.PHONY : sinus_lifting.i
+
+# target to preprocess a source file
+sinus_lifting.cpp.i:
+	$(MAKE) -f CMakeFiles/sinus_lifting.dir/build.make CMakeFiles/sinus_lifting.dir/sinus_lifting.cpp.i
+.PHONY : sinus_lifting.cpp.i
+
+sinus_lifting.s: sinus_lifting.cpp.s
+
+.PHONY : sinus_lifting.s
+
+# target to generate assembly for a file
+sinus_lifting.cpp.s:
+	$(MAKE) -f CMakeFiles/sinus_lifting.dir/build.make CMakeFiles/sinus_lifting.dir/sinus_lifting.cpp.s
+.PHONY : sinus_lifting.cpp.s
+
+snake_circle.o: snake_circle.cpp.o
+
+.PHONY : snake_circle.o
+
+# target to build an object file
+snake_circle.cpp.o:
+	$(MAKE) -f CMakeFiles/snake_circle.dir/build.make CMakeFiles/snake_circle.dir/snake_circle.cpp.o
+.PHONY : snake_circle.cpp.o
+
+snake_circle.i: snake_circle.cpp.i
+
+.PHONY : snake_circle.i
+
+# target to preprocess a source file
+snake_circle.cpp.i:
+	$(MAKE) -f CMakeFiles/snake_circle.dir/build.make CMakeFiles/snake_circle.dir/snake_circle.cpp.i
+.PHONY : snake_circle.cpp.i
+
+snake_circle.s: snake_circle.cpp.s
+
+.PHONY : snake_circle.s
+
+# target to generate assembly for a file
+snake_circle.cpp.s:
+	$(MAKE) -f CMakeFiles/snake_circle.dir/build.make CMakeFiles/snake_circle.dir/snake_circle.cpp.s
+.PHONY : snake_circle.cpp.s
+
+snake_circle2.o: snake_circle2.cpp.o
+
+.PHONY : snake_circle2.o
+
+# target to build an object file
+snake_circle2.cpp.o:
+	$(MAKE) -f CMakeFiles/snake_circle2.dir/build.make CMakeFiles/snake_circle2.dir/snake_circle2.cpp.o
+.PHONY : snake_circle2.cpp.o
+
+snake_circle2.i: snake_circle2.cpp.i
+
+.PHONY : snake_circle2.i
+
+# target to preprocess a source file
+snake_circle2.cpp.i:
+	$(MAKE) -f CMakeFiles/snake_circle2.dir/build.make CMakeFiles/snake_circle2.dir/snake_circle2.cpp.i
+.PHONY : snake_circle2.cpp.i
+
+snake_circle2.s: snake_circle2.cpp.s
+
+.PHONY : snake_circle2.s
+
+# target to generate assembly for a file
+snake_circle2.cpp.s:
+	$(MAKE) -f CMakeFiles/snake_circle2.dir/build.make CMakeFiles/snake_circle2.dir/snake_circle2.cpp.s
+.PHONY : snake_circle2.cpp.s
+
+snake_dwa.o: snake_dwa.cpp.o
+
+.PHONY : snake_dwa.o
+
+# target to build an object file
+snake_dwa.cpp.o:
+	$(MAKE) -f CMakeFiles/snake_dwa.dir/build.make CMakeFiles/snake_dwa.dir/snake_dwa.cpp.o
+.PHONY : snake_dwa.cpp.o
+
+snake_dwa.i: snake_dwa.cpp.i
+
+.PHONY : snake_dwa.i
+
+# target to preprocess a source file
+snake_dwa.cpp.i:
+	$(MAKE) -f CMakeFiles/snake_dwa.dir/build.make CMakeFiles/snake_dwa.dir/snake_dwa.cpp.i
+.PHONY : snake_dwa.cpp.i
+
+snake_dwa.s: snake_dwa.cpp.s
+
+.PHONY : snake_dwa.s
+
+# target to generate assembly for a file
+snake_dwa.cpp.s:
+	$(MAKE) -f CMakeFiles/snake_dwa.dir/build.make CMakeFiles/snake_dwa.dir/snake_dwa.cpp.s
+.PHONY : snake_dwa.cpp.s
+
+snake_straight.o: snake_straight.cpp.o
+
+.PHONY : snake_straight.o
+
+# target to build an object file
+snake_straight.cpp.o:
+	$(MAKE) -f CMakeFiles/snake_straight.dir/build.make CMakeFiles/snake_straight.dir/snake_straight.cpp.o
+.PHONY : snake_straight.cpp.o
+
+snake_straight.i: snake_straight.cpp.i
+
+.PHONY : snake_straight.i
+
+# target to preprocess a source file
+snake_straight.cpp.i:
+	$(MAKE) -f CMakeFiles/snake_straight.dir/build.make CMakeFiles/snake_straight.dir/snake_straight.cpp.i
+.PHONY : snake_straight.cpp.i
+
+snake_straight.s: snake_straight.cpp.s
+
+.PHONY : snake_straight.s
+
+# target to generate assembly for a file
+snake_straight.cpp.s:
+	$(MAKE) -f CMakeFiles/snake_straight.dir/build.make CMakeFiles/snake_straight.dir/snake_straight.cpp.s
+.PHONY : snake_straight.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... snake_key"
-	@echo "... frenet_serret"
+	@echo "... snake_circle"
+	@echo "... sinus_lifting"
 	@echo "... snake_joy"
+	@echo "... frenet_serret"
+	@echo "... snake_key"
+	@echo "... snake_straight"
+	@echo "... serpenoid"
+	@echo "... rebuild_cache"
+	@echo "... snake_circle2"
+	@echo "... snake_dwa"
+	@echo "... dwa"
 	@echo "... control_keyboard.o"
 	@echo "... control_keyboard.i"
 	@echo "... control_keyboard.s"
+	@echo "... dwa.o"
+	@echo "... dwa.i"
+	@echo "... dwa.s"
 	@echo "... frenet_serret.o"
 	@echo "... frenet_serret.i"
 	@echo "... frenet_serret.s"
@@ -280,6 +570,24 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... serpenoid.o"
+	@echo "... serpenoid.i"
+	@echo "... serpenoid.s"
+	@echo "... sinus_lifting.o"
+	@echo "... sinus_lifting.i"
+	@echo "... sinus_lifting.s"
+	@echo "... snake_circle.o"
+	@echo "... snake_circle.i"
+	@echo "... snake_circle.s"
+	@echo "... snake_circle2.o"
+	@echo "... snake_circle2.i"
+	@echo "... snake_circle2.s"
+	@echo "... snake_dwa.o"
+	@echo "... snake_dwa.i"
+	@echo "... snake_dwa.s"
+	@echo "... snake_straight.o"
+	@echo "... snake_straight.i"
+	@echo "... snake_straight.s"
 .PHONY : help
 
 
